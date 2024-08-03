@@ -1,0 +1,38 @@
+.App {
+    text-align: center;
+  }
+
+.Header {
+    background-color: #dff1fb;
+    min-height: 8vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+.Header h1 {
+    text-align: center;
+    font-size: 22px;  
+    color: #000000;
+}
+
+.Sidebar {
+    display: flex;
+    width: 20%;
+    background-color: #5b5b99;
+}
+
+.Sidebar li {
+    font-size: 20px;
+}
+
+.Sidebar jack-logo {
+    height: 8vw;
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    pointer-events: none;
+}

@@ -1,35 +1,43 @@
-import logo from './assets/JackTech banner logo.png';
-import './App.css';
-import MenuItem from './components/MenuItem';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './assets/css/webapi-react.css'
+import Header from './page/Header';
+import Sidebar from './page/Sidebar';
+import NC_Alarm from './page/NC_Alarm';
+import NC_Status from './page/NC_Status';
+import Order from './page/Order';
+import BasicSetting from './page/BasicSetting';
+import SysSetting from './page/SysSetting';
+// import MenuItem from './components/MenuItem';
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = ()=>{
+    setIsSidebarOpen(!isSidebarOpen);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <Router>
+      <div className="App">
+        <Header isSidebarOpen={ isSidebarOpen } toggleSidebar={ toggleSidebar } />
+        <div className={`main-content ${isSidebarOpen? 'SidebarOpen': ''}`}>
+          <Sidebar isSidebarOpen={ isSidebarOpen }>
+          <div className='page-content'>
+              <Routes>
+                <Route path='/' element={ <NC_Status/> }/>
+                <Route path='/alarm' element={ <NC_Alarm/> }/>
+                <Route path='/order/' element={ <Order/> }/>
+                <Route path='/setting' element={ <BasicSetting/> }/>
+                <Route path='/sys' element={ <SysSetting/> }/>
+              </Routes>
+          </div>
+          </Sidebar>
+        </div>
         
-      </header>
-      <body className=''>
-        <Sidebar />
-      </body>
-    </div>
+      </div>
+    </Router>    
   );
-}
-
-function Sidebar() {
-  let homeSideArr = ['機台', '警報', '工單', '基本設定', '系統設定'];
-
-  return (
-    <div className='homeSidebar'>
-      <ul>
-        <li>機台</li>
-        <li>警報</li>
-        <li>工單</li>
-        <li>基本設定</li>
-        <li>系統設定</li>
-      </ul>
-    </div>
-  )
 }
 
 export default App;
