@@ -2,6 +2,24 @@
     text-align: center;
   }
 
+.Layout {
+    display: flex;
+    transition: margin-left 0.3s ease;
+    margin-left: 10px;
+}
+
+.Layout.SidebarOpen {
+    margin-left: 210px;
+}
+
+
+/* RWD */
+@media (max-width: 768px) {
+    .Layout.SidebarOpen {
+        margin-left: 10;
+    }
+}
+
 .Header {
     background-color: #dff1fb;
     min-height: 8vw;
@@ -11,7 +29,30 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+    margin-left: 0px;
+    transition: margin-left 0.3s ease;
 }
+
+.Header.SidebarOpen {
+    margin-left: 200px;
+}
+
+.Header sidebar-toggle-button {
+    background-color: white;
+    color: #4CAF50;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+/* RWD */
+@media (max-width: 768px) {
+    .Header.SidebarOpen {
+        margin-left: 0;
+    }
+}
+
 .Header h1 {
     text-align: center;
     font-size: 22px;  
@@ -19,20 +60,38 @@
 }
 
 .Sidebar {
-    display: flex;
-    width: 20%;
+    width: 200px;
     background-color: #5b5b99;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100%;
+    left: -200px;
+    transition: left 0.3s ease;
+}
+.Sidebar.side-open {
+    left: 0;
 }
 
-.Sidebar li {
+.Sidebar.li {
     font-size: 20px;
 }
 
-.Sidebar jack-logo {
-    height: 8vw;
+.Sidebar.jack-logo {
+    flex: auto;
+    height: 10px;
     /* position: fixed; */
     top: 0;
     left: 0;
     z-index: 1000;
     pointer-events: none;
+}
+
+/* RWD */
+@media (max-width: 768px) {
+    .Sidebar {
+        width: 50%;
+        height: auto;
+        position: relative;
+        left: 0;
+    }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './assets/css/webapi-react.css'
 import Header from './page/Header';
 import Sidebar from './page/Sidebar';
@@ -18,25 +18,22 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="App">
-        <Header isSidebarOpen={ isSidebarOpen } toggleSidebar={ toggleSidebar } />
-        <div className={`main-content ${isSidebarOpen? 'SidebarOpen': ''}`}>
-          <Sidebar isSidebarOpen={ isSidebarOpen }>
-          <div className='page-content'>
-              <Routes>
-                <Route path='/' element={ <NC_Status/> }/>
-                <Route path='/alarm' element={ <NC_Alarm/> }/>
-                <Route path='/order/' element={ <Order/> }/>
-                <Route path='/setting' element={ <BasicSetting/> }/>
-                <Route path='/sys' element={ <SysSetting/> }/>
-              </Routes>
-          </div>
-          </Sidebar>
-        </div>
-        
+    <div className="App">
+      <Sidebar isSidebarOpen={ isSidebarOpen }></Sidebar>
+      <Header isSidebarOpen={ isSidebarOpen } toggleSidebar={ toggleSidebar } />
+      <div className={`Layout ${isSidebarOpen? 'SidebarOpen': ''}`}>
+          <Routes>
+            <Route path='/' element={ <NC_Status />}/>
+              <Route path='/alarm' element={ <NC_Alarm />}/>
+              <Route path='/order/' element={ <Order />}/>
+              <Route path='/setting' element={ <BasicSetting />}/>
+              <Route path='/sys' element={ <SysSetting />}/>\
+            <Route/>
+          </Routes>
       </div>
-    </Router>    
+
+      
+    </div>  
   );
 }
 

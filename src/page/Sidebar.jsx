@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Sidebar({ isSidebarOpen }) {
     return (
-        <div className={`sidebar ${isSidebarOpen? 'side-open': ''}`}>
+        <div className={`Sidebar ${isSidebarOpen? 'side-open': ''}`}>
             <img className="jack-logo" src={ logo }></img>
             <ul>
                 <li><Link to='/'>機台狀態</Link></li>
