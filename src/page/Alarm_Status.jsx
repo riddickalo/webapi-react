@@ -1,6 +1,7 @@
 import React from "react";
+import '../assets/css/Layout.css';
 
-function NC_Alarm() {
+function Alarm_Status() {
     return (
         <div>
             <h1>警報</h1>
@@ -9,4 +10,4 @@ function NC_Alarm() {
     );
 }
 
-export default NC_Alarm;
+export default Alarm_Status;

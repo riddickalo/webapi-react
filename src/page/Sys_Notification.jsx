@@ -1,12 +1,12 @@
 import React from "react";
 
-function SysSetting() {
+function Sys_Notification() {
     return (
         <div>
             <h1>系統設定</h1>
-            <p>系統設定頁面</p>
+            <p>通知設定頁面</p>
         </div>
     );
 }
 
-export default SysSetting;
+export default Sys_Notification;

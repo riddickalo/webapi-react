@@ -1,0 +1,53 @@
+.Sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background-color: #dff1fb;
+    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100%;
+    left: -250px;
+    transition: left 0.3s ease;
+}
+
+.Sidebar.side-open {
+    left: 0;
+}
+
+.Sidebar img {
+    height: 80px;
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.MuiListItemText-primary {
+    color: #7ab7d2;
+    text-align: left;
+}
+
+.MuiAccordion-region {
+    background-color: #dff1fb;
+    color: #7ab7d2;
+}
+
+.MuiAccordionDetails-root {
+    background-color: #dff1fb;
+    color: #7ab7d2;
+}
+
+
+
+/* RWD */
+@media (max-width: 500px) {
+    .Sidebar {
+        width: 50%;
+        height: auto;
+        position: relative;
+        left: 0;
+        z-index: 1000;
+    }
+    
+}
