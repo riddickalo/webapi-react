@@ -1,13 +1,37 @@
-import React from "react";
-import '../assets/css/Layout.css';
+import React, { useState } from "react";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
+import DataSearchSection from "../components/Data_Search";
 
-function Alarm_History() {
+export default function Alarm_History() {
+    const [showSection, setShowSection] = useState(true);
+
+    const toggleSection = ()=>{
+        setShowSection(!showSection);
+    }
+
     return (
-        <div>
-            <h1>警報</h1>
-            <p>歷史警報頁</p>
-        </div>
+        <Stack direction='column' mx='5%'>
+            <Stack className="layoutHead" 
+                direction="row" 
+                spacing='40px'
+                mt='30px' >
+                
+                <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
+                    歷史警報
+                </Typography>
+                <Button className="icon" 
+                    variant="text" 
+                    onClick={ toggleSection }
+                    sx={{ fontSize: '20px', color: 'white' }}
+                    startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
+                    進階搜尋
+                </Button>
+            </Stack>
+            <DataSearchSection showSection={showSection} />
+            <Box className="layoutContent">
+                <p>歷史警報頁面</p>
+            </Box>
+        </Stack>
     );
 }
-
-export default Alarm_History;

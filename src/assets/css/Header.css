@@ -37,8 +37,13 @@
 
 
 /* RWD */
-@media (max-width: 500px) {
+@media (max-width: 640px) {
+    .Header {
+        width: 100%;
+        position: absolute;
+    }
     .Header.SidebarOpen {
         margin-left: 0;
+        z-index: 1;
     }
 }

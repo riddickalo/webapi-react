@@ -23,14 +23,13 @@
     pointer-events: none;
 }
 
+.MuiAccordionSummary-content {
+    margin: auto;
+}
+
 .MuiListItemText-primary {
     color: #7ab7d2;
     text-align: left;
-}
-
-.MuiAccordion-region {
-    background-color: #dff1fb;
-    color: #7ab7d2;
 }
 
 .MuiAccordionDetails-root {
@@ -38,16 +37,23 @@
     color: #7ab7d2;
 }
 
-
+ 
 
 /* RWD */
-@media (max-width: 500px) {
+@media (max-width: 640px) {
     .Sidebar {
-        width: 50%;
-        height: auto;
+        max-width: 50%;
         position: relative;
-        left: 0;
-        z-index: 1000;
     }
     
+    .Sidebar.side-open {
+        left: 0;
+        float: left;
+    }
+}
+
+@media (max-width: 500px) {
+    .Sidebar.side-open {
+        width: 250px;
+    }
 }

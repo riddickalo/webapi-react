@@ -3,17 +3,20 @@
     height: 100%;
     transition: margin-left 0.3s ease;
     margin-left: 0px;
-    background-color: #5b5b99;
+    /* background-color: #5b5b99; */
     color: #ffffff;
 }
 
-.Layout h1 {
-    margin-left: 30px;
+.layoutHead {
+    /* display: flex; */
     text-align: left;
+    align-items: baseline;
+    flex-direction: row;
 }
-.Layout p {
-    margin-left: 35px;
+
+.layoutContent p {
     text-align: left;
+    font-size: '16px';
 }
 
 .Layout.SidebarOpen {
@@ -22,8 +25,18 @@
 
 
 /* RWD */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
+    .Layout {
+        width: 100%;
+        top: 80px;
+        height: auto;
+        position: absolute;
+    }
+
     .Layout.SidebarOpen {
-        margin-left: 10;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        z-index: 1;
     }
 }
