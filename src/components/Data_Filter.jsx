@@ -40,7 +40,7 @@ const opStatus = [
     },
 ];
 
-function DataFilterSection({ showSection }) {
+export default function DataFilterSection({ showSection }) {
     return (
         <Collapse in={showSection}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
@@ -85,5 +85,3 @@ function DataFilterSection({ showSection }) {
         </Collapse>
     );
 }
-
-export default DataFilterSection;

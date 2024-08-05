@@ -4,7 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-function DataSearchSection({ showSection }) {
+export default function DataSearchSection({ showSection }) {
     return (
         <Collapse in={showSection}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
@@ -59,5 +59,3 @@ function DataSearchSection({ showSection }) {
         </Collapse>
     );
 }
-
-export default DataSearchSection;

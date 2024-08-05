@@ -1,28 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import '../assets/css/Header.css';
-import { IconButton, Button } from '@mui/material';
-import { MenuRounded, CloseRounded, SmsFailedRounded, AccountBoxRounded } from '@mui/icons-material';
+import { IconButton, Button, Box } from '@mui/material';
+import { MenuRounded, CloseRounded } from '@mui/icons-material';
+import Popover_Logout from '../components/Popover_Logout';
+import Popover_Alarm from '../components/Popover_Alarm';
 
 function Header({ isSidebarOpen, toggleSidebar }) {
-    const login_ID = 'Admin';
-    const icon_size = '32px';
     return (
-        <div className={`Header ${isSidebarOpen? 'SidebarOpen': ''}`}>
+        <Box className={`Header ${isSidebarOpen? 'SidebarOpen': ''}`}>
             <IconButton onClick={toggleSidebar} className="sidebar-toggle-button" size="large">
                 { isSidebarOpen? <CloseRounded  />: <MenuRounded />}
             </IconButton>
             <h1>戰情中控台</h1>
-            <Button className="alarm-button" 
-                size="large"
-                startIcon={<SmsFailedRounded  />} >
-            </Button>
-            <Button className="login-button" 
-                size="large"
-                startIcon={<AccountBoxRounded />}
-                sx={{ fontSize: 18, textTransform: 'none' }} >
-                {login_ID}
-            </Button>
-        </div>
+            <Popover_Alarm />
+            <Popover_Logout />
+        </Box>
     );
 }
 
