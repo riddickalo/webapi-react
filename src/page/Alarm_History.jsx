@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import DataSearchSection from "../components/Data_Search";
+import Table_Alarm from "../components/Table_Alarm";
 
 export default function Alarm_History() {
     const [showSection, setShowSection] = useState(true);
@@ -29,8 +30,9 @@ export default function Alarm_History() {
                 </Button>
             </Stack>
             <DataSearchSection showSection={showSection} />
-            <Box className="layoutContent">
-                <p>歷史警報頁面</p>
+            <Box className="layoutContent" mt={1} mb={3}>
+                {/* <p>歷史警報頁面</p> */}
+                <Table_Alarm />
             </Box>
         </Stack>
     );

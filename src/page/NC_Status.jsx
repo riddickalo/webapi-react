@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import DataFilterSection from "../components/Data_Filter";
+import Table_NCStatus from "../components/Table_NCStatus";
 
 export default function NC_Status() {
     const [showSection, setShowSection] = useState(true);
@@ -29,8 +30,9 @@ export default function NC_Status() {
                 </Button>
             </Stack>
             <DataFilterSection showSection={showSection} />
-            <Box className="layoutContent">
-                <p>機台狀態頁面</p>
+            <Box className="layoutContent" mt={1} mb={3} width={'100%'}>
+                {/* <p>機台狀態頁面</p> */}
+                <Table_NCStatus />
             </Box>
         </Stack>
     );

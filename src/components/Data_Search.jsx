@@ -20,14 +20,14 @@ export default function DataSearchSection({ showSection }) {
                         <Grid item xs={12} sm={6}>
                             <DateTimePicker 
                                 format="YYYY/MM/DD hh:mm"
-                                label='警報區間 (起)' 
+                                label='查詢區間 (起)' 
                                 views={['year', 'month', 'day', 'hours', 'minutes']}
                                 ampm={false} />    
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <DateTimePicker 
                                 format="YYYY/MM/DD hh:mm"
-                                label='警報區間 (迄)' 
+                                label='查詢區間 (迄)' 
                                 views={['year', 'month', 'day', 'hours', 'minutes']}
                                 ampm={false} />    
                         </Grid>

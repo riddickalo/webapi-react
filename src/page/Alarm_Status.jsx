@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import DataFilterSection from "../components/Data_Filter";
+import Table_AlarmStatus from "../components/Table_Alarm";
 
 export default function Alarm_Status() {
     const [showSection, setShowSection] = useState(true);
@@ -29,8 +30,9 @@ export default function Alarm_Status() {
                 </Button>
             </Stack>
             <DataFilterSection showSection={showSection} />
-            <Box className="layoutContent">
-                <p>即時警報頁面</p>
+            <Box className="layoutContent" mt={1} mb={3}>
+                {/* <p>即時警報頁面</p> */}
+                <Table_AlarmStatus />
             </Box>
         </Stack>
     );
