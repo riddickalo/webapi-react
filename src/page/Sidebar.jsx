@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../assets/css/Sidebar.css';
-import logo from '../assets/img/JackTech banner logo.png';
+import logo from '../assets/img/mat logo.png';
 import { useAccordion } from "../components/AccordionContext";
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionSummary, AccordionDetails, List, ListItemIcon, ListItemButton, ListItemText } from '@mui/material';
