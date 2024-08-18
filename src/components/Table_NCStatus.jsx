@@ -13,15 +13,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
   
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+'&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+},
+// hide last border
+'&:last-child td, &:last-child th': {
+    border: 0,
+},
+}));
 
 function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
     return { region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus };
@@ -46,7 +46,7 @@ function statusIcon(status) {
     }
 
     return(
-        <Button disableRipple={true} size="small" variant="contained" sx={{ bgcolor: content.color }}>
+        <Button disableTouchRipple size="small" variant="contained" sx={{ bgcolor: content.color, "&:hover": {bgcolor: content.color} }}>
             {content.op}
         </Button>
     );
@@ -61,7 +61,7 @@ function maintainIcon(status) {
     }
 
     return(
-        <Button disableRipple={true} size="small" variant="contained" sx={{ bgcolor: content.color }}>
+        <Button disableTouchRipple size="small" variant="contained" sx={{ bgcolor: content.color, '&: hover': {bgcolor: content.color} }}>
             {content.op}
         </Button>
     );

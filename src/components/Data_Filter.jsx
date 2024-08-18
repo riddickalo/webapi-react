@@ -50,7 +50,7 @@ export default function DataFilterSection({ showSection }) {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Button variant="contained"
-                                sx={{bgcolor: '#70b9dc', color: 'black' }}>
+                                sx={{bgcolor: '#70b9dc', color: 'black', ':hover': { bgcolor: '#99cde6' } }}>
                                 清除篩選</Button>
                     </Grid>
                 </Grid>

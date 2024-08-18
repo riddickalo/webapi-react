@@ -1,7 +1,69 @@
 import React, { useState } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography, TableContainer, Paper, Table, TableRow, styled, TableCell, tableCellClasses, TableHead } from "@mui/material";
 import { AddRounded, FilterAltRounded } from '@mui/icons-material';
 import DataFilterSection from "../components/Data_Filter";
+import NoData from "../components/NoData";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: '#6f92be',
+      color: theme.palette.common.white,
+      fontWeight: 'bold',
+      fontSize: 16,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+'&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+},
+// hide last border
+'&:last-child td, &:last-child th': {
+    border: 0,
+},
+}));
+
+function orderSubTable() {
+    return (
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 640 }} aria-lable='record table'>
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell align="center">工單編號</StyledTableCell>
+                        <StyledTableCell align="center">工單名稱</StyledTableCell>
+                        <StyledTableCell align="center">客戶編號</StyledTableCell>
+                        <StyledTableCell align="center">工單狀態</StyledTableCell>
+                        <StyledTableCell align="center">訂單建立日</StyledTableCell>
+                        <StyledTableCell align="center">計畫開工日</StyledTableCell>
+                        <StyledTableCell align="center">計畫完工日</StyledTableCell>
+                        <StyledTableCell align="center">實際開工日</StyledTableCell>
+                        <StyledTableCell align="center">實際完工日</StyledTableCell>
+                        <StyledTableCell align="center">操作</StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <NoData />
+                {/* <TableBody>
+                    {demoData.map((row) => (
+                        <StyledTableRow key={row.region}>
+                            <StyledTableCell component={'th'} scope="row" align='center'>
+                                {row.region}
+                            </StyledTableCell>
+                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
+                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
+                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
+                        </StyledTableRow>
+                    ))}
+                </TableBody> */}
+            </Table>
+        </TableContainer>
+    );
+}
 
 export default function Order() {
     const [showSection, setShowSection] = useState(true);
@@ -29,8 +91,8 @@ export default function Order() {
                 </Button>
             </Stack>
             {/* <DataSearchSection showSection={showSection} /> */}
-            <Box className="layoutContent">
-                <p>工單清單頁面</p>
+            <Box className="layoutContent" mt={2} mb={3}>
+                {orderSubTable()}
             </Box>
         </Stack>
     );

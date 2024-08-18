@@ -1,37 +1,61 @@
-import React, { useState } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
-import DataSearchSection from "../components/Data_Search";
+import React from "react";
+import { Grid, TextField, MenuItem, Box, Button, Card, CardContent, Divider, IconButton, Stack, Typography } from "@mui/material";
+import { SaveRounded } from '@mui/icons-material';
+
+const lgOpts = [
+    { code: 0, key: 'tw', value: '繁體中文' },
+    { code: 1, key: 'en', value: 'English' },
+];
 
 export default function Sys_General() {
-    const [showSection, setShowSection] = useState(true);
-
-    const toggleSection = ()=>{
-        setShowSection(!showSection);
-    }
-
     return (
-        <Stack direction='column' mx='5%'>
+        <Stack direction='column' mx='5%' 
+            Spacing={2}
+            divider={<Divider orientation="horizontal" flexItem 
+            sx={{ bgcolor: 'white', marginTop: 2 }} />}>
             <Stack className="layoutHead" 
-                direction="row" 
-                spacing='40px'
+                direction="column" 
+                spacing='15px'
                 mt='30px' >
                 
                 <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
                     一般設定
                 </Typography>
-                {/* <Button className="icon" 
-                    variant="text" 
-                    onClick={ toggleSection }
-                    sx={{ fontSize: '20px', color: 'white' }}
-                    startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
-                    進階搜尋
-                </Button> */}
+
+                <Grid container spacing={1} width='100%'
+                        sx={{ alignItems: 'center', bgcolor: '#bfb3f4', borderRadius: 2 }}>
+                    <Grid item xs={12}>
+                        <Typography variant="h5" textAlign={'left'}>使用介面</Typography>
+                    </Grid>
+                    <Grid item xs={2} ml={1}> 
+                        <Typography variant="h6">系統語系: </Typography>
+                    </Grid>
+                    <Grid item xs={9}>
+                        <TextField select label='選擇語系' sx={{ width: '100%', marginBottom: 1 }}>
+                            {lgOpts.map((choice) => (     // should be '(' not'{'
+                                <MenuItem key={choice.key} value={choice.value} >
+                                    {choice.value}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                </Grid>
+
+                <Button 
+                    variant="contained" startIcon={<SaveRounded />}
+                    sx={{ bgcolor: '#20B2AA', width: '100%', marginBottom: 3 }}>
+                    儲存設定
+                </Button>
             </Stack>
-            {/* <DataSearchSection showSection={showSection} /> */}
-            <Box className="layoutContent">
-                <p>一般設定頁面</p>
-            </Box>
+
+            <Stack className="layouContent" direction='row' spacing={2} mt={2} alignItems='center'>
+                <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
+                    系統版本
+                </Typography>
+                <Card sx={{ width: 55, height: 25, bgcolor: "#E56717", alignContent:'center'}}>
+                    <Typography variant="body2" sx={{ color: 'white' }}> v0.1.0 </Typography>
+                </Card>
+            </Stack>
         </Stack>
     );
 }
