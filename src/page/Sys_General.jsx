@@ -43,12 +43,12 @@ export default function Sys_General() {
 
                 <Button 
                     variant="contained" startIcon={<SaveRounded />}
-                    sx={{ bgcolor: '#20B2AA', width: '100%', marginBottom: 3 }}>
+                    sx={{ bgcolor: '#20B2AA', width: '100%', marginBottom: 3, ':hover': { bgcolor: '#1c9c95' } }}>
                     儲存設定
                 </Button>
             </Stack>
 
-            <Stack className="layouContent" direction='row' spacing={2} mt={2} alignItems='center'>
+            <Stack className="layouContent" direction='row' spacing={2} mt={2} mb={3} alignItems='center'>
                 <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
                     系統版本
                 </Typography>

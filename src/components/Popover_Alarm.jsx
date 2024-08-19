@@ -15,7 +15,7 @@ export default function Popover_Alarm() {
     };
 
     const pop = Boolean(isAlarmPop);
-
+    const page_host = '/webapi-react';
 
     return (
         <div>
@@ -36,7 +36,7 @@ export default function Popover_Alarm() {
                         '& .MuiButton: hover': { bgcolor: '#b6003b'}
                     }} >
                     <Button 
-                        components='a' href='/alarm/status'
+                        components='a' href={`${page_host}/alarm/status`}
                         size="medium"
                         sx={{  
                             color: 'white', 
