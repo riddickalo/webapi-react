@@ -15,7 +15,6 @@ export default function Popover_Alarm() {
     };
 
     const pop = Boolean(isAlarmPop);
-    const page_host = '/webapi-react';
 
     return (
         <div>

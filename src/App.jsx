@@ -30,7 +30,6 @@ function App() {
     setIsSidebarOpen(!isSidebarOpen);
   }
 
-  const page_host = '/webapi-react';
 
   return (
     <AccordionProvider>
