@@ -36,7 +36,7 @@ export default function Popover_Alarm() {
                         '& .MuiButton: hover': { bgcolor: '#b6003b'}
                     }} >
                     <Button 
-                        components='a' href={`./alarm/status`}
+                        components='a' href={`/alarm/status`}
                         size="medium"
                         sx={{  
                             color: 'white', 
