@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/webapi-react/static/css/main.bad4b563.css",
-    "main.js": "/webapi-react/static/js/main.f3e87f20.js",
+    "main.js": "/webapi-react/static/js/main.cff055dc.js",
     "static/js/453.31d691e7.chunk.js": "/webapi-react/static/js/453.31d691e7.chunk.js",
     "static/media/mat logo.png": "/webapi-react/static/media/mat logo.b024798d01b235c0d70c.png",
     "static/media/u_icon2.png": "/webapi-react/static/media/u_icon2.a0ec0240c15f05ee2016.png",
@@ -9,11 +9,11 @@
     "static/media/u_icon3.png": "/webapi-react/static/media/u_icon3.069ce5778dc315f90d27.png",
     "index.html": "/webapi-react/index.html",
     "main.bad4b563.css.map": "/webapi-react/static/css/main.bad4b563.css.map",
-    "main.f3e87f20.js.map": "/webapi-react/static/js/main.f3e87f20.js.map",
+    "main.cff055dc.js.map": "/webapi-react/static/js/main.cff055dc.js.map",
     "453.31d691e7.chunk.js.map": "/webapi-react/static/js/453.31d691e7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bad4b563.css",
-    "static/js/main.f3e87f20.js"
+    "static/js/main.cff055dc.js"
   ]
 }
