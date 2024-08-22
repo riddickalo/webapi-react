@@ -8,6 +8,7 @@ import { ExpandMore, MonitorRounded, ReportProblemRounded, FeedRounded, Insights
 
 function Sidebar({ isSidebarOpen }) {
     const { accordionState, toggleAccordion } = useAccordion();
+    const page_host = '/webapi-react';
 
     return (
         <div className={`Sidebar ${isSidebarOpen? 'side-open': ''}`}>
@@ -27,19 +28,19 @@ function Sidebar({ isSidebarOpen }) {
                     </AccordionSummary>
                     <AccordionDetails sx={{minHeight: 0}}>       
                         <List>
-                            <ListItemButton components={Link} to='/machine/status'>
+                            <ListItemButton components={Link} to={`${page_host}/machine/status`}>
                                 <ListItemText inset primary='機台狀態'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/machine/maintain'>
+                            <ListItemButton components={Link} to={`${page_host}/machine/maintain`}>
                                 <ListItemText inset primary='機台保養'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/machine/utilize'>
+                            <ListItemButton components={Link} to={`${page_host}/machine/utilize`}>
                                 <ListItemText inset primary='機台稼動率'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/machine/ncfile'>
+                            <ListItemButton components={Link} to={`${page_host}/machine/ncfile`}>
                                 <ListItemText inset primary='加工程式'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
@@ -60,11 +61,11 @@ function Sidebar({ isSidebarOpen }) {
                     </AccordionSummary>
                     <AccordionDetails>       
                         <List>
-                            <ListItemButton components={Link} to='/alarm/status'>
+                            <ListItemButton components={Link} to={`${page_host}/alarm/status`}>
                                 <ListItemText inset primary='即時警報'
                                         primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/alarm/history'>
+                            <ListItemButton components={Link} to={`${page_host}/alarm/history`}>
                                 <ListItemText inset primary='歷史警報'
                                         primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}}/>
                             </ListItemButton>
@@ -73,7 +74,7 @@ function Sidebar({ isSidebarOpen }) {
                 </Accordion>
                 <Accordion classes="order" disableGutters sx={{bgcolor: '#dff1fb'}}>
                     <AccordionSummary>
-                        <ListItemButton components={Link} to='/order'>
+                        <ListItemButton components={Link} to={`${page_host}/order`}>
                         <ListItemIcon> <FeedRounded fontSize="large" /> </ListItemIcon>
                         <ListItemText primary='工單'
                                 primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
@@ -95,19 +96,19 @@ function Sidebar({ isSidebarOpen }) {
                     </AccordionSummary>
                     <AccordionDetails>       
                         <List>
-                            <ListItemButton components={Link} to='/setting/machine'>
+                            <ListItemButton components={Link} to={`${page_host}/setting/machine`}>
                                 <ListItemText inset primary='機台參數'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/setting/maintain'>
+                            <ListItemButton components={Link} to={`${page_host}/setting/maintain`}>
                                 <ListItemText inset primary='機台保養項目'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/setting/item'>
+                            <ListItemButton components={Link} to={`${page_host}/setting/item`}>
                                 <ListItemText inset primary='品項料號'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/setting/pp_map'>
+                            <ListItemButton components={Link} to={`${page_host}/setting/pp_map`}>
                                 <ListItemText inset primary='加工程式與品項'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
@@ -128,15 +129,15 @@ function Sidebar({ isSidebarOpen }) {
                     </AccordionSummary>
                     <AccordionDetails>       
                         <List>
-                            <ListItemButton components={Link} to='/sys/general'>
+                            <ListItemButton components={Link} to={`${page_host}/sys/general`}>
                                 <ListItemText inset primary='一般設定'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/sys/account'>
+                            <ListItemButton components={Link} to={`${page_host}/sys/account`}>
                                 <ListItemText inset primary='使用者設定'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>
-                            <ListItemButton components={Link} to='/sys/notify'>
+                            <ListItemButton components={Link} to={`${page_host}/sys/notify`}>
                                 <ListItemText inset primary='通知設定'
                                     primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
                             </ListItemButton>                            

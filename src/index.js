@@ -1,18 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const page_host = '/webapi-react';
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename={page_host} >
-      <App />
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );
 
