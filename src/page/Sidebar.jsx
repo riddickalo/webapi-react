@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import '../assets/css/Sidebar.css';
 import logo from '../assets/img/mat logo.png';
-import { useAccordion } from "../components/AccordionContext";
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionSummary, AccordionDetails, List, ListItemIcon, ListItemButton, ListItemText } from '@mui/material';
 import { ExpandMore, MonitorRounded, ReportProblemRounded, FeedRounded, InsightsRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
 
-function Sidebar({ isSidebarOpen }) {
-    const { accordionState, toggleAccordion } = useAccordion();
+function Sidebar({ isSidebarOpen, accordionState, setAccordionState }) {
+    const handleChange = (panel) => (event, isExpaned) => {
+        const newState = {  // create a new state instance
+            ...accordionState,
+            [panel]: isExpaned,
+        };
+        setAccordionState(newState);    // set new state
+        localStorage.setItem('accordionState', JSON.stringify(newState));   // write new state to localstorage
+    }
 
     return (
         <div className={`Sidebar ${isSidebarOpen? 'side-open': ''}`}>
             <img className="jack-logo" src={ logo }></img>
             <List>
                 <Accordion classes="ncSubmenu" 
-                        disableGutters
-                        expanded={accordionState.nc}
-                        onChange={() => toggleAccordion('nc')}
+                        disableGutters 
+                        expanded={accordionState.nc}    // expand accordingly
+                        onChange={handleChange('nc')}   // send new state using onChange()
                         sx={{bgcolor: '#dff1fb', margin: '0px'}} >
                     <AccordionSummary expandIcon={<ExpandMore />} >
                         <ListItemButton>
@@ -48,8 +54,8 @@ function Sidebar({ isSidebarOpen }) {
                 </Accordion>
                 <Accordion classes="alarmSubmenu" 
                         disableGutters
-                        expanded={accordionState.alarm}
-                        onChange={() => toggleAccordion('alarm')}
+                        expanded={accordionState.alarm} 
+                        onChange={handleChange('alarm')} 
                         sx={{bgcolor: '#dff1fb'}} >
                     <AccordionSummary expandIcon={<ExpandMore />}>
                         <ListItemButton>
@@ -83,8 +89,8 @@ function Sidebar({ isSidebarOpen }) {
                 
                 <Accordion classes="settingSubmenu" 
                         disableGutters
-                        expanded={accordionState.setting}
-                        onChange={() => toggleAccordion('setting')}
+                        expanded={accordionState.setting} 
+                        onChange={handleChange('setting')} 
                         sx={{bgcolor: '#dff1fb'}} >
                     <AccordionSummary expandIcon={<ExpandMore />}>
                         <ListItemButton>
@@ -116,8 +122,8 @@ function Sidebar({ isSidebarOpen }) {
                 </Accordion>
                 <Accordion classes="sysSubmenu" 
                         disableGutters
-                        expanded={accordionState.sys}
-                        onChange={() => toggleAccordion('sys')}
+                        expanded={accordionState.sys} 
+                        onChange={handleChange('sys')} 
                         sx={{bgcolor: '#dff1fb'}} >
                     <AccordionSummary expandIcon={<ExpandMore />}>
                         <ListItemButton>

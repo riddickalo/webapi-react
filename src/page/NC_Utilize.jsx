@@ -3,10 +3,19 @@ import { Box, Button, Stack, Typography, Grid } from "@mui/material";
 import { FindInPageRounded } from '@mui/icons-material';
 import DataSearchSection from "../components/Data_Search";
 import Card_Utilize from "../components/Card_Utilize";
-import U_card1 from '../assets/img/u_icon1.png'
-import U_card2 from '../assets/img/u_icon2.png'
-import U_card3 from '../assets/img/u_icon3.png'
 import '../assets/css/NC_Utilize.css'
+
+function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
+    return { region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus };
+}
+
+const demoData = [
+    createData('總部', 'RG', '內溝研磨', 'GI-700-3', 'alarm', 'O999', true),
+    createData('總部', 'RG', '平測磨', 'SG-500-1', 'idle', 'G100', false),
+    createData('一廠', 'MG', '內溝研磨', 'GI-700-4', 'running', 'O991', true),
+    createData('一廠', 'MG', '關節手臂', 'Fanuc M-800i', 'running', 'Main.tch', false),
+    createData('二廠', 'EG', '裝配', 'GI-700-3', 'idle', 'O999', false),
+];
 
 export default function NC_Utilize() {
     const [showSection, setShowSection] = useState(false);
@@ -35,17 +44,21 @@ export default function NC_Utilize() {
             </Stack>
             <DataSearchSection showSection={showSection} />
             <Box className="layoutContent" sx={{ height: '100%', my: 3}}>
-                {/* <p>機台稼動率頁面</p> */}
-                {/* <Card_Utilize /> */}
-                <Grid container spacing={3}>
-                    <Grid item sm={12}>
-                        <img className="u-card" src={U_card1} />
+                <Grid container spacing={5}>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card_Utilize data={demoData[0]} />
                     </Grid>
-                    <Grid item sm={6}>
-                        <img className="u-card1" src={U_card2} />
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card_Utilize data={demoData[1]} />
                     </Grid>
-                    <Grid item sm={6}>
-                        <img className="u-card1" src={U_card3} />
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card_Utilize data={demoData[2]} />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card_Utilize data={demoData[3]} />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card_Utilize data={demoData[4]} />
                     </Grid>
                 </Grid>
                     
