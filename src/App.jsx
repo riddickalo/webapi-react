@@ -12,6 +12,7 @@ import NC_Utilize from './page/NC_Utilize';
 import Alarm_Status from './page/Alarm_Status';
 import Alarm_History from './page/Alarm_History';
 import Order from './page/Order';
+import Report from './page/Report';
 import Setting_Item from './page/Setting_Item';
 import Setting_Maintain from './page/Setting_Maintain';
 import Setting_NCStatus from './page/Setting_NCstatus';
@@ -54,6 +55,7 @@ function App() {
                     <Route path='/alarm/status' element={ <Alarm_Status />}/>
                     <Route path='/alarm/history' element={ <Alarm_History />}/>
                     <Route path='/order' element={ <Order />}/>
+                    <Route path='/report' element={ <Report />}/>
                     <Route path='/setting/machine' element={ <Setting_NCStatus />}/>
                     <Route path='/setting/maintain' element={ <Setting_Maintain />}/>
                     <Route path='/setting/item' element={ <Setting_Item />}/>

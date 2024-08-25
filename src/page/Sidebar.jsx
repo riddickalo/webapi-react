@@ -3,7 +3,7 @@ import '../assets/css/Sidebar.css';
 import logo from '../assets/img/mat logo.png';
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionSummary, AccordionDetails, List, ListItemIcon, ListItemButton, ListItemText } from '@mui/material';
-import { ExpandMore, MonitorRounded, ReportProblemRounded, FeedRounded, InsightsRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
+import { FilePresentRounded, ExpandMore, MonitorRounded, ReportProblemRounded, FeedRounded, InsightsRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
 
 function Sidebar({ isSidebarOpen, accordionState, setAccordionState }) {
     const handleChange = (panel) => (event, isExpaned) => {
@@ -86,7 +86,15 @@ function Sidebar({ isSidebarOpen, accordionState, setAccordionState }) {
                         </ListItemButton>
                     </AccordionSummary>
                 </Accordion>
-                
+                <Accordion classes="report" disableGutters sx={{bgcolor: '#dff1fb'}}>
+                    <AccordionSummary>
+                        <ListItemButton components={Link} to={`/report`}>
+                        <ListItemIcon> <FilePresentRounded fontSize="large" /> </ListItemIcon>
+                        <ListItemText primary='報表下載'
+                                primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
+                        </ListItemButton>
+                    </AccordionSummary>
+                </Accordion>
                 <Accordion classes="settingSubmenu" 
                         disableGutters
                         expanded={accordionState.setting} 

@@ -1,31 +1,19 @@
 import React, { useState } from "react";
-import { Box, Grid, Button, Stack, Typography, TableContainer, Paper, Table, TableRow, styled, TableCell, tableCellClasses, TableHead } from "@mui/material";
-import { AddRounded, FilterAltRounded } from '@mui/icons-material';
+import { Box, Grid, Button, Stack, Typography, TableContainer, Paper, Table, TableRow, TableHead, TableBody } from "@mui/material";
+import { FileDownloadRounded } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#6f92be',
-      color: theme.palette.common.white,
-      fontWeight: 'bold',
-      fontSize: 16,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-'&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-},
-// hide last border
-'&:last-child td, &:last-child th': {
-    border: 0,
-},
-}));
+function getReportButton({ key }) {
+    return (
+        <Button variant="contained" startIcon={<FileDownloadRounded />}
+            sx={{ bgcolor: '#20B2AA', ':hover': { bgcolor: '#1c9c95' } }}>
+            下載
+        </Button>
+    );
+}
 
 function reportSubTable() {
     return (
@@ -38,21 +26,38 @@ function reportSubTable() {
                         <StyledTableCell align="center">操作</StyledTableCell>
                     </TableRow>
                 </TableHead>
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
+                <TableBody sx={{ '.p': { fontWeight: 'bold'} }}>
+                    <StyledTableRow key={'nc_month'}>
+                        <StyledTableCell align='center'>機台產量 (月)</StyledTableCell>
+                        <StyledTableCell align='center'>系統報表</StyledTableCell>
+                        <StyledTableCell align='center'>{getReportButton('nc_month')}</StyledTableCell>
+                    </StyledTableRow>
+                    <StyledTableRow key={'nc_day'}>
+                        <StyledTableCell align='center'>機台產量 (日)</StyledTableCell>
+                        <StyledTableCell align='center'>系統報表</StyledTableCell>
+                        <StyledTableCell align='center'>{getReportButton('nc_day')}</StyledTableCell>
+                    </StyledTableRow>
+                    <StyledTableRow key={'nc_hour'}>
+                        <StyledTableCell align='center'>機台產量 (時)</StyledTableCell>
+                        <StyledTableCell align='center'>系統報表</StyledTableCell>
+                        <StyledTableCell align='center'>{getReportButton('nc_hour')}</StyledTableCell>
+                    </StyledTableRow>
+                    <StyledTableRow key={'item_month'}>
+                        <StyledTableCell align='center'>加工項目產量 (月)</StyledTableCell>
+                        <StyledTableCell align='center'>系統報表</StyledTableCell>
+                        <StyledTableCell align='center'>{getReportButton('item_month')}</StyledTableCell>
+                    </StyledTableRow>
+                    <StyledTableRow key={'item_day'}>
+                        <StyledTableCell align='center'>加工項目產量 (日)</StyledTableCell>
+                        <StyledTableCell align='center'>系統報表</StyledTableCell>
+                        <StyledTableCell align='center'>{getReportButton('item_day')}</StyledTableCell>
+                    </StyledTableRow>
+                    <StyledTableRow key={'item_hour'}>
+                        <StyledTableCell align='center'>加工項目產量 (時)</StyledTableCell>
+                        <StyledTableCell align='center'>系統報表</StyledTableCell>
+                        <StyledTableCell align='center'>{getReportButton('item_hour')}</StyledTableCell>
+                    </StyledTableRow>
+                </TableBody>
             </Table>
         </TableContainer>
     );
