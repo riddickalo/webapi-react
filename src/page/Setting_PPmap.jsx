@@ -1,29 +1,8 @@
 import React, { useState } from "react";
-import { styled, TableCell, tableCellClasses, Collapse, TextField, Grid, tableClasses, TableRow, Paper, Table, TableHead, TableContainer, Box, Button, Stack, Typography } from "@mui/material";
+import { Collapse, TableRow, TextField, Grid, Paper, Table, TableHead, TableContainer, Box, Button, Stack, Typography } from "@mui/material";
 import { AddRounded } from '@mui/icons-material';
+import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 import NoData from "../components/NoData";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#6f92be',
-      color: theme.palette.common.white,
-      fontWeight: 'bold',
-      fontSize: 16,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-'&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-},
-// hide last border
-'&:last-child td, &:last-child th': {
-    border: 0,
-},
-}));
 
 function fileSubTable() {
     return (

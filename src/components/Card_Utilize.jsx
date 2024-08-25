@@ -12,7 +12,7 @@ function statusIcon(status) {
     }
 
     return(
-        <Button disableTouchRipple size="small" variant="contained" sx={{ bgcolor: content.color, '&:hover': { bgcolor: content.color } }}>
+        <Button disableTouchRipple size="large" variant="contained" sx={{ bgcolor: content.color, '&:hover': { bgcolor: content.color } }}>
             {content.op}
         </Button>
     );
@@ -38,9 +38,16 @@ const dividerStyle = {
     color: '#545454', 
 }
 
-// function CircularProgressWithLabel(props) {
-//     <Box
-// }
+function CircularProgressWithLabel(props) {
+    return(
+        <Box sx={{alignItems: 'flex-end'}}>
+            <Stack direction={'column'} spacing={5}>
+                <CircularProgress variant='determinate' value={50} size={150} thickness={5} sx={{ color: '#6ce5e8' }} />
+                <Typography variant="h6">稼動率</Typography>
+            </Stack>
+        </Box>
+    );    
+}
 
 /*
     data = {
@@ -55,7 +62,7 @@ const dividerStyle = {
 */
 export default function Card_Utilize({ data }) {
     return (
-        <Card sx={{ minWidth: 300, maxWidth: 600, bgcolor: '#6f92be' }}>
+        <Card sx={{ minWidth: 300, maxWidth: 600, bgcolor: '#6f92be', borderRadius: 3 }}>
             <CardHeader 
                 avatar={ statusIcon(data.opStatus) }
                 title={data.nc_id} 
@@ -68,7 +75,8 @@ export default function Card_Utilize({ data }) {
             <CardContent sx={{ color: 'white' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={6} sx={{ alignContent:'center' }}>
-                        <CircularProgress variant='determinate' value={50} size={120} />
+                        {/* <CircularProgress variant='determinate' value={50} size={120} /> */}
+                        <CircularProgressWithLabel />
                     </Grid>
                     {/* <Divider variant="middle" orientation='vertical' sx={dividerStyle} flexItem/> */}
                     <Grid item xs={6}>

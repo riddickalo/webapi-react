@@ -1,31 +1,10 @@
 import React, { useState } from "react";
-import { styled, TableCell, tableClasses, tableCellClasses, TableBody, TableRow, TableContainer, Paper, Table, TableHead, Box, Button, Stack, Typography } from "@mui/material";
+import { TableBody, TableRow, TableContainer, Paper, Table, TableHead, Box, Button, Stack, Typography } from "@mui/material";
 import { PersonAddAltRounded, CheckCircleOutlineRounded, HighlightOffRounded, PersonRemoveRounded, CreateRounded } from '@mui/icons-material';
 import DataSearchSection from "../components/Data_Search";
 import { green, red } from "@mui/material/colors";
 import NoData from '../components/NoData'
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#6f92be',
-      color: theme.palette.common.white,
-      fontWeight: 'bold',
-      fontSize: 16,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
+import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
 function statusIcon(actStatus) {
     return (

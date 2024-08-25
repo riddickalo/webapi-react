@@ -12,6 +12,7 @@
 
 .Sidebar.side-open {
     left: 0;
+    overflow-y: auto;
 }
 
 .Sidebar img {
