@@ -29,6 +29,7 @@ function ApiData () {
         }).then((resp) => {
             const temp = resp.data;
             setData(temp[1]);
+            console.log(temp);
             console.log(temp[0]);
         }).catch((err) => console.error(err));
     }, []);
@@ -36,11 +37,11 @@ function ApiData () {
     if (data !== null) {
         return (
             <div>
-                <h2>{data.deviceName}</h2>
+                {/* <h2>{data.deviceName}</h2>
                 <h5>{data.exeProgName}</h5>
                 <h5>{data.running}</h5>
                 <h5>{data.emergency}</h5>
-                <h6>{data.timestamp}</h6>
+                <h6>{data.timestamp}</h6> */}
             </div>
         );
     } else {
