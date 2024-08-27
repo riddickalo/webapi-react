@@ -13,6 +13,7 @@ const demoData = [
     createData('一廠', 'MG', '關節手臂', 'Fanuc M-800i', 'running', 'Main.tch', false),
     createData('二廠', 'EG', '裝配', 'GI-700-3', 'idle', 'O999', false),
 ];
+const statusData = demoData;
 
 function statusIcon(status) {
     let content = {};
@@ -62,8 +63,8 @@ export default function Table_NCStatus() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
+                    {statusData.map((row) => (
+                        <StyledTableRow key={row.nc_id}>
                             <StyledTableCell component={'th'} scope="row" align='center'>
                                 {row.region}
                             </StyledTableCell>
