@@ -25,7 +25,7 @@ function ApiData () {
 
     useEffect(() => {
         axios.get(api_url, {
-            params: { startTime: 20240827000000 }
+            params: { startTime: '20240827-000000' }
         }).then((resp) => {
             const temp = resp.data;
             setData(temp[1]);
