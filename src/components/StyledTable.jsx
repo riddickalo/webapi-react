@@ -1,4 +1,9 @@
-import { TableCell, TableRow, tableCellClasses, styled } from "@mui/material";
+import { TableContainer, TableCell, TableRow, tableCellClasses, styled } from "@mui/material";
+
+export const StyledTableContainer = styled(TableContainer)({
+  maxWidth: '100%',
+  overflowX: 'auto',
+})
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -10,6 +15,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
+    whiteSpace: 'nowrap',
   }));
   
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({

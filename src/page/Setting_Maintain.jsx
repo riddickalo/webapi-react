@@ -40,7 +40,7 @@ function maintainSubTable() {
 
 function DataSearchSection({ showSection }) {
     return (
-        <Collapse in={showSection}>
+        <Collapse in={showSection === 'search'}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
                 sx={{ 
                     bgcolor: '#e0e0e0',
@@ -66,7 +66,7 @@ function DataSearchSection({ showSection }) {
 
 function addItemSection({ showSection }) {
     return (
-        <Collapse in={showSection}>
+        <Collapse in={showSection === 'add'}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
                 sx={{ 
                     bgcolor: '#e0e0e0',
@@ -101,10 +101,10 @@ function addItemSection({ showSection }) {
 }
 
 export default function Setting_Maintain() {
-    const [showSection, setShowSection] = useState();
+    const [showSection, setShowSection] = useState('search');
 
-    const toggleSection = ()=>{
-        setShowSection(!showSection);
+    const toggleSection = (sectionName) => {
+        setShowSection(showSection === sectionName? null: sectionName);
     }
 
     return (
@@ -119,14 +119,14 @@ export default function Setting_Maintain() {
                 </Typography>
                 <Button className="icon-search" 
                     variant="text" 
-                    onClick={ toggleSection }
+                    onClick={ () => toggleSection('search') }
                     sx={{ fontSize: '20px', color: 'white' }}
                     startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
                     進階搜尋
                 </Button>
                 <Button className="icon-add" 
                     variant="text" 
-                    onClick={ toggleSection }
+                    onClick={ () => toggleSection('add') }
                     sx={{ fontSize: '20px', color: 'white' }}
                     startIcon={<NoteAddRounded sx={{ mr: '3px' }} />} > 
                     新增保養項目

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, Button, Table, TableContainer, TableHead, TableBody, TableRow, Paper, dividerClasses } from "@mui/material";
+import { Tabs, Tab, Box, Button, Table, TableHead, TableBody, TableRow, Paper, dividerClasses } from "@mui/material";
 import { BorderColor } from "@mui/icons-material";
 import NoData from "./NoData";
-import { StyledTableCell, StyledTableRow } from "./StyledTable";
+import { StyledTableContainer, StyledTableCell, StyledTableRow } from "./StyledTable";
 
 
 function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
@@ -52,7 +52,7 @@ function maintainIcon(status) {
 
 function recordSubTable() {
     return(
-        <TableContainer component={Paper}>
+        <StyledTableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='status table'>
                 <TableHead>
                     <TableRow>
@@ -80,13 +80,13 @@ function recordSubTable() {
                     ))}
                 </TableBody> */}
             </Table>
-        </TableContainer>
+        </StyledTableContainer>
     );
 }
 
 function updateSubTable() {
     return (
-        <TableContainer component={Paper}>
+        <StyledTableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='record table'>
                 <TableHead>
                     <TableRow>
@@ -113,7 +113,7 @@ function updateSubTable() {
                     ))}
                 </TableBody> */}
             </Table>
-        </TableContainer>
+        </StyledTableContainer>
     );
 }
 

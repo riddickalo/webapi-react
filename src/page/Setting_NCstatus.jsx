@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Collapse, TextField, Grid, TableRow, Paper, Table, TableHead, TableContainer, Box, Button, Stack, Typography } from "@mui/material";
+import { Collapse, TextField, Grid, TableRow, Paper, Table, TableHead, Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import NoData from "../components/NoData";
-import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
+import { StyledTableContainer, StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
 function statusSubTable() {
     return (
-        <TableContainer component={Paper}>
+        <StyledTableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
                 <TableHead>
                     <TableRow>
@@ -36,7 +36,7 @@ function statusSubTable() {
                     ))}
                 </TableBody> */}
             </Table>
-        </TableContainer>
+        </StyledTableContainer>
     );
 }
 
