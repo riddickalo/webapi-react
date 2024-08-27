@@ -4,7 +4,7 @@ import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import NoData from "../components/NoData";
 import { StyledTableContainer, StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
-function statusSubTable() {
+function StatusSubTable() {
     return (
         <StyledTableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
@@ -107,7 +107,7 @@ export default function Setting_NCStatus() {
             </Stack>
             {DataSearchSection({showSection})}
             <Box className="layoutContent" mt={2} mb={3}>
-                {statusSubTable()}
+                {StatusSubTable()}
             </Box>
         </Stack>
     );

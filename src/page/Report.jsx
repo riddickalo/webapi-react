@@ -6,7 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/L
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
-function getReportButton({ key }) {
+function GetReportButton({ key }) {
     return (
         <Button variant="contained" startIcon={<FileDownloadRounded />}
             sx={{ bgcolor: '#20B2AA', ':hover': { bgcolor: '#1c9c95' } }}>
@@ -15,7 +15,7 @@ function getReportButton({ key }) {
     );
 }
 
-function reportSubTable() {
+function ReportSubTable() {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='record table'>
@@ -30,32 +30,32 @@ function reportSubTable() {
                     <StyledTableRow key={'nc_month'}>
                         <StyledTableCell align='center'>機台產量 (月)</StyledTableCell>
                         <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{getReportButton('nc_month')}</StyledTableCell>
+                        <StyledTableCell align='center'>{GetReportButton('nc_month')}</StyledTableCell>
                     </StyledTableRow>
                     <StyledTableRow key={'nc_day'}>
                         <StyledTableCell align='center'>機台產量 (日)</StyledTableCell>
                         <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{getReportButton('nc_day')}</StyledTableCell>
+                        <StyledTableCell align='center'>{GetReportButton('nc_day')}</StyledTableCell>
                     </StyledTableRow>
                     <StyledTableRow key={'nc_hour'}>
                         <StyledTableCell align='center'>機台產量 (時)</StyledTableCell>
                         <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{getReportButton('nc_hour')}</StyledTableCell>
+                        <StyledTableCell align='center'>{GetReportButton('nc_hour')}</StyledTableCell>
                     </StyledTableRow>
                     <StyledTableRow key={'item_month'}>
                         <StyledTableCell align='center'>加工項目產量 (月)</StyledTableCell>
                         <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{getReportButton('item_month')}</StyledTableCell>
+                        <StyledTableCell align='center'>{GetReportButton('item_month')}</StyledTableCell>
                     </StyledTableRow>
                     <StyledTableRow key={'item_day'}>
                         <StyledTableCell align='center'>加工項目產量 (日)</StyledTableCell>
                         <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{getReportButton('item_day')}</StyledTableCell>
+                        <StyledTableCell align='center'>{GetReportButton('item_day')}</StyledTableCell>
                     </StyledTableRow>
                     <StyledTableRow key={'item_hour'}>
                         <StyledTableCell align='center'>加工項目產量 (時)</StyledTableCell>
                         <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{getReportButton('item_hour')}</StyledTableCell>
+                        <StyledTableCell align='center'>{GetReportButton('item_hour')}</StyledTableCell>
                     </StyledTableRow>
                 </TableBody>
             </Table>
@@ -102,7 +102,7 @@ export default function Order() {
                     </Grid>
             </Box>
             <Box className="layoutContent" mt={2} mb={3}>
-                {reportSubTable()}
+                {ReportSubTable()}
             </Box>
         </Stack>
     );

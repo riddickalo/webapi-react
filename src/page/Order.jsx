@@ -5,7 +5,7 @@ import DataFilterSection from "../components/Data_Filter";
 import NoData from "../components/NoData";
 import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
-function orderSubTable() {
+function OrderSubTable() {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='record table'>
@@ -71,7 +71,7 @@ export default function Order() {
             </Stack>
             {/* <DataSearchSection showSection={showSection} /> */}
             <Box className="layoutContent" mt={2} mb={3}>
-                {orderSubTable()}
+                {OrderSubTable()}
             </Box>
         </Stack>
     );

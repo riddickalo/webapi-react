@@ -24,7 +24,7 @@ function allyProps(index) {
     };
 }
 
-function linePanel() {
+function LinePanel() {
     return (
         <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
             <Grid container width={'100%'} spacing={2}
@@ -90,7 +90,7 @@ function linePanel() {
     );
 }
 
-function emailPanel() {
+function EmailPanel() {
     return (
         <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
             <Grid container width={'100%'} rowSpacing={2} columnSpacing={2}
@@ -220,10 +220,10 @@ export default function Sys_Notification() {
                         </Tabs>
                     </Box>
                     <CustomTabPanel value={value} index={0}>
-                        {linePanel()}
+                        {LinePanel()}
                     </CustomTabPanel>
                     <CustomTabPanel value={value} index={1}>
-                        {emailPanel()}
+                        {EmailPanel()}
                     </CustomTabPanel>
                 </Box>
             </Stack>

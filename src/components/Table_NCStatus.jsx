@@ -15,7 +15,7 @@ const demoData = [
 ];
 const statusData = demoData;
 
-function statusIcon(status) {
+function StatusIcon(status) {
     let content = {};
     if (status === 'alarm') {
         content = { color: 'red', op: '警報'};
@@ -32,7 +32,7 @@ function statusIcon(status) {
     );
 }
 
-function maintainIcon(status) {
+function MaintainIcon(status) {
     let content = {};
     if (status) {
         content = { color: 'green', op: '預約'};
@@ -71,9 +71,9 @@ export default function Table_NCStatus() {
                             <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
                             <StyledTableCell align='center'>{row.station}</StyledTableCell>
                             <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
+                            <StyledTableCell align='center'>{StatusIcon(row.opStatus)}</StyledTableCell>
                             <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
+                            <StyledTableCell align='center'>{MaintainIcon(row.maintainStatus)}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>

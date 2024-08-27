@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import '@mui/material'
-import { createTheme } from "@mui/material";
+// import { createTheme } from "@mui/material";
 
 // export const theme = createTheme({
 //     components: {
@@ -19,7 +19,7 @@ import { createTheme } from "@mui/material";
 // });
 const api_url = 'http://localhost:8083/api/device-events'
 
-function apiData () {
+function ApiData () {
     const [data, setData] = useState();
 
     useEffect(() => {
@@ -43,11 +43,11 @@ function apiData () {
     );
 }
 
-export default function testPage() {
+export default function TestPage() {
     return (
         <div>
             <h1>Test Page</h1>
-            {apiData()}
+            {ApiData()}
         </div>
     );
 }

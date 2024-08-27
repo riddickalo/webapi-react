@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography, Collapse, Grid, TextField } from "@mui/
 import { FilterAltRounded } from '@mui/icons-material';
 import Table_NcMaintain from "../components/Table_NCMaintain";
 
-function filterSection({ showSection }) {
+function FilterSection({ showSection }) {
     return (
         <Collapse in={showSection}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
@@ -54,7 +54,7 @@ export default function NC_Maintain() {
                     資料篩選
                 </Button>
             </Stack>
-            {filterSection({ showSection })}
+            <FilterSection showSection={showSection} />
             <Box className="layoutContent" mt={2}>
                 <Table_NcMaintain />
             </Box>

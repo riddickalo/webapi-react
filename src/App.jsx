@@ -20,7 +20,7 @@ import Setting_PPmap from './page/Setting_PPmap';
 import Sys_Account from './page/Sys_Account';
 import Sys_General from './page/Sys_General';
 import Sys_Notification from './page/Sys_Notification';
-import testPage from './page/theme';
+import TestPage from './page/theme';
 
 // import MenuItem from './components/MenuItem';
 
@@ -55,7 +55,7 @@ function App() {
                     <Route path='/machine/ncfile' element={ <NC_File />}/>
                     <Route path='/alarm/status' element={ <Alarm_Status />}/>
                     <Route path='/alarm/history' element={ <Alarm_History />}/>
-                    <Route path='/order' element={ <testPage />}/>
+                    <Route path='/order' element={ <TestPage />}/>
                     <Route path='/report' element={ <Report />}/>
                     <Route path='/setting/machine' element={ <Setting_NCStatus />}/>
                     <Route path='/setting/maintain' element={ <Setting_Maintain />}/>

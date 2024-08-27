@@ -4,7 +4,7 @@ import { AddRounded } from '@mui/icons-material';
 import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 import NoData from "../components/NoData";
 
-function fileSubTable() {
+function FileSubTable() {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
@@ -36,7 +36,7 @@ function fileSubTable() {
     );
 }
 
-function addItemSection({ showSection }) {
+function AddItemSection({ showSection }) {
     return (
         <Collapse in={showSection}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
@@ -93,9 +93,9 @@ export default function Setting_PPmap() {
                     新增對照資料
                 </Button>
             </Stack>
-            {addItemSection({ showSection })}
+            {AddItemSection({ showSection })}
             <Box className="layoutContent" mt={2} mb={3}>
-                {fileSubTable()}
+                {FileSubTable()}
             </Box>
         </Stack>
     );

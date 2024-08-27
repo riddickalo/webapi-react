@@ -12,7 +12,7 @@ const itemTypes = [
 ];
 
 
-function itemSubTable() {
+function ItemSubTable() {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
@@ -88,7 +88,7 @@ function DataSearchSection({ showSection }) {
     );
 }
 
-function addItemSection({ showSection }) {
+function AddItemSection({ showSection }) {
     return (
         <Collapse in={showSection === 'add'}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
@@ -159,9 +159,9 @@ export default function Setting_Item() {
                 </Button>
             </Stack>
             {DataSearchSection({ showSection })}
-            {addItemSection({ showSection })}
+            {AddItemSection({ showSection })}
             <Box className="layoutContent" mt={2} mb={3}>
-                {itemSubTable()}
+                {ItemSubTable()}
             </Box>
         </Stack>
     );

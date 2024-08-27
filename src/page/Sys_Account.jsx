@@ -6,7 +6,7 @@ import { green, red } from "@mui/material/colors";
 import NoData from '../components/NoData'
 import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
-function statusIcon(actStatus) {
+function StatusIcon(actStatus) {
     return (
         <Box>
             {
@@ -16,7 +16,7 @@ function statusIcon(actStatus) {
     );
 }
 
-function editButtons() {
+function EditButtons() {
     return(
         <Stack direction='row' spacing={2}>
             <Button sx={{ color: 'white', bgcolor: green[600], ':hover': {bgcolor: green[800]} }} 
@@ -31,9 +31,9 @@ function accountData(account, alias, lastLogTime, actStatus, butts) {
     return { account, alias, lastLogTime, actStatus, butts };
 }
 
-const demoData = [accountData('admin', 'SuperUser', '', true, editButtons())];
+const demoData = [accountData('admin', 'SuperUser', '', true, EditButtons())];
 
-function accountSubTable() {
+function AccountSubTable() {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='account table'>
@@ -54,7 +54,7 @@ function accountSubTable() {
                             </StyledTableCell>
                             <StyledTableCell align='center'>{row.alias}</StyledTableCell>
                             <StyledTableCell align='center'>{row.lastLogTime}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.actStatus)}</StyledTableCell>
+                            <StyledTableCell align='center'>{StatusIcon(row.actStatus)}</StyledTableCell>
                             <StyledTableCell align='center'>{row.butts}</StyledTableCell>
                         </StyledTableRow>
                     ))}
@@ -91,7 +91,7 @@ export default function Sys_Account() {
             </Stack>
             {/* <DataSearchSection showSection={showSection} /> */}
             <Box className="layoutContent" mt={2} mb={5}>
-                {accountSubTable()}
+                {AccountSubTable()}
             </Box>
         </Stack>
     );
