@@ -28,7 +28,7 @@ function ApiData () {
             params: { startTime: 20240827000000 }
         }).then((resp) => {
             const temp = resp.data;
-            data = temp[1];
+            setData(temp[1]);
             console.log(temp[0]);
         }).catch((err) => console.error(err));
     }, []);
