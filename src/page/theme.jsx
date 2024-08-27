@@ -18,7 +18,7 @@ import axios from "axios";
 //         },
 //     }
 // });
-const api_url = 'http://localhost:8083/api/device-events'
+const api_url = 'http://127.0.0.1:8083/api/device-events'
 
 function ApiData () {
     const [data, setData] = useState(null);
@@ -27,6 +27,7 @@ function ApiData () {
         axios.get(api_url, {
             params: { startTime: '20240827-000000' }
         }).then((resp) => {
+            // console.info(resp);
             const temp = resp.data;
             setData(temp[1]);
             console.log(temp);
@@ -37,11 +38,11 @@ function ApiData () {
     if (data !== null) {
         return (
             <div>
-                {/* <h2>{data.deviceName}</h2>
+                <h2>{data.deviceName}</h2>
                 <h5>{data.exeProgName}</h5>
                 <h5>{data.running}</h5>
                 <h5>{data.emergency}</h5>
-                <h6>{data.timestamp}</h6> */}
+                <h6>{data.timestamp}</h6>
             </div>
         );
     } else {
