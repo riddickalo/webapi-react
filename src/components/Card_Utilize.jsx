@@ -42,7 +42,32 @@ function CircularProgressWithLabel(props) {
     return(
         <Box sx={{alignItems: 'flex-end'}}>
             <Stack direction={'column'} spacing={5}>
-                <CircularProgress variant='determinate' value={50} size={150} thickness={5} sx={{ color: '#6ce5e8' }} />
+                <Box sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <CircularProgress variant='determinate' 
+                        {...props} 
+                        size={150} 
+                        thickness={5} 
+                        sx={{ color: '#6ce5e8' }} />
+                    <Box
+                        sx={{
+                            top: 0,
+                            left: 0,
+                            bottom: 0,
+                            right: 0,
+                            position: 'absolute',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                        <Typography
+                            variant="caption"
+                            component="div"
+                            sx={{ color: 'white', fontSize: '24px', }}
+                        >
+                            {`${Math.round(props.value)}%`}
+                        </Typography>
+                    </Box>
+                </Box>
                 <Typography variant="h6">稼動率</Typography>
             </Stack>
         </Box>
@@ -62,7 +87,7 @@ function CircularProgressWithLabel(props) {
 */
 export default function Card_Utilize({ data }) {
     return (
-        <Card sx={{ minWidth: 300, maxWidth: 600, bgcolor: '#6f92be', borderRadius: 3 }}>
+        <Card sx={{ minWidth: 280, maxWidth: 500, bgcolor: '#6f92be', borderRadius: 3 }}>
             <CardHeader 
                 avatar={ statusIcon(data.opStatus) }
                 title={data.nc_id} 
@@ -75,8 +100,7 @@ export default function Card_Utilize({ data }) {
             <CardContent sx={{ color: 'white' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={6} sx={{ alignContent:'center' }}>
-                        {/* <CircularProgress variant='determinate' value={50} size={120} /> */}
-                        <CircularProgressWithLabel />
+                        <CircularProgressWithLabel value={data.utilize_rate}/>
                     </Grid>
                     {/* <Divider variant="middle" orientation='vertical' sx={dividerStyle} flexItem/> */}
                     <Grid item xs={6}>
@@ -92,19 +116,6 @@ export default function Card_Utilize({ data }) {
                         </Stack>
                     </Grid>
                 </Grid>
-                {/* <CircularProgress variant='determinate' value={50} />
-                <Stack direction={'row'}>
-                    <Stack direction={'column'}>
-                        <Typography variant="body2">機台產線</Typography> 
-                        <Typography variant="h6">{data.prod_line}</Typography> 
-                        <Typography variant="body2">機台工作站</Typography> 
-                        <Typography variant="h6">{data.station}</Typography> 
-                        <Typography variant="body2">加工程式</Typography> 
-                        <Typography variant="h6">{data.ncfile}</Typography> 
-                        <Typography variant="body2">保養狀態</Typography> 
-                        <Typography variant="h6">{maintainIcon(data.maintainStatus)}</Typography> 
-                    </Stack>
-                </Stack> */}
             </CardContent>
         </Card>
     );

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Button, Table, TableContainer, TableHead, TableBody, TableRow, Paper } from "@mui/material";
 import { StyledTableCell, StyledTableRow } from "./StyledTable";
+import NoData from "./NoData";
 
 function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
     return { region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus };
@@ -13,7 +15,6 @@ const demoData = [
     createData('一廠', 'MG', '關節手臂', 'Fanuc M-800i', 'running', 'Main.tch', false),
     createData('二廠', 'EG', '裝配', 'GI-700-3', 'idle', 'O999', false),
 ];
-const statusData = demoData;
 
 function StatusIcon(status) {
     let content = {};
@@ -48,6 +49,18 @@ function MaintainIcon(status) {
 }
 
 export default function Table_NCStatus() {
+    const [statusData, setStatusData] = useState(null);
+
+    useEffect(() => {
+        // setStatusData(demoData);
+
+        axios.get('http://127.0.0.1:5000/machine/status')
+            .then(({data, }) => {
+                console.log(data);
+                setStatusData(data);
+            }).catch((err) => console.error(err));
+    }, []);
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
@@ -63,18 +76,20 @@ export default function Table_NCStatus() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {statusData.map((row) => (
-                        <StyledTableRow key={row.nc_id}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{StatusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{MaintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
+                    {
+                        statusData==null? <NoData />: 
+                            statusData.map((row) => (
+                                <StyledTableRow key={row.nc_id}>
+                                    <StyledTableCell component={'th'} scope="row" align='center'>
+                                        {row.region}
+                                    </StyledTableCell>
+                                    <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                                    <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                                    <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                                    <StyledTableCell align='center'>{StatusIcon(row.opStatus)}</StyledTableCell>
+                                    <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
+                                    <StyledTableCell align='center'>{MaintainIcon(row.maintainStatus)}</StyledTableCell>
+                                </StyledTableRow>
                     ))}
                 </TableBody>
             </Table>

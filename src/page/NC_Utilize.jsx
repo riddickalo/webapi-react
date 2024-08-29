@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography, Grid } from "@mui/material";
 import { FindInPageRounded } from '@mui/icons-material';
 import DataSearchSection from "../components/Data_Search";
 import Card_Utilize from "../components/Card_Utilize";
+import NoData from "../components/NoData";
 import '../assets/css/NC_Utilize.css'
+import axios from "axios";
 
 function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
     return { region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus };
@@ -19,10 +21,20 @@ const demoData = [
 
 export default function NC_Utilize() {
     const [showSection, setShowSection] = useState(false);
+    const [utilizeData, setUtilizeData] = useState(null);
 
     const toggleSection = ()=>{
         setShowSection(!showSection);
     }
+
+    useEffect(() => {
+        // setUtilizeData(demoData);
+        axios.get('http://127.0.0.1:5000/machine/status')
+            .then(({data, }) => {
+                console.log(data);
+                setUtilizeData(data);
+            }).catch((err) => console.error(err));
+    }, []);
 
     return (
         <Stack direction='column' mx='5%'>
@@ -45,21 +57,14 @@ export default function NC_Utilize() {
             <DataSearchSection showSection={showSection} />
             <Box className="layoutContent" sx={{ height: '100%', my: 3}}>
                 <Grid container spacing={5}>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card_Utilize data={demoData[0]} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card_Utilize data={demoData[1]} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card_Utilize data={demoData[2]} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card_Utilize data={demoData[3]} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card_Utilize data={demoData[4]} />
-                    </Grid>
+                    {
+                        utilizeData==null? <NoData mt={3} ml={5}/>:
+                            utilizeData.map((row) => (
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <Card_Utilize data={row} />
+                                </Grid>
+                            ))
+                    }
                 </Grid>
                     
             </Box>

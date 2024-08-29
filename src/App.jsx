@@ -41,9 +41,11 @@ function App() {
   }, [accordionState]);
   // const page_host = '/webapi-react';
 
+  const base_name = process.env.BASE_NAME || '';
+
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename={base_name}>
         <Sidebar isSidebarOpen={ isSidebarOpen } accordionState={ accordionState } setAccordionState={ setAccordionState }></Sidebar>
         <Header isSidebarOpen={ isSidebarOpen } toggleSidebar={ toggleSidebar } />
         <div className={`Layout ${isSidebarOpen? 'SidebarOpen': ''}`}>
@@ -64,7 +66,7 @@ function App() {
                     <Route path='/sys/general' element={ <Sys_General />}/>
                     <Route path='/sys/account' element={ <Sys_Account />}/>
                     <Route path='/sys/notify' element={ <Sys_Notification />}/>
-                    <Route path='/' element={ <NC_Status />}/>
+                    <Route path='/' element={ <NC_Utilize />}/>
                   <Route/>
                 </Routes>
               
