@@ -15,7 +15,7 @@ function Sidebar({ isSidebarOpen, accordionState, setAccordionState }) {
         localStorage.setItem('accordionState', JSON.stringify(newState));   // write new state to localstorage
     }
 
-    const base_name = process.env.BASE_NAME || '';
+    const base_name = process.env.REACT_APP_BASE_NAME || '';
 
     return (
         <div className={`Sidebar ${isSidebarOpen? 'side-open': ''}`}>

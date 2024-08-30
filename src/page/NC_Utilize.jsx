@@ -29,7 +29,7 @@ export default function NC_Utilize() {
 
     useEffect(() => {
         // setUtilizeData(demoData);
-        axios.get('http://127.0.0.1:5000/machine/status')
+        axios.get(process.env.REACT_APP_API_URL + '/machine/status')
             .then(({data, }) => {
                 console.log(data);
                 setUtilizeData(data);

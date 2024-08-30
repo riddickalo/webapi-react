@@ -41,7 +41,7 @@ function App() {
   }, [accordionState]);
   // const page_host = '/webapi-react';
 
-  const base_name = process.env.BASE_NAME || '';
+  const base_name = process.env.REACT_APP_BASE_NAME || '';
 
   return (
     <div className="App">
