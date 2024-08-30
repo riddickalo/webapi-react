@@ -1,6 +1,6 @@
-import React from "react";
-import { Button, Table, TableContainer, TableHead, TableBody, TableRow, Paper } from "@mui/material";
-import { StyledTableCell, StyledTableRow } from "./StyledTable";
+import React, { useState, useEffect } from "react";
+import NoData from "./NoData";
+import { StyledSubTable, StyledTableCell, StyledTableRow } from "./StyledTable";
 
 function createData(region, prod_line, station, nc_id, timestamp, desc) {
     return { region, prod_line, station, nc_id, timestamp, desc };
@@ -27,34 +27,35 @@ const demoData = [
 ];
 
 export default function Table_Alarm() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">機台廠區</StyledTableCell>
-                        <StyledTableCell align="center">機台產線</StyledTableCell>
-                        <StyledTableCell align="center">機台工作站</StyledTableCell>
-                        <StyledTableCell align="center">機台名稱</StyledTableCell>
-                        <StyledTableCell align="center">警報時間</StyledTableCell>
-                        <StyledTableCell align="center">警報描述</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.timestamp}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.desc}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+    const [alarmData, setAlarmData] = useState(null);
+    
+    const tableHead = ['機台廠區', '機台產線', '機台工作站', '機台名稱', '警報時間', '警報描述'];
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.timestamp}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.timestamp}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.desc}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
+    }
+
+    useEffect(() => {
+        setAlarmData(demoData);
+    }, []);
+
+    return <StyledSubTable
+                ariaLabel='alarm-table'
+                headData={tableHead}
+                bodyData={bodyData(alarmData)} />;
 }

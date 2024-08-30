@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, Button, Table, TableHead, TableBody, TableRow, Paper, dividerClasses } from "@mui/material";
+import { Tabs, Tab, Box, dividerClasses } from "@mui/material";
 import { BorderColor } from "@mui/icons-material";
 import NoData from "./NoData";
-import { StyledTableContainer, StyledTableCell, StyledTableRow } from "./StyledTable";
+import { StatusIcon } from "./Icons";
+import { StyledSubTable, StyledTableCell, StyledTableRow } from "./StyledTable";
 
 
 function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
@@ -18,103 +19,59 @@ const demoData = [
     createData('二廠', 'EG', '裝配', 'GI-700-3', 'idle', 'O999', false),
 ];
 
-function statusIcon(status) {
-    let content = {};
-    if (status === 'alarm') {
-        content = { color: 'red', op: '警報'};
-    } else if (status === 'idle') {
-        content = { color: 'orange', op: '閒置中'};
-    } else if (status === 'running') {
-        content = { color: 'green', op: '運轉中'};
+function RecordSubTable(props) {
+    const tableHead = ['機台名稱', '加工程式', '加工時間', '加工開始時間', '加工完成時間'];
+
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                        <StyledTableCell align='center'>{<StatusIcon status={row.opStatus} />}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
     }
-
-    return(
-        <Button disableRipple={true} size="small" variant="contained" sx={{ bgcolor: content.color }}>
-            {content.op}
-        </Button>
-    );
+    
+    return <StyledSubTable
+                ariaLabel='ncFile-record-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
-function maintainIcon(status) {
-    let content = {};
-    if (status) {
-        content = { color: 'green', op: '預約'};
-    } else {
-        content = { color: 'grey.500', op: '未啟用'};
+function UpdateSubTable(props) {
+    const tableHead = ['機台名稱', '操作類型', '操作時間', '加工程式名稱'];
+
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
     }
-
-    return(
-        <Button disableRipple={true} size="small" variant="contained" sx={{ bgcolor: content.color }}>
-            {content.op}
-        </Button>
-    );
-}
-
-function recordSubTable() {
-    return(
-        <StyledTableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">機台名稱</StyledTableCell>
-                        <StyledTableCell align="center">加工程式</StyledTableCell>
-                        <StyledTableCell align="center">加工時間</StyledTableCell>
-                        <StyledTableCell align="center">加工開始時間</StyledTableCell>
-                        <StyledTableCell align="center">加工完成時間</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </StyledTableContainer>
-    );
-}
-
-function updateSubTable() {
-    return (
-        <StyledTableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='record table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">機台名稱</StyledTableCell>
-                        <StyledTableCell align="center">操作類型</StyledTableCell>
-                        <StyledTableCell align="center">操作時間</StyledTableCell>
-                        <StyledTableCell align="center">加工程式名稱</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </StyledTableContainer>
-    );
+    
+    return <StyledSubTable
+                ariaLabel='ncFile-update-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
 function CustomTabPanel(props) {
@@ -140,6 +97,7 @@ function allyProps(index) {
 }
 
 export default function Table_NCFile() {
+    const [statusData, setStatusData] = useState(null);
     const [value, setValus] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -155,10 +113,10 @@ export default function Table_NCFile() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                {recordSubTable()}
+                {<RecordSubTable data={statusData} />}
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                {updateSubTable()}
+                {<UpdateSubTable data={statusData} />}
             </CustomTabPanel>
         </Box>
     );

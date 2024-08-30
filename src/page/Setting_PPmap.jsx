@@ -1,39 +1,34 @@
 import React, { useState } from "react";
-import { Collapse, TableRow, TextField, Grid, Paper, Table, TableHead, TableContainer, Box, Button, Stack, Typography } from "@mui/material";
+import { Collapse, TextField, Grid, Box, Button, Stack, Typography } from "@mui/material";
 import { AddRounded } from '@mui/icons-material';
-import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
+import { StyledTableCell, StyledTableRow, StyledSubTable } from "../components/StyledTable";
 import NoData from "../components/NoData";
 
-function FileSubTable() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">加工程式</StyledTableCell>
-                        <StyledTableCell align="center">加工品項</StyledTableCell>
-                        <StyledTableCell align="center">操作</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </TableContainer>
-    );
+function FileSubTable(props) {
+    const tableHead = ['加工程式', '加工品項', '操作'];
+
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                    
+                    </StyledTableRow>
+            )));
+        }
+    }
+
+    return <StyledSubTable
+                ariaLabel='settingPPmap-file-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
 function AddItemSection({ showSection }) {
@@ -69,6 +64,7 @@ function AddItemSection({ showSection }) {
 }
 
 export default function Setting_PPmap() {
+    const [statusData, setStatusData] = useState(null);
     const [showSection, setShowSection] = useState(true);
 
     const toggleSection = ()=>{
@@ -93,9 +89,9 @@ export default function Setting_PPmap() {
                     新增對照資料
                 </Button>
             </Stack>
-            {AddItemSection({ showSection })}
+            {<AddItemSection showSection={ showSection } />}
             <Box className="layoutContent" mt={2} mb={3}>
-                {FileSubTable()}
+                {<FileSubTable data={statusData} />}
             </Box>
         </Stack>
     );

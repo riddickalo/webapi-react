@@ -61,7 +61,7 @@ export default function NC_Utilize() {
                         utilizeData==null? <NoData mt={3} ml={5}/>:
                             utilizeData.map((row) => (
                                 <Grid item xs={12} sm={6} md={4}>
-                                    <Card_Utilize data={row} />
+                                    <Card_Utilize {...row} />
                                 </Grid>
                             ))
                     }

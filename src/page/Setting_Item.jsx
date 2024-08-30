@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { styled, MenuItem, Collapse, TextField, Grid, TableRow, Paper, Table, TableHead, TableContainer, Box, Button, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { MenuItem, Collapse, TextField, Grid, Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, NoteAddRounded } from '@mui/icons-material';
 import NoData from "../components/NoData";
-import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
+import { StyledSubTable, StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
 const itemTypes = [
     { code: 0, key: 'all', value: '全部' },
@@ -12,37 +12,30 @@ const itemTypes = [
 ];
 
 
-function ItemSubTable() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">品項料號</StyledTableCell>
-                        <StyledTableCell align="center">品項名稱</StyledTableCell>
-                        <StyledTableCell align="center">品項類型</StyledTableCell>
-                        <StyledTableCell align="center">操作</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </TableContainer>
-    );
+function ItemSubTable(props) {
+    const tableHead = ['品項料號', '品項名稱', '品項類型', '操作'];
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
+    }
+
+    return <StyledSubTable
+                ariaLabel='settingItem-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
 function DataSearchSection({ showSection }) {
@@ -128,10 +121,15 @@ function AddItemSection({ showSection }) {
 
 export default function Setting_Item() {
     const [showSection, setShowSection] = useState('search');
+    const [itemData, setItemData] = useState(null);
 
     const toggleSection = (sectionName)=>{
         setShowSection(showSection === sectionName? null: sectionName);
     }
+
+    // useEffect(() => {
+    //     setItemData(demo)
+    // })
 
     return (
         <Stack direction='column' mx='5%'>
@@ -158,10 +156,10 @@ export default function Setting_Item() {
                     新增品項料號
                 </Button>
             </Stack>
-            {DataSearchSection({ showSection })}
-            {AddItemSection({ showSection })}
+            {<DataSearchSection showSection={ showSection } />}
+            {<AddItemSection showSection={ showSection } />}
             <Box className="layoutContent" mt={2} mb={3}>
-                {ItemSubTable()}
+                {<ItemSubTable data={itemData} />}
             </Box>
         </Stack>
     );

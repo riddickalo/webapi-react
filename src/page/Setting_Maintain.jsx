@@ -1,41 +1,37 @@
 import React, { useState } from "react";
-import { FormControlLabel, Checkbox, Collapse, TextField, Grid, TableRow, Paper, Table, TableHead, TableContainer, Box, Button, Stack, Typography } from "@mui/material";
+import { FormControlLabel, Checkbox, Collapse, Box, Button, Stack, Typography, Grid, TextField } from "@mui/material";
 import { FindInPageRounded, NoteAddRounded } from '@mui/icons-material';
 import NoData from "../components/NoData";
-import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
+import { StatusIcon } from "../components/Icons";
+import { StyledSubTable, StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
-function MaintainSubTable() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">項次</StyledTableCell>
-                        <StyledTableCell align="center">保養項目</StyledTableCell>
-                        <StyledTableCell align="center">機台週期(天)</StyledTableCell>
-                        <StyledTableCell align="center">自動啟用</StyledTableCell>
-                        <StyledTableCell align="center">操作</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </TableContainer>
-    );
+function MaintainSubTable(props) {
+    const tableHead = ['項次', '保養項目', '機台週期(天)', '自動啟用', '操作'];
+
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                        <StyledTableCell align='center'>{<StatusIcon status={row.opStatus} />}</StyledTableCell>
+                    
+                    </StyledTableRow>
+            )));
+        }
+    } 
+
+    return <StyledSubTable
+                ariaLabel='settingMaintain-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
 function DataSearchSection({ showSection }) {
@@ -101,6 +97,7 @@ function AddItemSection({ showSection }) {
 }
 
 export default function Setting_Maintain() {
+    const [maintainData, setMaintainData] = useState(null);
     const [showSection, setShowSection] = useState('search');
 
     const toggleSection = (sectionName) => {
@@ -132,10 +129,10 @@ export default function Setting_Maintain() {
                     新增保養項目
                 </Button>
             </Stack>
-            {DataSearchSection({ showSection })}
-            {AddItemSection({ showSection })}
+            {<DataSearchSection showSection={ showSection } />}
+            {<AddItemSection showSection={ showSection } />}
             <Box className="layoutContent" mt={2} mb={3}>
-                {MaintainSubTable()}
+                {<MaintainSubTable data={maintainData} />}
             </Box>
         </Stack>
     );

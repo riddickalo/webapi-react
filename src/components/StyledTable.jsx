@@ -1,4 +1,4 @@
-import { TableContainer, TableCell, TableRow, tableCellClasses, styled } from "@mui/material";
+import { Table, TableBody, TableContainer, TableHead, TableCell, TableRow, tableCellClasses, styled, Paper } from "@mui/material";
 
 export const StyledTableContainer = styled(TableContainer)({
   maxWidth: '100%',
@@ -27,3 +27,21 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
+
+function StyledTableHead({ data }) {
+  let tableHead = [];
+  data.forEach(element => tableHead.push(<StyledTableCell align="center">{element}</StyledTableCell>));
+  
+  return <TableRow>{tableHead}</TableRow>;
+}
+
+export function StyledSubTable(props) {
+  return (
+    <TableContainer component={Paper} maxWidth='100%' overflowX='auto' sx={{ width: '100%' }}>
+      <Table aria-label={ props.ariaLabel }>
+        <TableHead>{ <StyledTableHead data={props.headData} />}</TableHead>
+        <TableBody>{ props.bodyData }</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

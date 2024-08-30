@@ -1,37 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardContent, Divider, Box, Grid, Button, CircularProgress, Typography, Stack } from "@mui/material";
-
-function statusIcon(status) {
-    let content = {};
-    if (status === 'alarm') {
-        content = { color: 'red', op: '警報'};
-    } else if (status === 'idle') {
-        content = { color: 'orange', op: '閒置中'};
-    } else if (status === 'running') {
-        content = { color: 'green', op: '運轉中'};
-    }
-
-    return(
-        <Button disableTouchRipple size="large" variant="contained" sx={{ bgcolor: content.color, '&:hover': { bgcolor: content.color } }}>
-            {content.op}
-        </Button>
-    );
-}
-
-function maintainIcon(status) {
-    let content = {};
-    if (status) {
-        content = { color: 'green', op: '預約'};
-    } else {
-        content = { color: 'grey.500', op: '未啟用'};
-    }
-
-    return(
-        <Button disableTouchRipple size="small" variant="contained" sx={{ bgcolor: content.color, '&: hover': {bgcolor: content.color} }}>
-            {content.op}
-        </Button>
-    );
-}
+import { StatusIcon, MaintainIcon } from "./Icons";
 
 const dividerStyle = {
     border: '1px solid',
@@ -85,14 +54,14 @@ function CircularProgressWithLabel(props) {
         maintainStatus: 保養狀態,
     }
 */
-export default function Card_Utilize({ data }) {
+export default function Card_Utilize(props) {
     return (
         <Card sx={{ minWidth: 280, maxWidth: 500, bgcolor: '#6f92be', borderRadius: 3 }}>
             <CardHeader 
-                avatar={ statusIcon(data.opStatus) }
-                title={data.nc_id} 
+                avatar={<StatusIcon status={props.opStatus} />}
+                title={props.nc_id} 
                 titleTypographyProps={{variant: 'h5'}}
-                subheader={data.region}
+                subheader={props.region}
                 subheaderTypographyProps={{variant: 'h6'}} 
                 sx={{color: 'white'}}>
             </CardHeader>
@@ -100,19 +69,19 @@ export default function Card_Utilize({ data }) {
             <CardContent sx={{ color: 'white' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={6} sx={{ alignContent:'center' }}>
-                        <CircularProgressWithLabel value={data.utilize_rate}/>
+                        <CircularProgressWithLabel value={props.utilize_rate}/>
                     </Grid>
                     {/* <Divider variant="middle" orientation='vertical' sx={dividerStyle} flexItem/> */}
                     <Grid item xs={6}>
                         <Stack direction={'column'} spacing={1}>
                             <Typography variant="body2">機台產線</Typography> 
-                            <Typography variant="h6">{data.prod_line}</Typography> 
+                            <Typography variant="h6">{props.prod_line}</Typography> 
                             <Typography variant="body2">機台工作站</Typography> 
-                            <Typography variant="h6">{data.station}</Typography> 
+                            <Typography variant="h6">{props.station}</Typography> 
                             <Typography variant="body2">加工程式</Typography> 
-                            <Typography variant="h6">{data.ncfile}</Typography> 
+                            <Typography variant="h6">{props.ncfile}</Typography> 
                             <Typography variant="body2">保養狀態</Typography> 
-                            <Typography variant="h6">{maintainIcon(data.maintainStatus)}</Typography> 
+                            <Typography variant="h6">{<MaintainIcon status={props.maintainStatus} />}</Typography> 
                         </Stack>
                     </Grid>
                 </Grid>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, Button, Table, TableHead, TableBody, TableRow, Paper, dividerClasses } from "@mui/material";
+import { Tabs, Tab, Box, dividerClasses } from "@mui/material";
 import { BorderColor } from "@mui/icons-material";
 import NoData from "./NoData";
-import { StyledTableContainer, StyledTableCell, StyledTableRow } from "./StyledTable";
+import { StyledTableCell, StyledTableRow, StyledSubTable } from "./StyledTable";
+import { StatusIcon, MaintainIcon } from "./Icons";
 
 function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
     return { region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus };
@@ -17,106 +18,62 @@ const demoData = [
     createData('二廠', 'EG', '裝配', 'GI-700-3', 'idle', 'O999', false),
 ];
 
-function statusIcon(status) {
-    let content = {};
-    if (status === 'alarm') {
-        content = { color: 'red', op: '警報'};
-    } else if (status === 'idle') {
-        content = { color: 'orange', op: '閒置中'};
-    } else if (status === 'running') {
-        content = { color: 'green', op: '運轉中'};
-    }
+function StatusSubTable(props) {
+    const tableHead = ['項次', '保養項目', '保養週期(天)', '保養狀態', '預約保養時間', '最後保養時間', '啟用狀態', '操作'];
 
-    return(
-        <Button disableRipple={true} size="small" variant="contained" sx={{ bgcolor: content.color }}>
-            {content.op}
-        </Button>
-    );
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                        <StyledTableCell align='center'>{<StatusIcon status={row.opStatus} />}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
+                        <StyledTableCell align='center'>{<MaintainIcon status={row.maintainStatus} />}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
+    } 
+
+    return <StyledSubTable
+                ariaLabel='ncMaintain-status-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
-function maintainIcon(status) {
-    let content = {};
-    if (status) {
-        content = { color: 'green', op: '預約'};
-    } else {
-        content = { color: 'grey.500', op: '未啟用'};
-    }
-
-    return(
-        <Button disableRipple={true} size="small" variant="contained" sx={{ bgcolor: content.color }}>
-            {content.op}
-        </Button>
-    );
-}
-
-function statusSubTable() {
-    return(
-        <StyledTableContainer component={Paper} >
-            <Table sx={{ minWidth: 640 }} aria-lable='status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">項次</StyledTableCell>
-                        <StyledTableCell align="center">保養項目</StyledTableCell>
-                        <StyledTableCell align="center">保養週期(天)</StyledTableCell>
-                        <StyledTableCell align="center">保養狀態</StyledTableCell>
-                        <StyledTableCell align="center">預約保養時間</StyledTableCell>
-                        <StyledTableCell align="center">最後保養時間</StyledTableCell>
-                        <StyledTableCell align="center">啟用狀態</StyledTableCell>
-                        <StyledTableCell align="center">操作</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
+function RecordSubTable(props) {
+    const tableHead = ['保養項目', '保養人員', '預約保養時間', '實際保養時間'];
+    
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
                                 {row.region}
                             </StyledTableCell>
                             <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
                             <StyledTableCell align='center'>{row.station}</StyledTableCell>
                             <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
+                
                         </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </StyledTableContainer>
-    );
-}
+            )));
+        }
+    } 
 
-function recordSubTable() {
-    return (
-        <StyledTableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='record table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">保養項目</StyledTableCell>
-                        <StyledTableCell align="center">保養人員</StyledTableCell>
-                        <StyledTableCell align="center">預約保養時間</StyledTableCell>
-                        <StyledTableCell align="center">實際保養時間</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </StyledTableContainer>
-    );
+    return <StyledSubTable
+                ariaLabel='ncMaintain-record-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
 function CustomTabPanel(props) {
@@ -142,6 +99,7 @@ function allyProps(index) {
 }
 
 export default function Table_NCStatus() {
+    const [statusData, setStatusData] = useState(null);
     const [value, setValus] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -157,10 +115,10 @@ export default function Table_NCStatus() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                {statusSubTable()}
+                <StatusSubTable data={statusData} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                {recordSubTable()}
+                <RecordSubTable data={statusData} />
             </CustomTabPanel>
         </Box>
     );

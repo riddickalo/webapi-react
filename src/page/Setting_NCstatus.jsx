@@ -1,43 +1,37 @@
 import React, { useState } from "react";
-import { Collapse, TextField, Grid, TableRow, Paper, Table, TableHead, Box, Button, Stack, Typography } from "@mui/material";
+import { Collapse, TextField, Grid, Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import NoData from "../components/NoData";
-import { StyledTableContainer, StyledTableCell, StyledTableRow } from "../components/StyledTable";
+import { StatusIcon, MaintainIcon } from "../components/Icons";
+import { StyledSubTable, StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
-function StatusSubTable() {
-    return (
-        <StyledTableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">機台IP</StyledTableCell>
-                        <StyledTableCell align="center">機台廠區</StyledTableCell>
-                        <StyledTableCell align="center">機台產線</StyledTableCell>
-                        <StyledTableCell align="center">機台工作站</StyledTableCell>
-                        <StyledTableCell align="center">機台名稱</StyledTableCell>
-                        <StyledTableCell align="center">控制器類型</StyledTableCell>
-                        <StyledTableCell align="center">操作</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <NoData />
-                {/* <TableBody>
-                    {demoData.map((row) => (
-                        <StyledTableRow key={row.region}>
-                            <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.region}
-                            </StyledTableCell>
-                            <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                            <StyledTableCell align='center'>{statusIcon(row.opStatus)}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{maintainIcon(row.maintainStatus)}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody> */}
-            </Table>
-        </StyledTableContainer>
-    );
+function StatusSubTable(props) {
+    const tableHead = ['機台IP', '機台廠區', '機台產線', '機台工作站', '機台名稱', '控制器類型', '操作']
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                        <StyledTableCell align='center'>{<StatusIcon status={row.opStatus} />}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
+                        <StyledTableCell align='center'>{<MaintainIcon status={row.maintainStatus} />}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
+    } 
+    
+    return <StyledSubTable
+                ariaLabel='settingStatus-subtable'
+                headData={tableHead}
+                bodyData={bodyData(props.data)} />;
 }
 
 function DataSearchSection({ showSection }) {
@@ -81,6 +75,7 @@ function DataSearchSection({ showSection }) {
 }
 
 export default function Setting_NCStatus() {
+    const [statusData, setStatusData] = useState(null);
     const [showSection, setShowSection] = useState(true);
 
     const toggleSection = ()=>{
@@ -105,9 +100,9 @@ export default function Setting_NCStatus() {
                     進階搜尋
                 </Button>
             </Stack>
-            {DataSearchSection({showSection})}
+            {<DataSearchSection showSection={showSection} />}
             <Box className="layoutContent" mt={2} mb={3}>
-                {StatusSubTable()}
+                {<StatusSubTable data={statusData} />}
             </Box>
         </Stack>
     );

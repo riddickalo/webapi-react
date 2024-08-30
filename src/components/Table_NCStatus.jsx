@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Table, TableContainer, TableHead, TableBody, TableRow, Paper } from "@mui/material";
-import { StyledTableCell, StyledTableRow } from "./StyledTable";
+import { StyledSubTable, StyledTableCell, StyledTableRow } from "./StyledTable";
+import { StatusIcon, MaintainIcon } from "./Icons";
 import NoData from "./NoData";
 
 function createData(region, prod_line, station, nc_id, opStatus, ncfile, maintainStatus) {
@@ -16,37 +16,7 @@ const demoData = [
     createData('二廠', 'EG', '裝配', 'GI-700-3', 'idle', 'O999', false),
 ];
 
-function StatusIcon(status) {
-    let content = {};
-    if (status === 'alarm') {
-        content = { color: 'red', op: '警報'};
-    } else if (status === 'idle') {
-        content = { color: 'orange', op: '閒置中'};
-    } else if (status === 'running') {
-        content = { color: 'green', op: '運轉中'};
-    }
-
-    return(
-        <Button disableTouchRipple size="small" variant="contained" sx={{ bgcolor: content.color, "&:hover": {bgcolor: content.color} }}>
-            {content.op}
-        </Button>
-    );
-}
-
-function MaintainIcon(status) {
-    let content = {};
-    if (status) {
-        content = { color: 'green', op: '預約'};
-    } else {
-        content = { color: 'grey.500', op: '未啟用'};
-    }
-
-    return(
-        <Button disableTouchRipple size="small" variant="contained" sx={{ bgcolor: content.color, '&: hover': {bgcolor: content.color} }}>
-            {content.op}
-        </Button>
-    );
-}
+const tableHead = ['機台廠區', '機台產線', '機台工作站', '機台名稱', '運行狀態', '加工程式', '保養狀態'];
 
 export default function Table_NCStatus() {
     const [statusData, setStatusData] = useState(null);
@@ -61,38 +31,29 @@ export default function Table_NCStatus() {
             }).catch((err) => console.error(err));
     }, []);
 
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='nc_status table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">機台廠區</StyledTableCell>
-                        <StyledTableCell align="center">機台產線</StyledTableCell>
-                        <StyledTableCell align="center">機台工作站</StyledTableCell>
-                        <StyledTableCell align="center">機台名稱</StyledTableCell>
-                        <StyledTableCell align="center">運行狀態</StyledTableCell>
-                        <StyledTableCell align="center">加工程式</StyledTableCell>
-                        <StyledTableCell align="center">保養狀態</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {
-                        statusData==null? <NoData />: 
-                            statusData.map((row) => (
-                                <StyledTableRow key={row.nc_id}>
-                                    <StyledTableCell component={'th'} scope="row" align='center'>
-                                        {row.region}
-                                    </StyledTableCell>
-                                    <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                                    <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                                    <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                                    <StyledTableCell align='center'>{StatusIcon(row.opStatus)}</StyledTableCell>
-                                    <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                                    <StyledTableCell align='center'>{MaintainIcon(row.maintainStatus)}</StyledTableCell>
-                                </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+    const bodyData = (statusData) => {
+        if(statusData === null) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.nc_id}>
+                        <StyledTableCell component={'th'} scope="row" align='center'>
+                            {row.region}
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                        <StyledTableCell align='center'>{<StatusIcon status={row.opStatus} />}</StyledTableCell>
+                        <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
+                        <StyledTableCell align='center'>{<MaintainIcon status={row.maintainStatus} />}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
+    }
+
+    return <StyledSubTable 
+                ariaLabel='ncStatus-table' 
+                headData={tableHead}
+                bodyData={bodyData(statusData)} />;
 }
