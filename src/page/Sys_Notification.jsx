@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Tabs, Tab, Grid, TextField, MenuItem, Box, Button, Card, CardContent, Divider, IconButton, Stack, Typography, Switch } from "@mui/material";
-import { SaveRounded } from '@mui/icons-material';
+import React, { useState, useEffect } from "react";
+import { Tabs, Tab, Box, Stack, Typography } from "@mui/material";
+import LinePanel from "../components/Line_NotifyPanel";
+import EmailPanel from "../components/Email_NotifiPanel";
+import axios from "axios";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -24,180 +26,58 @@ function allyProps(index) {
     };
 }
 
-function LinePanel() {
-    return (
-        <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
-            <Grid container width={'100%'} spacing={2}
-                    sx={{ alignItems: 'center', bgcolor: '#bfb3f4', borderRadius: 2 }}>
-                <Grid item xs={12}>
-                    <Typography variant="h5" textAlign={'left'}>即時警報通知</Typography>
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>啟用狀態: </Typography>
-                </Grid>
-                <Grid item xs={9} align={'left'}>
-                    <Switch defaultChecked/>
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>Line Token: </Typography>
-                </Grid>
-                <Grid item xs={9}>
-                    <TextField label='LineToken' defaultValue={'37v9RzV9SWv7pHEYHEkzzYGwmoeDeLDdn3Hw1iOQaj3'} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>訊息語言: </Typography>
-                </Grid>
-                <Grid item xs={9}>
-                    <TextField label='MsgLang' defaultValue={'en'} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1} mb={2}>
-                    <Typography variant="h6" textAlign={'left'}>時區: </Typography>
-                </Grid>
-                <Grid item xs={9} mb={2}>
-                    <TextField label='TimeZone' defaultValue={'Taipei'} sx={{ width: '100%' }} />
-                </Grid>
-            </Grid>
-            <Grid container width={'100%'} spacing={2}
-                    sx={{ alignItems: 'center', bgcolor: '#bfb3f4', borderRadius: 2 }}>
-                <Grid item xs={12}>
-                    <Typography variant="h5" textAlign={'left'}>當日產量通知</Typography>
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>啟用狀態: </Typography>
-                </Grid>
-                <Grid item xs={9} align={'left'}>
-                    <Switch />
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>Line Token: </Typography>
-                </Grid>
-                <Grid item xs={9}>
-                    <TextField label='LineToken' sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1} mb={2}>
-                    <Typography variant="h6" textAlign={'left'}>訊息語言: </Typography>
-                </Grid>
-                <Grid item xs={9} mb={2}>
-                    <TextField label='NotifyTime' defaultValue={'10:00'} sx={{ width: '100%' }} />
-                </Grid>
-            </Grid>
-            <Button 
-                variant="contained" startIcon={<SaveRounded />}
-                sx={{ bgcolor: '#20B2AA', width: '100%', marginBottom: 3 }}>
-                    儲存設定
-            </Button>
-        </Stack>
-    );
-}
-
-function EmailPanel() {
-    return (
-        <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
-            <Grid container width={'100%'} rowSpacing={2} columnSpacing={2}
-                    sx={{ alignItems: 'center', bgcolor: '#bfb3f4', borderRadius: 2 }}>
-                <Grid item xs={12}>
-                    <Typography variant="h5" textAlign={'left'}>寄信參數</Typography>
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>SMTP: </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                <TextField label='SMTP' defaultValue={'mail.jacktech.com.tw'} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={2}>
-                    <Typography variant="h6" textAlign={'left'}>Port: </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                    <TextField label='port no.' defaultValue={'587'} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>信箱帳號: </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                <TextField label='Email account' defaultValue={''} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={2}>
-                    <Typography variant="h6" textAlign={'left'}>信箱密碼: </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                    <TextField label='Email password' defaultValue={''} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1} mb={2}>
-                    <Typography variant="h6" textAlign={'left'}>寄件者地址: </Typography>
-                </Grid>
-                <Grid item xs={9} mb={2}>
-                    <TextField label='From: ' defaultValue={'auto@jacktech.com.tw'} sx={{ width: '100%' }} />
-                </Grid>
-            </Grid>
-            <Grid container width={'100%'} spacing={2}
-                    sx={{ alignItems: 'center', bgcolor: '#bfb3f4', borderRadius: 2 }}>
-                <Grid item xs={12}>
-                    <Typography variant="h5" textAlign={'left'}>即時警報通知</Typography>
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>啟用狀態: </Typography>
-                </Grid>
-                <Grid item xs={9} align={'left'}>
-                    <Switch />
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>收件者: </Typography>
-                </Grid>
-                <Grid item xs={9}>
-                    <TextField label='To: ' defaultValue={''} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1} mb={2}>
-                    <Typography variant="h6" textAlign={'left'}>副本: </Typography>
-                </Grid>
-                <Grid item xs={9} mb={2}>
-                    <TextField label='cc' defaultValue={''} sx={{ width: '100%' }} />
-                </Grid>
-            </Grid>
-            <Grid container width={'100%'} spacing={2}
-                    sx={{ alignItems: 'center', bgcolor: '#bfb3f4', borderRadius: 2 }}>
-                <Grid item xs={12}>
-                    <Typography variant="h5" textAlign={'left'}>當日產量通知</Typography>
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>啟用狀態: </Typography>
-                </Grid>
-                <Grid item xs={9} align={'left'}>
-                    <Switch />
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>收件者: </Typography>
-                </Grid>
-                <Grid item xs={9}>
-                    <TextField label='To: ' defaultValue={'jack@jacktech.com.tw'} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1}>
-                    <Typography variant="h6" textAlign={'left'}>副本: </Typography>
-                </Grid>
-                <Grid item xs={9} mb={2}>
-                    <TextField label='cc' defaultValue={''} sx={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={2} ml={1} mb={2}>
-                    <Typography variant="h6" textAlign={'left'}>訊息語言: </Typography>
-                </Grid>
-                <Grid item xs={9} mb={2}>
-                    <TextField label='NotifyTime' defaultValue={'10:00'} sx={{ width: '100%' }} />
-                </Grid>
-            </Grid>
-            <Button 
-                variant="contained" startIcon={<SaveRounded />}
-                sx={{ bgcolor: '#20B2AA', width: '100%', marginBottom: 3 }}>
-                    儲存設定
-            </Button>
-        </Stack>
-    );
+const initStatus = {
+    line_alarm_status: true,
+    line_alarm_token: '37v9RzV9SWv7pHEYHEkzzYGwmoeDeLDdn3Hw1iOQaj3',
+    line_alarm_ln: 'en',
+    line_alarm_timezone:'Taipei',
+    line_date_status: false,
+    line_date_token: '',
+    line_date_time: '10:00',
+    email_smtp: 'mail.jacktech.com.tw',
+    email_port: '587',
+    email_account: '',
+    email_password: '',
+    email_from: 'auto@jacktech.com.tw',
+    email_alarm_status: false,
+    email_alarm_to: '',
+    email_alarm_cc: '',
+    email_date_status: false,
+    email_date_to: 'jack@jacktech.com.tw',
+    email_date_cc: '',
+    email_date_time: '10:00',
 }
 
 export default function Sys_Notification() {
-    const [value, setValus] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValus(newValue);
+    const [value, setValue] = useState(0);
+    const [settingStatus, setSettingStatus] = useState(initStatus);
+    // 控制Line和Email設定版面顯示切換
+    const handlePanelChange = (event, newValue) => {
+        setValue(newValue);
     };
+    // 控制設定內容變化
+    const handleInputChange = (name, value) => {
+        setSettingStatus(prevStatus => ({
+            ...prevStatus,
+            [name]: value,
+        }));
+    };
+    // 控制儲存按鍵程序
+    const handleSubmit = () => {
+        axios.post(process.env.REACT_APP_API_URL + '/api/sys', settingStatus)
+            .then((ret) => {
+                console.info(ret);
+                setSettingStatus(ret.data);
+                console.info('new settings effected.'); 
+            }).catch(err => console.error(err));
+    }
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/sys').then((ret) => {
+            setSettingStatus(ret.data);
+            console.log(ret.data)
+        }).catch(err => console.error(err));
+    }, []);
 
     return (
         <Stack direction='column' mx='5%' Spacing={2}>
@@ -214,16 +94,16 @@ export default function Sys_Notification() {
             <Stack className="layouContent" direction='row' spacing={2} mt={2} alignItems='center'>
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderBottom: 1, BorderColor: 'divider', borderRadius: 2, backgroundColor: '#f0f0f0' }}>
-                        <Tabs value={value} onChange={handleChange} aria-label="ncMaintain tabs" centered variant="fullWidth">
+                        <Tabs value={value} onChange={handlePanelChange} aria-label="ncMaintain tabs" centered variant="fullWidth">
                             <Tab label='Line' {...allyProps(0)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
                             <Tab label='E-Mail' {...allyProps(1)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
                         </Tabs>
                     </Box>
                     <CustomTabPanel value={value} index={0}>
-                        {LinePanel()}
+                        <LinePanel onSubmit={handleSubmit} onChange={handleInputChange} status={settingStatus} />
                     </CustomTabPanel>
                     <CustomTabPanel value={value} index={1}>
-                        {EmailPanel()}
+                        <EmailPanel onSubmit={handleSubmit} onChange={handleInputChange} status={settingStatus} />
                     </CustomTabPanel>
                 </Box>
             </Stack>
