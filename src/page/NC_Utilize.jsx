@@ -29,9 +29,9 @@ export default function NC_Utilize() {
 
     useEffect(() => {
         // setUtilizeData(demoData);
-        axios.get(process.env.REACT_APP_API_URL + '/machine/status')
+        axios.get(process.env.REACT_APP_API_URL + '/api/status')
             .then(({data, }) => {
-                console.log(data);
+                // console.log(data);
                 setUtilizeData(data);
             }).catch((err) => console.error(err));
     }, []);

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import { StyledSubTable, StyledTableCell, StyledTableRow } from "./StyledTable";
 import { StatusIcon, MaintainIcon } from "./Icons";
 import NoData from "./NoData";
@@ -18,25 +17,14 @@ const demoData = [
 
 const tableHead = ['機台廠區', '機台產線', '機台工作站', '機台名稱', '運行狀態', '加工程式', '保養狀態'];
 
-export default function Table_NCStatus() {
-    const [statusData, setStatusData] = useState(null);
+export default function Table_NCStatus({ statusData }) {
 
-    useEffect(() => {
-        // setStatusData(demoData);
-
-        axios.get(process.env.REACT_APP_API_URL + '/machine/status')
-            .then(({data, }) => {
-                console.log(data);
-                setStatusData(data);
-            }).catch((err) => console.error(err));
-    }, []);
-
-    const bodyData = (statusData) => {
-        if(statusData === null) {
+    const bodyData = (data) => {
+        if(data === null) {
             return (<NoData />);
         } else {
             return (
-                statusData.map((row) => (
+                data.map((row) => (
                     <StyledTableRow key={row.nc_id}>
                         <StyledTableCell component={'th'} scope="row" align='center'>
                             {row.region}

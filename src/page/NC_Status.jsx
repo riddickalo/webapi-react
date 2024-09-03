@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import DataFilterSection from "../components/Data_Filter";
@@ -6,10 +7,21 @@ import Table_NCStatus from "../components/Table_NCStatus";
 
 export default function NC_Status() {
     const [showSection, setShowSection] = useState(true);
+    const [statusData, setStatusData] = useState(null);
 
     const toggleSection = ()=>{
         setShowSection(!showSection);
     }
+
+    useEffect(() => {
+        // setStatusData(demoData);
+
+        axios.get(process.env.REACT_APP_API_URL + '/api/status')
+            .then(({data, }) => {
+                console.log(data);
+                setStatusData(data);
+            }).catch((err) => console.error(err));
+    }, []);
 
     return (
         <Stack direction='column' mx='5%'>
@@ -32,7 +44,7 @@ export default function NC_Status() {
             <DataFilterSection showSection={showSection} />
             <Box className="layoutContent" mt={1} mb={3} width={'100%'}>
                 {/* <p>機台狀態頁面</p> */}
-                <Table_NCStatus />
+                <Table_NCStatus statusData={statusData} />
             </Box>
         </Stack>
     );

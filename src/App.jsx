@@ -57,7 +57,7 @@ function App() {
                     <Route path='/machine/ncfile' element={ <NC_File />}/>
                     <Route path='/alarm/status' element={ <Alarm_Status />}/>
                     <Route path='/alarm/history' element={ <Alarm_History />}/>
-                    <Route path='/order' element={ <TestPage />}/>
+                    <Route path='/order' element={ <Order />}/>
                     <Route path='/report' element={ <Report />}/>
                     <Route path='/setting/machine' element={ <Setting_NCStatus />}/>
                     <Route path='/setting/maintain' element={ <Setting_Maintain />}/>
