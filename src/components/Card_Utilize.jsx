@@ -56,7 +56,8 @@ function CircularProgressWithLabel(props) {
 */
 export default function Card_Utilize(props) {
     return (
-        <Card sx={{ minWidth: 280, maxWidth: 500, bgcolor: '#6f92be', borderRadius: 3 }}>
+        <Card sx={{ minWidth: 280, maxWidth: 500, bgcolor: '#6f92be', borderRadius: 3,
+                    display: 'flex', flex: 1, flexDirection: 'column' }}>
             <CardHeader 
                 avatar={<StatusIcon status={props.opStatus} />}
                 title={props.nc_id} 
@@ -66,7 +67,7 @@ export default function Card_Utilize(props) {
                 sx={{color: 'white'}}>
             </CardHeader>
             <Divider variant="middle" sx={dividerStyle} />
-            <CardContent sx={{ color: 'white' }}>
+            <CardContent sx={{ flexGrow: 2, color: 'white' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={6} sx={{ alignContent:'center' }}>
                         <CircularProgressWithLabel value={props.utilize_rate}/>

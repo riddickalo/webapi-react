@@ -29,7 +29,7 @@ export default function Alarm_Status() {
                     資料篩選
                 </Button>
             </Stack>
-            <DataFilterSection showSection={showSection} />
+            {/* <DataFilterSection showSection={showSection} /> */}
             <Box className="layoutContent" mt={1} mb={3}>
                 {/* <p>即時警報頁面</p> */}
                 <Table_AlarmStatus />

@@ -13,7 +13,15 @@ const opStatus = [
     { code: 8, key: 'unknown', value: '未知' },
 ];
 
-export default function DataFilterSection({ showSection }) {
+export default function DataFilterSection({ showSection, onFilter, conditions, onCondChange }) {
+
+    const handleChange = ({target, }) => {
+        onCondChange(prevCond => ({
+            ...prevCond,
+            [target.name]: target.value,
+        }))
+    };
+
     return (
         <Collapse in={showSection}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
@@ -26,30 +34,33 @@ export default function DataFilterSection({ showSection }) {
                     '.p': { fontSize: '16px' }, }} > 
                 <Grid container mt={1} mb={4} spacing={2} width='100%'>
                     <Grid item xs={12} sm={6}>
-                        <TextField label='機台廠區' />
+                        <TextField label='機台廠區' name='region'
+                            value={conditions.region} onChange={handleChange} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField label='機台名稱' />
+                        <TextField label='機台名稱' name='nc_id'
+                            value={conditions.nc_id} onChange={handleChange} />
                     </Grid>
                     <Grid item xs={12} sm={6}> 
-                        <TextField label='機台產線'/>
+                        <TextField label='機台產線' name='prod_line' 
+                            value={conditions.prod_line} onChange={handleChange} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField select label='運行狀態' >
+                        <TextField select label='運行狀態' name='opStatus' onChange={handleChange} value={conditions.opStatus} >
                             {opStatus.map((choice) => (     // should be '(' not'{'
-                                <MenuItem key={choice.key} value={choice.value}>
+                                <MenuItem key={choice.code} value={choice.key}>
                                     {choice.value}
                                 </MenuItem>
                             ))}
                         </TextField>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Button variant="contained"
+                        <Button variant="contained" name='setButton' onClick={onFilter}
                                 sx={{bgcolor: '#027dbc' }}>
                                 更新篩選</Button>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Button variant="contained"
+                        <Button variant="contained" name='cleanButton' onClick={onFilter}
                                 sx={{bgcolor: '#70b9dc', color: 'black', ':hover': { bgcolor: '#99cde6' } }}>
                                 清除篩選</Button>
                     </Grid>

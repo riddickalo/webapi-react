@@ -49,7 +49,7 @@ function App() {
         <Sidebar isSidebarOpen={ isSidebarOpen } accordionState={ accordionState } setAccordionState={ setAccordionState }></Sidebar>
         <Header isSidebarOpen={ isSidebarOpen } toggleSidebar={ toggleSidebar } />
         <div className={`Layout ${isSidebarOpen? 'SidebarOpen': ''}`}>
-            <Box sx={{ bgcolor: '#5b5b99', width: '100%', height: '100%' }}>
+            <Box sx={{ bgcolor: '#5b5b99', width: '100%', minHeight: '100vh' }}>
                 <Routes>
                     <Route path='/machine/status' element={ <NC_Status />}/>
                     <Route path='/machine/maintain' element={ <NC_Maintain />}/>

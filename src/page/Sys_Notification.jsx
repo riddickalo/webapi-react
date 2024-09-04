@@ -63,7 +63,7 @@ export default function Sys_Notification() {
         }));
     };
     // 控制儲存按鍵程序
-    const handleSubmit = () => {
+    const onSubmit = () => {
         axios.post(process.env.REACT_APP_API_URL + '/api/sys', settingStatus)
             .then((ret) => {
                 console.info(ret);
@@ -100,10 +100,10 @@ export default function Sys_Notification() {
                         </Tabs>
                     </Box>
                     <CustomTabPanel value={value} index={0}>
-                        <LinePanel onSubmit={handleSubmit} onChange={handleInputChange} status={settingStatus} />
+                        <LinePanel onSubmit={onSubmit} onChange={handleInputChange} status={settingStatus} />
                     </CustomTabPanel>
                     <CustomTabPanel value={value} index={1}>
-                        <EmailPanel onSubmit={handleSubmit} onChange={handleInputChange} status={settingStatus} />
+                        <EmailPanel onSubmit={onSubmit} onChange={handleInputChange} status={settingStatus} />
                     </CustomTabPanel>
                 </Box>
             </Stack>

@@ -20,7 +20,7 @@ const tableHead = ['機台廠區', '機台產線', '機台工作站', '機台名
 export default function Table_NCStatus({ statusData }) {
 
     const bodyData = (data) => {
-        if(data === null) {
+        if(data === null || data.length === 0) {
             return (<NoData />);
         } else {
             return (
