@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Box, Stack, Typography } from "@mui/material";
-import LinePanel from "../components/Line_NotifyPanel";
-import EmailPanel from "../components/Email_NotifiPanel";
+import LinePanel from "../components/NotifyPanel_Line";
+import EmailPanel from "../components/NotifiPanel_Email";
 import axios from "axios";
 
 function CustomTabPanel(props) {

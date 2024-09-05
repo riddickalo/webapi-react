@@ -3,7 +3,7 @@ import axios from "axios";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FilterAltRounded } from '@mui/icons-material';
 import DataFilterSection from "../components/Data_Filter";
-import Table_NCStatus from "../components/Table_NCStatus";
+import NCStatusSubTable from "../components/Table_NCStatus";
 
 const initConditions = {
     region: '', 
@@ -22,7 +22,7 @@ export default function NC_Status() {
 
     // 篩選資料
     const filterData = (event) => {   
-        if(event.target.name === 'setButton') {             // 設定條件篩選
+        if(event.target.name === 'SetFilterButton') {             // 設定條件篩選
             setFilteredData(statusData.filter(row => {
                 if(filterConditions.region === '' || (filterConditions.region.split(';').includes(row.region))) 
                     if(filterConditions.prod_line === '' || (filterConditions.prod_line.split(';').includes(row.prod_line))) 
@@ -32,7 +32,7 @@ export default function NC_Status() {
 
                 return false;
             }));
-        } else if(event.target.name === 'cleanButton') {    // 清除篩選
+        } else if(event.target.name === 'CleanFilterButton') {    // 清除篩選
             setFilterConditions(initConditions);
             setFilteredData(statusData);
         }
@@ -70,7 +70,7 @@ export default function NC_Status() {
             <DataFilterSection showSection={showSection} onFilter={filterData}
                 conditions={filterConditions} onCondChange={setFilterConditions} />
             <Box className="layoutContent" mt={1} mb={3} width={'100%'}>
-                <Table_NCStatus statusData={filteredData} />
+                <NCStatusSubTable statusData={filteredData} />
             </Box>
         </Stack>
     );

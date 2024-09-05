@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@mui/material";
+import { Edit, SaveAs } from "@mui/icons-material";
 
 function StyledButton(content) {
     return (
@@ -10,6 +11,25 @@ function StyledButton(content) {
     )
 }
 
+export function EditNcInfoButton(props) {
+    return (
+        <Button size="small" variant="contained" startIcon={<Edit />}
+            name={`${props.id}`} onClick={props.onClick}
+            sx={{ bgcolor: '#00AEAE', '&:hover': {bgcolor: '#007979'} }}>
+            編輯
+        </Button>
+    )
+}
+
+export function SaveNcInfoButton(props) {
+    return (
+        <Button size="small" variant="contained" startIcon={<SaveAs />}
+            name={`${props.id}`} onClick={props.onClick}
+            sx={{ bgcolor: '#02C874', '&:hover': {bgcolor: '#02F78E'} }}>
+            儲存
+        </Button>
+    )
+}
 
 export function MaintainIcon(props) {
     let content = {

@@ -14,7 +14,12 @@ const opStatus = [
 ];
 
 export default function DataFilterSection({ showSection, onFilter, conditions, onCondChange }) {
-
+    /*
+        showSection: 開啟篩選視窗
+        onFilter: 觸發按鍵行為(查詢，清除)
+        conditions: state from parent, 篩選條件
+        onCondChange: state updating method, 條件輸入行為
+    */
     const handleChange = ({target, }) => {
         onCondChange(prevCond => ({
             ...prevCond,
@@ -55,12 +60,12 @@ export default function DataFilterSection({ showSection, onFilter, conditions, o
                         </TextField>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Button variant="contained" name='setButton' onClick={onFilter}
+                        <Button variant="contained" name='SetFilterButton' onClick={onFilter}
                                 sx={{bgcolor: '#027dbc' }}>
                                 更新篩選</Button>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Button variant="contained" name='cleanButton' onClick={onFilter}
+                        <Button variant="contained" name='CleanFilterButton' onClick={onFilter}
                                 sx={{bgcolor: '#70b9dc', color: 'black', ':hover': { bgcolor: '#99cde6' } }}>
                                 清除篩選</Button>
                     </Grid>
