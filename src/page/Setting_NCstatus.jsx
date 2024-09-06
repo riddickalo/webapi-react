@@ -18,8 +18,15 @@ export default function Setting_NCStatus() {
         if(isEdit === target.name && isEdit !== null) {
             axios.post(process.env.REACT_APP_API_URL + '/api/status', editedStatus)
             .then(({data, }) => {
-                console.info(target.name, 'nc_status updated!');
-                setStatusData(data);
+                let updateTarget = [];      // 挑出目前顯示已篩選的資料更新
+                data.foreach(row => updateTarget.push(row.nc_id));
+                let updatedData = [];
+                for(let row of data) {
+                    if(updateTarget.includes(row.nc_id))
+                        updatedData.push(row);
+                }
+                setFilteredData(updatedData);
+                setStatusData(data);                
             }).catch(err => console.error(err));
             setIsEdit(null);
         } else {

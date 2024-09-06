@@ -1,75 +1,48 @@
-import React, { useState } from "react";
-import { Box, Grid, Button, Stack, Typography, TableContainer, Paper, Table, TableRow, TableHead, TableBody } from "@mui/material";
-import { FileDownloadRounded } from '@mui/icons-material';
+import React, { useEffect, useState } from "react";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { StyledTableCell, StyledTableRow } from "../components/StyledTable";
+import ReportSubTable from "../components/Table_Report";
+import axios from 'axios';
+import * as dayjs from 'dayjs';
+import downloader from 'js-file-download';
 
-function GetReportButton({ key }) {
-    return (
-        <Button variant="contained" startIcon={<FileDownloadRounded />}
-            sx={{ bgcolor: '#20B2AA', ':hover': { bgcolor: '#1c9c95' } }}>
-            下載
-        </Button>
-    );
-}
+export default function Report() {
+    const [timeRange, setTimeRange] = useState({ startTime: null, endTime: null });
 
-function ReportSubTable() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 640 }} aria-lable='record table'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">報表</StyledTableCell>
-                        <StyledTableCell align="center">報表類型</StyledTableCell>
-                        <StyledTableCell align="center">操作</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody sx={{ '.p': { fontWeight: 'bold'} }}>
-                    <StyledTableRow key={'nc_month'}>
-                        <StyledTableCell align='center'>機台產量 (月)</StyledTableCell>
-                        <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{GetReportButton('nc_month')}</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow key={'nc_day'}>
-                        <StyledTableCell align='center'>機台產量 (日)</StyledTableCell>
-                        <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{GetReportButton('nc_day')}</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow key={'nc_hour'}>
-                        <StyledTableCell align='center'>機台產量 (時)</StyledTableCell>
-                        <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{GetReportButton('nc_hour')}</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow key={'item_month'}>
-                        <StyledTableCell align='center'>加工項目產量 (月)</StyledTableCell>
-                        <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{GetReportButton('item_month')}</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow key={'item_day'}>
-                        <StyledTableCell align='center'>加工項目產量 (日)</StyledTableCell>
-                        <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{GetReportButton('item_day')}</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow key={'item_hour'}>
-                        <StyledTableCell align='center'>加工項目產量 (時)</StyledTableCell>
-                        <StyledTableCell align='center'>系統報表</StyledTableCell>
-                        <StyledTableCell align='center'>{GetReportButton('item_hour')}</StyledTableCell>
-                    </StyledTableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-}
-
-export default function Order() {
-    const [showSection, setShowSection] = useState(true);
-
-    const toggleSection = ()=>{
-        setShowSection(!showSection);
+    const handleTriggerDownload = (e) => {
+        console.info(e.target.name);
+        const rangeStart = timeRange.startTime.format('YYYYMMDD-HHmm') + '00';
+        const rangeEnd = timeRange.endTime.format('YYYYMMDD-HHmm') + '00';
+        axios.get(process.env.REACT_APP_API_URL + '/report', {
+            params: {
+                type: e.target.name,
+                startTime: rangeStart,
+                endTime: rangeEnd,
+            }
+        }).then(res => {
+            console.log(res);
+            downloader(res.data, `${e.target.name}_${rangeStart}-${rangeEnd}.csv`);
+        }).catch(err => console.error(err));
     }
 
+    const handleChangeRange = (label, e) => {
+        // console.log(timeRange.endTime.format('YYYYMMDD-HHmm') + '00');
+        setTimeRange(prevRange => ({
+            ...prevRange,
+            [label]: e,
+        }));
+    }
+
+    useEffect(() => {
+        const ed = dayjs();
+        const st = dayjs().month(ed.month() - 1);
+        console.log(st, ed)
+        setTimeRange({ startTime: st, endTime: ed, });
+    }, []);
+
+    // format="YYYY/MM/DD HH:mm", HH indicates 24h format, hh indicates 12h
     return (
         <Stack direction='column' mx='5%'>                
             <Typography variant="h4" fontWeight={'bold'} mt={'30px'} align="left">
@@ -86,23 +59,27 @@ export default function Order() {
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="zh-TW">
                             <Grid item xs={12} sm={6}>
                                 <DateTimePicker 
-                                    format="YYYY/MM/DD hh:mm"
+                                    format="YYYY/MM/DD HH:mm"
                                     label='統計區間(起)' 
                                     views={['year', 'month', 'day', 'hours', 'minutes']}
-                                    ampm={false} />
+                                    ampm={false}
+                                    onChange={(e) => handleChangeRange('startTime', e)}
+                                    value={timeRange.startTime} />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <DateTimePicker 
-                                    format="YYYY/MM/DD hh:mm"
+                                    format="YYYY/MM/DD HH:mm"
                                     label='統計區間 (迄)' 
                                     views={['year', 'month', 'day', 'hours', 'minutes']}
-                                    ampm={false} />
+                                    ampm={false}                                    
+                                    onChange={(e) => handleChangeRange('endTime', e)}
+                                    value={timeRange.endTime} />
                             </Grid>
                         </LocalizationProvider>
                     </Grid>
             </Box>
             <Box className="layoutContent" mt={2} mb={3}>
-                {ReportSubTable()}
+                <ReportSubTable onDownload={handleTriggerDownload} />
             </Box>
         </Stack>
     );
