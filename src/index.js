@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const base_name = process.env.REACT_APP_BASE_NAME || '';
 
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter basename={base_name}>
+      <App />
+    </BrowserRouter>      
   </React.StrictMode>
 );
 

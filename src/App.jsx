@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { Box, useMediaQuery } from '@mui/material';
 import './assets/css/Layout.css';
 import './App.css';
 import Header from './components/Header';
@@ -26,6 +26,8 @@ import TestPage from './page/theme';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const loc = useLocation();                                // page changing listener
+  const isXsScreen = useMediaQuery('(max-width: 600px');    // small resolution listener
   // const [isSidebarClosing, setIsSidebarClosing] = useState(false);
 
   const toggleSidebar = () => {
@@ -51,14 +53,17 @@ function App() {
   useEffect(() => {
     localStorage.setItem('accordionState', JSON.stringify(accordionState)); // write state into storage
   }, [accordionState]);
-  // const page_host = '/webapi-react';
-
-  const base_name = process.env.REACT_APP_BASE_NAME || '';
+  
+  useEffect(() => {
+    console.log(loc, isXsScreen)
+    if(isXsScreen)
+      setIsSidebarOpen(false);
+  }, [loc, isXsScreen])
+  
   const sidebarWidth = 250;
 
   return (
     <div className="App">
-      <BrowserRouter basename={base_name}>
         <Sidebar sidebarWidth={sidebarWidth} isSidebarOpen={ isSidebarOpen } 
             handleClose={handleSidebarClose} /*handleTransitionEnd={handleSidebarTransitionEnd}*/
             accordionState={ accordionState } setAccordionState={ setAccordionState } />
@@ -87,7 +92,6 @@ function App() {
           
           </Box>
         </div>
-      </BrowserRouter>
     </div>  
   );
 }
