@@ -32,15 +32,15 @@ export default function Card_Utilize(props) {
                         <CircularProgressWithLabel value={props.utilize_rate}/>
                     </Grid>
                     {/* <Divider variant="middle" orientation='vertical' sx={dividerStyle} flexItem/> */}
-                    <Grid item xs={6} sx={{ whiteSpace: 'pre-line' }} >
+                    <Grid item xs={6} sx={{ textAlign: 'center', whiteSpace: 'pre-line' }} >
                         <Stack direction={'column'} spacing={1}>
-                            <Typography variant="body2">機台產線</Typography> 
+                            <Typography variant="body2" textAlign='left'>機台產線</Typography> 
                             <Typography variant="h6">{props.prod_line}</Typography> 
-                            <Typography variant="body2">機台工作站</Typography> 
+                            <Typography variant="body2" textAlign='left'>機台工作站</Typography> 
                             <Typography variant="h6">{props.station}</Typography> 
-                            <Typography variant="body2">加工程式</Typography> 
+                            <Typography variant="body2" textAlign='left'>加工程式</Typography> 
                             <Typography variant="h6">{props.ncfile}</Typography> 
-                            <Typography variant="body2">保養狀態</Typography> 
+                            <Typography variant="body2" textAlign='left'>保養狀態</Typography> 
                             <Typography variant="h6">{<MaintainIcon status={props.maintainStatus} />}</Typography> 
                         </Stack>
                     </Grid>

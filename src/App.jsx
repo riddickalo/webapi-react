@@ -55,9 +55,7 @@ function App() {
   }, [accordionState]);
   
   useEffect(() => {
-    console.log(loc, isXsScreen)
-    if(isXsScreen)
-      setIsSidebarOpen(false);
+    if(isXsScreen) setIsSidebarOpen(false);
   }, [loc, isXsScreen])
   
   const sidebarWidth = 250;
