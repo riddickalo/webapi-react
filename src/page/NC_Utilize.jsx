@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Stack, Typography, Grid } from "@mui/material";
 import { FindInPageRounded } from '@mui/icons-material';
 import DataSearchSection from "../components/Data_Search";
@@ -22,18 +22,47 @@ const demoData = [
 export default function NC_Utilize() {
     const [showSection, setShowSection] = useState(false);
     const [utilizeData, setUtilizeData] = useState(null);
+    const layoutRef = useRef(null);
+    const [layoutWidth, setLayoutWidth] = useState(0);
 
     const toggleSection = ()=>{
         setShowSection(!showSection);
     }
 
+    const getGridColumns = () => {
+        if(layoutWidth > 900) return 3;
+        else if(layoutWidth > 600) return 2;
+        else return 1;
+    };
+
     useEffect(() => {
         // setUtilizeData(demoData);
+        // get Data
         axios.get(process.env.REACT_APP_API_URL + '/api/status')
             .then(({data, }) => {
                 // console.log(data);
                 setUtilizeData(data);
             }).catch((err) => console.error(err));
+
+        // observe parent component width
+        // create a  listener
+        const sizeObserver = new ResizeObserver((entries) => {
+            if(entries[0]) {
+                setLayoutWidth(entries[0].contentRect.width);
+            }
+        });
+
+        // start listening if listener exists
+        if(layoutRef.current) {
+            sizeObserver.observe(layoutRef.current);
+        }
+
+        // clean listener
+        return() => {
+            if(sizeObserver.current) {
+                sizeObserver.unobserve(layoutRef.current);
+            }
+        }
     }, []);
 
     return (
@@ -55,12 +84,12 @@ export default function NC_Utilize() {
                 </Button>
             </Stack>
             <DataSearchSection showSection={showSection} />
-            <Box className="layoutContent" sx={{ height: '100%', my: 3, display: 'flex' }}>
-                <Grid container spacing={5}>
+            <Box className="layoutContent" ref={layoutRef} sx={{ height: '100%', my: 3, display: 'flex' }}>
+                <Grid container spacing={5} columns={getGridColumns()}>
                     {
                         utilizeData==null? <NoData mt={3} ml={5}/>:
                             utilizeData.map((row) => (
-                                <Grid item xs={12} sm={6} md={4}>
+                                <Grid item xs={1} key={row.nc_id}>
                                     <Card_Utilize {...row} />
                                 </Grid>
                             ))
