@@ -1,11 +1,56 @@
-import React, { useState } from "react";
-import '../assets/css/Sidebar.css';
+import React from "react";
 import logo from '../assets/img/mat logo.png';
-import { Link } from 'react-router-dom';
-import { Accordion, AccordionSummary, AccordionDetails, List, ListItemIcon, ListItemButton, ListItemText } from '@mui/material';
-import { FilePresentRounded, ExpandMore, MonitorRounded, ReportProblemRounded, FeedRounded, InsightsRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
+import { List, Box } from '@mui/material';
+import { FilePresentRounded, MonitorRounded, ReportProblemRounded, FeedRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
+import { SidebarDrawer, SidebarAccordion } from "../components/StyledSidebar";
 
-function Sidebar({ isSidebarOpen, accordionState, setAccordionState }) {
+export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, handleTransitionEnd, accordionState, setAccordionState }) {
+    const base_name = process.env.REACT_APP_BASE_NAME || '';
+    const accordionContents = [
+        {
+            className: "NcSubMenu",
+            summary: "機台",
+            icon: <MonitorRounded fontSize="large"/>,
+            details: ['機台稼動率', '機台狀態', '機台保養', '加工程式'],
+            links: [`${base_name}/machine/utilize`, `${base_name}/machine/status`, `${base_name}/machine/maintain`, `${base_name}/machine/ncfile`]
+        },
+        {
+            className: "AlarmSubMenu",
+            summary: "警報",
+            icon: <ReportProblemRounded fontSize="large" />,
+            details: ['即時警報', '歷史警報'],
+            links: [`${base_name}/alarm/status`, `${base_name}/alarm/history`],
+        },
+        {
+            className: "OrderMenu",
+            summary: "工單",
+            icon: <FeedRounded fontSize="large" />,
+            details: null,
+            links: `${base_name}/order`,
+        },
+        {
+            className: "ReportMenu",
+            summary: "報表下載",
+            icon: <FilePresentRounded fontSize="large" />,
+            details: null,
+            links: `${base_name}/report`,
+        },
+        {
+            className: "SettingMenu",
+            summary: "基本設定",
+            icon: <SettingsRounded fontSize="large" />,
+            details: ['機台參數', '機台保養項目', '品項料號', '加工程式與品項'],
+            links: [`${base_name}/setting/machine`, `${base_name}/setting/maintain`, `${base_name}/setting/item`, `${base_name}/setting/pp_map`],
+        },
+        {
+            className: "SysMenu",
+            summary: "系統設定",
+            icon: <DisplaySettingsRounded fontSize="large" />,
+            details: ['一般設定', '使用者設定', '通知設定'],
+            links: [`${base_name}/sys/general`, `${base_name}/sys/account`, `${base_name}/sys/notify`],
+        },
+    ];
+
     const handleChange = (panel) => (event, isExpaned) => {
         const newState = {  // create a new state instance
             ...accordionState,
@@ -15,153 +60,25 @@ function Sidebar({ isSidebarOpen, accordionState, setAccordionState }) {
         localStorage.setItem('accordionState', JSON.stringify(newState));   // write new state to localstorage
     }
 
-    const base_name = process.env.REACT_APP_BASE_NAME || '';
-
     return (
-        <div className={`Sidebar ${isSidebarOpen? 'side-open': ''}`}>
-            <img className="jack-logo" src={ logo }></img>
-            <List>
-                <Accordion classes="ncSubmenu" 
-                        disableGutters 
-                        expanded={accordionState.nc}    // expand accordingly
-                        onChange={handleChange('nc')}   // send new state using onChange()
-                        sx={{bgcolor: '#dff1fb', margin: '0px'}} >
-                    <AccordionSummary expandIcon={<ExpandMore />} >
-                        <ListItemButton>
-                            <ListItemIcon> <MonitorRounded fontSize="large"/> </ListItemIcon>
-                            <ListItemText primary='機台' 
-                                primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                        </ListItemButton>
-                    </AccordionSummary>
-                    <AccordionDetails sx={{minHeight: 0}}>       
-                        <List>
-                            <ListItemButton components={Link} to={`${base_name}/machine/utilize`}>
-                                <ListItemText inset primary='機台稼動率'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/machine/status`}>
-                                <ListItemText inset primary='機台狀態'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/machine/maintain`}>
-                                <ListItemText inset primary='機台保養'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/machine/ncfile`}>
-                                <ListItemText inset primary='加工程式'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                        </List>
-                    </AccordionDetails>     
-                </Accordion>
-                <Accordion classes="alarmSubmenu" 
-                        disableGutters
-                        expanded={accordionState.alarm} 
-                        onChange={handleChange('alarm')} 
-                        sx={{bgcolor: '#dff1fb'}} >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        <ListItemButton>
-                            <ListItemIcon> <ReportProblemRounded fontSize="large" /> </ListItemIcon>
-                            <ListItemText primary='警報'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                        </ListItemButton>
-                    </AccordionSummary>
-                    <AccordionDetails>       
-                        <List>
-                            <ListItemButton components={Link} to={`${base_name}/alarm/status`}>
-                                <ListItemText inset primary='即時警報'
-                                        primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/alarm/history`}>
-                                <ListItemText inset primary='歷史警報'
-                                        primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}}/>
-                            </ListItemButton>
-                        </List>
-                    </AccordionDetails>     
-                </Accordion>
-                <Accordion classes="order" disableGutters sx={{bgcolor: '#dff1fb'}}>
-                    <AccordionSummary>
-                        <ListItemButton components={Link} to={`${base_name}/order`}>
-                        <ListItemIcon> <FeedRounded fontSize="large" /> </ListItemIcon>
-                        <ListItemText primary='工單'
-                                primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                        </ListItemButton>
-                    </AccordionSummary>
-                </Accordion>
-                <Accordion classes="report" disableGutters sx={{bgcolor: '#dff1fb'}}>
-                    <AccordionSummary>
-                        <ListItemButton components={Link} to={`${base_name}/report`}>
-                        <ListItemIcon> <FilePresentRounded fontSize="large" /> </ListItemIcon>
-                        <ListItemText primary='報表下載'
-                                primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                        </ListItemButton>
-                    </AccordionSummary>
-                </Accordion>
-                <Accordion classes="settingSubmenu" 
-                        disableGutters
-                        expanded={accordionState.setting} 
-                        onChange={handleChange('setting')} 
-                        sx={{bgcolor: '#dff1fb'}} >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        <ListItemButton>
-                            <ListItemIcon> <SettingsRounded fontSize="large" /> </ListItemIcon>
-                            <ListItemText primary='基本設定'
-                                primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}}/>
-                        </ListItemButton>
-                    </AccordionSummary>
-                    <AccordionDetails>       
-                        <List>
-                            <ListItemButton components={Link} to={`${base_name}/setting/machine`}>
-                                <ListItemText inset primary='機台參數'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/setting/maintain`}>
-                                <ListItemText inset primary='機台保養項目'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/setting/item`}>
-                                <ListItemText inset primary='品項料號'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/setting/pp_map`}>
-                                <ListItemText inset primary='加工程式與品項'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                        </List>
-                    </AccordionDetails>     
-                </Accordion>
-                <Accordion classes="sysSubmenu" 
-                        disableGutters
-                        expanded={accordionState.sys} 
-                        onChange={handleChange('sys')} 
-                        sx={{bgcolor: '#dff1fb'}} >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        <ListItemButton>
-                            <ListItemIcon> <DisplaySettingsRounded fontSize="large" /> </ListItemIcon>
-                            <ListItemText primary='系統設定'
-                                primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                        </ListItemButton>
-                    </AccordionSummary>
-                    <AccordionDetails>       
-                        <List>
-                            <ListItemButton components={Link} to={`${base_name}/sys/general`}>
-                                <ListItemText inset primary='一般設定'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/sys/account`}>
-                                <ListItemText inset primary='使用者設定'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>
-                            <ListItemButton components={Link} to={`${base_name}/sys/notify`}>
-                                <ListItemText inset primary='通知設定'
-                                    primaryTypographyProps={{ fontSize: 18, fontWeight: 'bold'}} />
-                            </ListItemButton>                            
-                        </List>
-                    </AccordionDetails>     
-                </Accordion>
-            </List>
-        </div>
+        <Box className='Sidebar'>
+            {/* Desktop */}
+            <SidebarDrawer variant="persistent" anchor="left" open={isSidebarOpen} disableScrollLock
+                sx={{ width: sidebarWidth, display: { xs: 'none', sm: 'block' } }} >           
+                <img className="Sidebar-Logo" src={ logo }></img>
+                <List>
+                    <SidebarAccordion content={accordionContents} accordionState={accordionState} onChange={handleChange} />
+                </List>
+            </SidebarDrawer>  
+            {/* Mobile */}
+            <SidebarDrawer variant='temporary' anchor="left" open={isSidebarOpen} disableScrollLock
+                /*onTransitionEnd={handleTransitionEnd}*/ onClose={handleClose}
+                sx={{ width: sidebarWidth, display: { xs: 'block', sm: 'none' } }} >           
+                <img className="Sidebar-Logo" src={ logo }></img>
+                <List>
+                    <SidebarAccordion content={accordionContents} accordionState={accordionState} onChange={handleChange} />
+                </List>
+            </SidebarDrawer> 
+        </Box>      
     );
 }
-
-export default Sidebar;

@@ -55,7 +55,7 @@ export default function NC_Utilize() {
                 </Button>
             </Stack>
             <DataSearchSection showSection={showSection} />
-            <Box className="layoutContent" sx={{ height: '100%', my: 3}}>
+            <Box className="layoutContent" sx={{ height: '100%', my: 3, display: 'flex' }}>
                 <Grid container spacing={5}>
                     {
                         utilizeData==null? <NoData mt={3} ml={5}/>:

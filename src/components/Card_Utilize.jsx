@@ -2,6 +2,54 @@ import React from "react";
 import { Card, CardHeader, CardContent, Divider, Box, Grid, Button, CircularProgress, Typography, Stack } from "@mui/material";
 import { StatusIcon, MaintainIcon } from "./Icons";
 
+/*
+    data = {
+        region: 廠區,
+        prod_line: 機台產線,
+        station: 機台工作站,
+        nc_id: 機台名稱,
+        opStatus: 運行狀態,
+        ncfile: 加工程式,
+        maintainStatus: 保養狀態,
+    }
+*/
+export default function Card_Utilize(props) {
+    return (
+        <Card sx={{ minWidth: 280, maxWidth: 500, bgcolor: '#6f92be', borderRadius: 3,
+                    display: 'flex', flex: 1, flexDirection: 'column', height: '100%' }}>
+            <CardHeader 
+                avatar={<StatusIcon status={props.opStatus} />}
+                title={props.nc_id} 
+                titleTypographyProps={{variant: 'h5', fontWeight: 'bold'}}
+                subheader={props.region}
+                subheaderTypographyProps={{variant: 'h6', fontWeight: 'bold', marginTop: 1}} 
+                sx={{color: 'white'}}>
+            </CardHeader>
+            <Divider variant="middle" sx={dividerStyle} />
+            <CardContent sx={{ color: 'white', flexGrow: 1 }}>
+                <Grid container spacing={3}>
+                    <Grid item xs={6} sx={{ alignContent:'center' }}>
+                        <CircularProgressWithLabel value={props.utilize_rate}/>
+                    </Grid>
+                    {/* <Divider variant="middle" orientation='vertical' sx={dividerStyle} flexItem/> */}
+                    <Grid item xs={6} sx={{ whiteSpace: 'pre-line' }} >
+                        <Stack direction={'column'} spacing={1}>
+                            <Typography variant="body2">機台產線</Typography> 
+                            <Typography variant="h6">{props.prod_line}</Typography> 
+                            <Typography variant="body2">機台工作站</Typography> 
+                            <Typography variant="h6">{props.station}</Typography> 
+                            <Typography variant="body2">加工程式</Typography> 
+                            <Typography variant="h6">{props.ncfile}</Typography> 
+                            <Typography variant="body2">保養狀態</Typography> 
+                            <Typography variant="h6">{<MaintainIcon status={props.maintainStatus} />}</Typography> 
+                        </Stack>
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card>
+    );
+}
+
 const dividerStyle = {
     border: '1px solid',
     color: '#545454', 
@@ -43,50 +91,3 @@ function CircularProgressWithLabel(props) {
     );    
 }
 
-/*
-    data = {
-        region: 廠區,
-        prod_line: 機台產線,
-        station: 機台工作站,
-        nc_id: 機台名稱,
-        opStatus: 運行狀態,
-        ncfile: 加工程式,
-        maintainStatus: 保養狀態,
-    }
-*/
-export default function Card_Utilize(props) {
-    return (
-        <Card sx={{ minWidth: 280, maxWidth: 500, bgcolor: '#6f92be', borderRadius: 3,
-                    display: 'flex', flex: 1, flexDirection: 'column' }}>
-            <CardHeader 
-                avatar={<StatusIcon status={props.opStatus} />}
-                title={props.nc_id} 
-                titleTypographyProps={{variant: 'h5'}}
-                subheader={props.region}
-                subheaderTypographyProps={{variant: 'h6'}} 
-                sx={{color: 'white'}}>
-            </CardHeader>
-            <Divider variant="middle" sx={dividerStyle} />
-            <CardContent sx={{ flexGrow: 2, color: 'white' }}>
-                <Grid container spacing={3}>
-                    <Grid item xs={6} sx={{ alignContent:'center' }}>
-                        <CircularProgressWithLabel value={props.utilize_rate}/>
-                    </Grid>
-                    {/* <Divider variant="middle" orientation='vertical' sx={dividerStyle} flexItem/> */}
-                    <Grid item xs={6}>
-                        <Stack direction={'column'} spacing={1}>
-                            <Typography variant="body2">機台產線</Typography> 
-                            <Typography variant="h6">{props.prod_line}</Typography> 
-                            <Typography variant="body2">機台工作站</Typography> 
-                            <Typography variant="h6">{props.station}</Typography> 
-                            <Typography variant="body2">加工程式</Typography> 
-                            <Typography variant="h6">{props.ncfile}</Typography> 
-                            <Typography variant="body2">保養狀態</Typography> 
-                            <Typography variant="h6">{<MaintainIcon status={props.maintainStatus} />}</Typography> 
-                        </Stack>
-                    </Grid>
-                </Grid>
-            </CardContent>
-        </Card>
-    );
-}

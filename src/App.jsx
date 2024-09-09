@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 import './assets/css/Layout.css';
 import './App.css';
-import Header from './page/Header';
+import Header from './components/Header';
 import Sidebar from './page/Sidebar';
 import NC_Status from './page/NC_Status';
 import NC_Maintain from './page/NC_Maintain';
@@ -26,10 +26,22 @@ import TestPage from './page/theme';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  // const [isSidebarClosing, setIsSidebarClosing] = useState(false);
 
-  const toggleSidebar = ()=>{
-    setIsSidebarOpen(!isSidebarOpen);
+  const toggleSidebar = () => {
+    // console.log(isSidebarOpen, isSidebarClosing);
+    // if(!isSidebarClosing)
+      setIsSidebarOpen(!isSidebarOpen);
   }
+
+  const handleSidebarClose = () => {
+    // setIsSidebarClosing(true);
+    setIsSidebarOpen(false);
+  }
+
+  // const handleSidebarTransitionEnd = () => {
+  //   setIsSidebarClosing(false);
+  // }
   
   const [accordionState, setAccordionState]= useState(() => {   // define state for accordion
     const savedState = localStorage.getItem('accordionState');  // read previous state from storage
@@ -42,35 +54,38 @@ function App() {
   // const page_host = '/webapi-react';
 
   const base_name = process.env.REACT_APP_BASE_NAME || '';
+  const sidebarWidth = 250;
 
   return (
     <div className="App">
       <BrowserRouter basename={base_name}>
-        <Sidebar isSidebarOpen={ isSidebarOpen } accordionState={ accordionState } setAccordionState={ setAccordionState }></Sidebar>
+        <Sidebar sidebarWidth={sidebarWidth} isSidebarOpen={ isSidebarOpen } 
+            handleClose={handleSidebarClose} /*handleTransitionEnd={handleSidebarTransitionEnd}*/
+            accordionState={ accordionState } setAccordionState={ setAccordionState } />
         <Header isSidebarOpen={ isSidebarOpen } toggleSidebar={ toggleSidebar } />
         <div className={`Layout ${isSidebarOpen? 'SidebarOpen': ''}`}>
-            <Box sx={{ bgcolor: '#5b5b99', width: '100%', minHeight: '100vh' }}>
-                <Routes>
-                    <Route path='/machine/status' element={ <NC_Status />}/>
-                    <Route path='/machine/maintain' element={ <NC_Maintain />}/>
-                    <Route path='/machine/utilize' element={ <NC_Utilize />}/>
-                    <Route path='/machine/ncfile' element={ <NC_File />}/>
-                    <Route path='/alarm/status' element={ <Alarm_Status />}/>
-                    <Route path='/alarm/history' element={ <Alarm_History />}/>
-                    <Route path='/order' element={ <Order />}/>
-                    <Route path='/report' element={ <Report />}/>
-                    <Route path='/setting/machine' element={ <Setting_NCStatus />}/>
-                    <Route path='/setting/maintain' element={ <Setting_Maintain />}/>
-                    <Route path='/setting/item' element={ <Setting_Item />}/>
-                    <Route path='/setting/pp_map' element={ <Setting_PPmap />}/>
-                    <Route path='/sys/general' element={ <Sys_General />}/>
-                    <Route path='/sys/account' element={ <Sys_Account />}/>
-                    <Route path='/sys/notify' element={ <Sys_Notification />}/>
-                    <Route path='/' element={ <NC_Utilize />}/>
-                  <Route/>
-                </Routes>
-              
-            </Box>
+          <Box sx={{ bgcolor: '#5b5b99', width: '100%', minHeight: '100vh' }}>
+            <Routes>
+                <Route path='/machine/status' element={ <NC_Status />}/>
+                <Route path='/machine/maintain' element={ <NC_Maintain />}/>
+                <Route path='/machine/utilize' element={ <NC_Utilize />}/>
+                <Route path='/machine/ncfile' element={ <NC_File />}/>
+                <Route path='/alarm/status' element={ <Alarm_Status />}/>
+                <Route path='/alarm/history' element={ <Alarm_History />}/>
+                <Route path='/order' element={ <Order />}/>
+                <Route path='/report' element={ <Report />}/>
+                <Route path='/setting/machine' element={ <Setting_NCStatus />}/>
+                <Route path='/setting/maintain' element={ <Setting_Maintain />}/>
+                <Route path='/setting/item' element={ <Setting_Item />}/>
+                <Route path='/setting/pp_map' element={ <Setting_PPmap />}/>
+                <Route path='/sys/general' element={ <Sys_General />}/>
+                <Route path='/sys/account' element={ <Sys_Account />}/>
+                <Route path='/sys/notify' element={ <Sys_Notification />}/>
+                <Route path='/' element={ <NC_Utilize />}/>
+              <Route/>
+            </Routes>
+          
+          </Box>
         </div>
       </BrowserRouter>
     </div>  

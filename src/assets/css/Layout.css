@@ -1,31 +1,21 @@
 .Layout {
     display: flex;
-    height: 100%;
     transition: margin-left 0.3s ease;
     margin-left: 0px;
     /* background-color: #5b5b99; */
     color: #ffffff;
 }
 
-.layoutHead {
-    /* display: flex; */
-    text-align: left;
-    align-items: baseline;
-    flex-direction: row;
-}
-
-.layoutContent p {
-    text-align: left;
-    font-size: '16px';
-}
-
 .Layout.SidebarOpen {
     margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: margin-left 0.5s ease-out;
+    transition: margin-right 0.3s ease;
 }
 
 
 /* RWD */
-@media (max-width: 640px) {
+@media (max-width: 600px) {
     .Layout {
         width: 100%;
         top: 80px;
@@ -34,9 +24,9 @@
     }
 
     .Layout.SidebarOpen {
+        margin-left: 0;
         left: 0;
         width: 100%;
         position: absolute;
-        z-index: 1;
     }
 }

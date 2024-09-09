@@ -3,13 +3,6 @@
   /* background-color: #5b5b99; */
 }
 
-/* RWD */
-@media (max-width: 640px) {
-  .App {
-    display: flex;
-    flex-direction: column;
-  }
-}
 
 /* @keyframes App-logo-spin {
   from {

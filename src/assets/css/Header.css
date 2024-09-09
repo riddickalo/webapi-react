@@ -2,10 +2,10 @@
 .Header {
     background-color: #dff1fb;
     height: 80px;
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
     color: white;
     margin-left: 0px;
     transition: margin-left 0.3s ease;
@@ -13,37 +13,18 @@
 
 .Header.SidebarOpen {
     margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: margin-right 0.3s ease;
 }
-
-.Header button {
-    color: #4CAF50;
-    border: none;
-    padding: 10px;
-    margin-left: 15px;
-    margin-right: 15px;
-}
-
-.Header button:hover {
-    background-color: #c7d6e0;
-}
-
-.Header h1 {
-    flex: auto;
-    text-align: center;
-    font-size: 32px;  
-    color: #7171c1;
-}
-
-
 
 /* RWD */
-@media (max-width: 640px) {
+@media (max-width: 600px) {
     .Header {
         width: 100%;
-        position: absolute;
     }
     .Header.SidebarOpen {
         margin-left: 0;
-        z-index: 1;
+        width: 100%;
+        position: absolute;
     }
 }
