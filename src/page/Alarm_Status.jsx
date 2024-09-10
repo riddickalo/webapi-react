@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import DataFilterSection from "../components/Data_Filter";
-import Table_AlarmStatus from "../components/Table_Alarm";
+import AlarmSubTable from "../components/Table_Alarm";
+import axios from "axios";
 
 export default function Alarm_Status() {
     const [showSection, setShowSection] = useState(true);
+    const [alarmData, setAlarmData] = useState([]);
 
     const toggleSection = ()=>{
         setShowSection(!showSection);
     }
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/alarm/current')
+            .then(({data, }) => {
+                // console.log(data);
+                setAlarmData(data);
+            }).catch((err) => console.error(err));
+    }, []);
 
     return (
         <Stack direction='column' mx='5%'>
@@ -32,7 +42,7 @@ export default function Alarm_Status() {
             {/* <DataFilterSection showSection={showSection} /> */}
             <Box className="layoutContent" mt={1} mb={3}>
                 {/* <p>即時警報頁面</p> */}
-                <Table_AlarmStatus />
+                <AlarmSubTable data={alarmData} />
             </Box>
         </Stack>
     );

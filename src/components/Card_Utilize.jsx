@@ -28,7 +28,7 @@ export default function Card_Utilize(props) {
             <Divider variant="middle" sx={dividerStyle} />
             <CardContent sx={{ color: 'white', flexGrow: 1 }}>
                 <Grid container spacing={3}>
-                    <Grid item xs={6} sx={{ alignContent:'center' }}>
+                    <Grid item xs={6} sx={{ alignContent: 'center' }}>
                         <CircularProgressWithLabel value={props.utilize_rate}/>
                     </Grid>
                     {/* <Divider variant="middle" orientation='vertical' sx={dividerStyle} flexItem/> */}
