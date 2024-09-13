@@ -53,21 +53,21 @@ export default function LinePanel({ onSubmit, onChange, status }) {
                 </Grid>
                 <Grid item xs={9} align={'left'}>
                     <Switch name="line_date_status" onChange={handleSwitchChange}
-                        value={status.line_date_status}/>
+                        value={status.line_daily_status}/>
                 </Grid>
                 <Grid item xs={2} ml={1}>
                     <Typography variant="h6" textAlign={'left'}>Line Token: </Typography>
                 </Grid>
                 <Grid item xs={9}>
                     <TextField label='LineToken' sx={{ width: '100%' }} onChange={handleTextChange}
-                        name="line_date_token" value={status.line_date_token} />
+                        name="line_date_token" value={status.line_daily_token} />
                 </Grid>
                 <Grid item xs={2} ml={1} mb={2}>
                     <Typography variant="h6" textAlign={'left'}>通知時間: </Typography>
                 </Grid>
                 <Grid item xs={9} mb={2}>
                     <TextField label='NotifyTime' sx={{ width: '100%' }} onChange={handleTextChange}
-                        name="line_date_time" value={status.line_date_time} />
+                        name="line_date_time" value={status.line_daily_time} />
                 </Grid>
             </Grid>
             <Button 

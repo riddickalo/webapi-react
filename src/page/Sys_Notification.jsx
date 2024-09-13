@@ -31,9 +31,9 @@ const initStatus = {
     line_alarm_token: '37v9RzV9SWv7pHEYHEkzzYGwmoeDeLDdn3Hw1iOQaj3',
     line_alarm_ln: 'en',
     line_alarm_timezone:'Taipei',
-    line_date_status: false,
-    line_date_token: '',
-    line_date_time: '10:00',
+    line_daily_status: false,
+    line_daily_token: '',
+    line_daily_time: '10:00',
     email_smtp: 'mail.jacktech.com.tw',
     email_port: '587',
     email_account: '',
@@ -42,10 +42,10 @@ const initStatus = {
     email_alarm_status: false,
     email_alarm_to: '',
     email_alarm_cc: '',
-    email_date_status: false,
-    email_date_to: 'jack@jacktech.com.tw',
-    email_date_cc: '',
-    email_date_time: '10:00',
+    email_daily_status: false,
+    email_daily_to: 'jack@jacktech.com.tw',
+    email_daily_cc: '',
+    email_daily_time: '10:00',
 }
 
 export default function Sys_Notification() {
