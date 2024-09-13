@@ -85,28 +85,28 @@ export default function EmailPanel({ onSubmit, onChange, status }) {
                     <Typography variant="h6" textAlign={'left'}>啟用狀態: </Typography>
                 </Grid>
                 <Grid item xs={9} align={'left'}>
-                    <Switch name='email_date_status' onChange={handleSwitchChange} 
+                    <Switch name='email_daily_status' onChange={handleSwitchChange} 
                         checked={status.email_daily_status} />
                 </Grid>
                 <Grid item xs={2} ml={1}>
                     <Typography variant="h6" textAlign={'left'}>收件者: </Typography>
                 </Grid>
                 <Grid item xs={9}>
-                    <TextField label='To: ' name='email_date_to'  sx={{ width: '100%' }}
+                    <TextField label='To: ' name='email_daily_to'  sx={{ width: '100%' }}
                         onChange={handleTextChange} value={status.email_daily_to} />
                 </Grid>
                 <Grid item xs={2} ml={1}>
                     <Typography variant="h6" textAlign={'left'}>副本: </Typography>
                 </Grid>
                 <Grid item xs={9} mb={2}>
-                    <TextField label='cc' name='email_date_cc'  sx={{ width: '100%' }}
+                    <TextField label='cc' name='email_daily_cc'  sx={{ width: '100%' }}
                         onChange={handleTextChange} value={status.email_daily_cc} />
                 </Grid>
                 <Grid item xs={2} ml={1} mb={2}>
                     <Typography variant="h6" textAlign={'left'}>訊息語言: </Typography>
                 </Grid>
                 <Grid item xs={9} mb={2}>
-                    <TextField label='NotifyTime' name='email_date_time'  sx={{ width: '100%' }}
+                    <TextField label='NotifyTime' name='email_daily_time'  sx={{ width: '100%' }}
                         onChange={handleTextChange} value={status.email_daily_time} />
                 </Grid>
             </Grid>
