@@ -13,18 +13,44 @@ export default function Report() {
 
     const handleTriggerDownload = (e) => {
         console.info(e.target.name);
-        const rangeStart = timeRange.startTime.format('YYYY-MM-DD-HH-mm') + '-00';
-        const rangeEnd = timeRange.endTime.format('YYYY-MM-DD-HH-mm') + '-00';
-        axios.get(process.env.REACT_APP_API_URL + '/report', {
-            params: {
-                type: e.target.name,
-                startTime: rangeStart,
-                endTime: rangeEnd,
+        try{
+            const reportType = e.target.name.split('_');
+            const rangeStart = timeRange.startTime.format('YYYY-MM-DD-HH-mm') + '-00';
+            const rangeEnd = timeRange.endTime.format('YYYY-MM-DD-HH-mm') + '-00';
+            if(reportType[0] === 'nc') {        // handle nc reports as zip
+                axios.get(process.env.REACT_APP_API_URL + '/report', {
+                    params: {
+                        type: e.target.name,
+                        startTime: rangeStart,
+                        endTime: rangeEnd,
+                    },
+                    responseType: 'blob',
+                }).then(resp => {
+                    let fileName = `${e.target.name}_${rangeStart}_to_${rangeEnd}.zip`; // 默认文件名
+                    
+                    // create a object handling from received data download to local
+                    const url = window.URL.createObjectURL(new Blob([resp.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', fileName);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+
+            } else {                            // handle item report as csv
+                axios.get(process.env.REACT_APP_API_URL + '/report', {
+                    params: {
+                        type: e.target.name,
+                        startTime: rangeStart,
+                        endTime: rangeEnd,
+                    }
+                }).then(res => {
+                    console.log(res);
+                    downloader(res.data, `${e.target.name}_${rangeStart}_to_${rangeEnd}.csv`);
+                })
             }
-        }).then(res => {
-            console.log(res);
-            downloader(res.data, `${e.target.name}_${rangeStart}-${rangeEnd}.csv`);
-        }).catch(err => console.error(err));
+        } catch(err) { console.error(err) };
     }
 
     const handleChangeRange = (label, e) => {
