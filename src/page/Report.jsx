@@ -13,8 +13,8 @@ export default function Report() {
 
     const handleTriggerDownload = (e) => {
         console.info(e.target.name);
-        const rangeStart = timeRange.startTime.format('YYYYMMDD-HHmm') + '00';
-        const rangeEnd = timeRange.endTime.format('YYYYMMDD-HHmm') + '00';
+        const rangeStart = timeRange.startTime.format('YYYY-MM-DD-HH-mm') + '-00';
+        const rangeEnd = timeRange.endTime.format('YYYY-MM-DD-HH-mm') + '-00';
         axios.get(process.env.REACT_APP_API_URL + '/report', {
             params: {
                 type: e.target.name,
