@@ -37,9 +37,15 @@ export function MaintainIcon(props) {
         op: '未啟用',
     };
 
-    if(props.status) {
+    if(props.status === 1) {
         content.color = 'green';
         content.op = '預約';
+    } else if(props.status === 2) {
+        content.color = 'yellow';
+        content.op = '需保養';
+    } else if(props.status === 3) {
+        content.color = 'red';
+        content.op = '過期';
     }
 
     return <StyledButton {...content} />;

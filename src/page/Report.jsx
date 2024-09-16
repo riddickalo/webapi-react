@@ -26,7 +26,7 @@ export default function Report() {
                     },
                     responseType: 'blob',
                 }).then(resp => {
-                    let fileName = `${e.target.name}_${rangeStart}_to_${rangeEnd}.zip`; // 默认文件名
+                    let fileName = `${e.target.name}_${rangeStart}_to_${rangeEnd}.zip`;
                     
                     // create a object handling from received data download to local
                     const url = window.URL.createObjectURL(new Blob([resp.data]));

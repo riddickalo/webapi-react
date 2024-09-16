@@ -5,6 +5,48 @@ import NoData from "../components/NoData";
 import { StatusIcon } from "../components/Icons";
 import { StyledSubTable, StyledTableCell, StyledTableRow } from "../components/StyledTable";
 
+export default function Setting_Maintain() {
+    const [maintainData, setMaintainData] = useState(null);
+    const [showSection, setShowSection] = useState('search');
+
+    const toggleSection = (sectionName) => {
+        setShowSection(showSection === sectionName? null: sectionName);
+    }
+
+    return (
+        <Stack direction='column' mx='5%'>
+            <Stack className="layoutHead" 
+                direction="row" 
+                spacing='40px'
+                mt='30px' >
+                
+                <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
+                    機台保養項目
+                </Typography>
+                <Button className="icon-search" 
+                    variant="text" 
+                    onClick={ () => toggleSection('search') }
+                    sx={{ fontSize: '20px', color: 'white' }}
+                    startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
+                    進階搜尋
+                </Button>
+                <Button className="icon-add" 
+                    variant="text" 
+                    onClick={ () => toggleSection('add') }
+                    sx={{ fontSize: '20px', color: 'white' }}
+                    startIcon={<NoteAddRounded sx={{ mr: '3px' }} />} > 
+                    新增保養項目
+                </Button>
+            </Stack>
+            {<DataSearchSection showSection={ showSection } />}
+            {<AddItemSection showSection={ showSection } />}
+            <Box className="layoutContent" mt={2} mb={3}>
+                {<MaintainSubTable data={maintainData} />}
+            </Box>
+        </Stack>
+    );
+}
+
 function MaintainSubTable(props) {
     const tableHead = ['項次', '保養項目', '機台週期(天)', '自動啟用', '操作'];
 
@@ -93,47 +135,5 @@ function AddItemSection({ showSection }) {
                 </Grid>
             </Box>
         </Collapse>
-    );
-}
-
-export default function Setting_Maintain() {
-    const [maintainData, setMaintainData] = useState(null);
-    const [showSection, setShowSection] = useState('search');
-
-    const toggleSection = (sectionName) => {
-        setShowSection(showSection === sectionName? null: sectionName);
-    }
-
-    return (
-        <Stack direction='column' mx='5%'>
-            <Stack className="layoutHead" 
-                direction="row" 
-                spacing='40px'
-                mt='30px' >
-                
-                <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
-                    機台保養項目
-                </Typography>
-                <Button className="icon-search" 
-                    variant="text" 
-                    onClick={ () => toggleSection('search') }
-                    sx={{ fontSize: '20px', color: 'white' }}
-                    startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
-                    進階搜尋
-                </Button>
-                <Button className="icon-add" 
-                    variant="text" 
-                    onClick={ () => toggleSection('add') }
-                    sx={{ fontSize: '20px', color: 'white' }}
-                    startIcon={<NoteAddRounded sx={{ mr: '3px' }} />} > 
-                    新增保養項目
-                </Button>
-            </Stack>
-            {<DataSearchSection showSection={ showSection } />}
-            {<AddItemSection showSection={ showSection } />}
-            <Box className="layoutContent" mt={2} mb={3}>
-                {<MaintainSubTable data={maintainData} />}
-            </Box>
-        </Stack>
     );
 }
