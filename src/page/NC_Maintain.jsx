@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Stack, Typography, Collapse, Grid, TextField } from "@mui/material";
 import { FilterAltRounded } from '@mui/icons-material';
 import NcMaintainSubTable from "../components/Table_NCMaintain";
+import { MaintainFilterSection } from "../components/Section_Maintain";
+import axios from "axios";
 
 export default function NC_Maintain() {
-    const [showSection, setShowSection] = useState(true);
+    const [showSection, setShowSection] = useState('filter');
+    const [ncList, setNcList] = useState([]);
+    const [selectedNc, setSelectedNc] = useState(null);
 
-    const toggleSection = ()=>{
-        setShowSection(!showSection);
-    }
+    const toggleSection = () => {
+        if(showSection) setShowSection(null);
+        else setShowSection('filter');
+    };
+
+    const handleSetFilter = () => {
+        console.log(selectedNc);
+    };
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/status')
+            .then(({data, }) => {
+                setNcList(data);
+            }).catch((err) => console.error(err));
+    }, []);
 
     return (
         <Stack direction='column' mx='5%'>
@@ -28,36 +44,11 @@ export default function NC_Maintain() {
                     資料篩選
                 </Button>
             </Stack>
-            <FilterSection showSection={showSection} />
+            <MaintainFilterSection showSection={showSection} selectedNc={selectedNc} ncList={ncList}
+                selectChange={setSelectedNc} handleSetFilter={handleSetFilter} />
             <Box className="layoutContent" mt={2}>
                 <NcMaintainSubTable />
             </Box>
         </Stack>
-    );
-}
-
-function FilterSection({ showSection }) {
-    return (
-        <Collapse in={showSection}>
-            <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
-                sx={{ 
-                    bgcolor: '#e0e0e0',
-                    border: '3px solid #5e75ae',
-                    borderRadius: 2,
-                    '& .MuiTextField-root': { width: "90%" },
-                    '& .MuiButton-root': { width: "90%" },
-                    '.p': { fontSize: '16px' }, }} > 
-                <Grid container mt={1} mb={4} spacing={2} width='100%'>
-                    <Grid item xs={12}>
-                        <TextField label='機台名稱' select />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained"
-                                sx={{bgcolor: '#027dbc' }}>
-                                更新篩選</Button>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Collapse>
     );
 }

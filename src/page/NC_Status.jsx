@@ -40,7 +40,6 @@ export default function NC_Status() {
 
     useEffect(() => {
         // setStatusData(demoData);
-        console.log('useEffect')
         axios.get(process.env.REACT_APP_API_URL + '/api/status')
             .then(({data, }) => {
                 // console.log(data);

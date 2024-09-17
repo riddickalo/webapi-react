@@ -1,17 +1,59 @@
-import React, { useState } from "react";
-import { FormControlLabel, Checkbox, Collapse, Box, Button, Stack, Typography, Grid, TextField } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, NoteAddRounded } from '@mui/icons-material';
-import NoData from "../components/NoData";
-import { StatusIcon } from "../components/Icons";
-import { StyledSubTable, StyledTableCell, StyledTableRow } from "../components/StyledTable";
+import { MaintainFilterSection, MaintainAddSection} from "../components/Section_Maintain";
+import SettingMaintainSubTable from "../components/Table_SettingMaintain";
 
 export default function Setting_Maintain() {
-    const [maintainData, setMaintainData] = useState(null);
-    const [showSection, setShowSection] = useState('search');
+    const [maintainData, setMaintainData] = useState(initialMaintainData);
+    const [showSection, setShowSection] = useState('filter');
+    const [sectionState, setSectionState] = useState(initialSectionState);
 
     const toggleSection = (sectionName) => {
         setShowSection(showSection === sectionName? null: sectionName);
-    }
+    };
+
+    const handleSectionChange = (name, value) => {
+        setSectionState(prevState => ({
+            ...prevState,
+            [name]: value,
+        }))
+    };
+
+    const handleClick = ({target}) => {
+        console.log(sectionState)
+        if(target.name === 'SetFilterButton') {
+            console.log('filter')
+            let NcId;
+            if(sectionState.nc_id === null) NcId = 'all';
+            else NcId = sectionState.nc_id;
+
+            axios.get(process.env.REACT_APP_API_URL + `/api/maintain/${NcId}`)
+                .then(({data, }) => {
+                    console.log(data)
+                    setMaintainData(data);
+                }).catch((err) => console.error(err));
+
+        } else if(target.name === 'SubmmitButton') {
+            console.log('submit')
+            axios.post(process.env.REACT_APP_API_URL + '/api/maintain', sectionState)
+                .then(({data, }) => {
+                    console.log(data)
+                    setMaintainData(data);
+                }).catch((err) => console.error(err));
+        }
+        
+    };
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/maintain/all')
+            .then(({data, }) => {
+                if(data !== null)
+                    console.log(data)
+                    setMaintainData(data);
+            }).catch((err) => console.error(err));
+    }, []);
 
     return (
         <Stack direction='column' mx='5%'>
@@ -25,7 +67,7 @@ export default function Setting_Maintain() {
                 </Typography>
                 <Button className="icon-search" 
                     variant="text" 
-                    onClick={ () => toggleSection('search') }
+                    onClick={ () => toggleSection('filter') }
                     sx={{ fontSize: '20px', color: 'white' }}
                     startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
                     進階搜尋
@@ -38,102 +80,16 @@ export default function Setting_Maintain() {
                     新增保養項目
                 </Button>
             </Stack>
-            {<DataSearchSection showSection={ showSection } />}
-            {<AddItemSection showSection={ showSection } />}
+            {<MaintainFilterSection showSection={showSection} selectedNc={sectionState} 
+                selectChange={handleSectionChange} handleSetFilter={handleClick} />}
+            {<MaintainAddSection showSection={showSection} newItem={sectionState} 
+                selectChange={handleSectionChange} handleSubmmit={handleClick} />}
             <Box className="layoutContent" mt={2} mb={3}>
-                {<MaintainSubTable data={maintainData} />}
+                {<SettingMaintainSubTable data={maintainData.status} />}
             </Box>
         </Stack>
     );
 }
 
-function MaintainSubTable(props) {
-    const tableHead = ['項次', '保養項目', '機台週期(天)', '自動啟用', '操作'];
-
-    const bodyData = (statusData) => {
-        if(statusData === null) {
-            return (<NoData />);
-        } else {
-            return (
-                statusData.map((row) => (
-                    <StyledTableRow key={row.nc_id}>
-                        <StyledTableCell component={'th'} scope="row" align='center'>
-                            {row.region}
-                        </StyledTableCell>
-                        <StyledTableCell align='center'>{row.prod_line}</StyledTableCell>
-                        <StyledTableCell align='center'>{row.station}</StyledTableCell>
-                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
-                        <StyledTableCell align='center'>{<StatusIcon status={row.opStatus} />}</StyledTableCell>
-                    
-                    </StyledTableRow>
-            )));
-        }
-    } 
-
-    return <StyledSubTable
-                ariaLabel='settingMaintain-subtable'
-                headData={tableHead}
-                bodyData={bodyData(props.data)} />;
-}
-
-function DataSearchSection({ showSection }) {
-    return (
-        <Collapse in={showSection === 'search'}>
-            <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
-                sx={{ 
-                    bgcolor: '#e0e0e0',
-                    border: '3px solid #5e75ae',
-                    borderRadius: 2,
-                    '& .MuiTextField-root': { width: "90%" },
-                    '& .MuiButton-root': { width: "90%" },
-                    '.p': { fontSize: '16px' }, }} > 
-                <Grid container mt={1} mb={4} spacing={2} width='100%'>
-                    <Grid item xs={12}>
-                        <TextField label='機台名稱' select />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained"
-                                sx={{ color: '#010101', bgcolor: '#bfbfbf', ':hover': { bgcolor: '#8e8e8e' } }}>
-                                查詢</Button>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Collapse>
-    );
-}
-
-function AddItemSection({ showSection }) {
-    return (
-        <Collapse in={showSection === 'add'}>
-            <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
-                sx={{ 
-                    bgcolor: '#e0e0e0',
-                    border: '3px solid #5e75ae',
-                    borderRadius: 2,
-                    '& .MuiTextField-root': { width: "90%" },
-                    '& .MuiButton-root': { width: "90%" },
-                    '.p': { fontSize: '16px' }, }} > 
-                <Grid container mt={1} mb={4} spacing={2} width='100%'>
-                    <Grid item xs={12}>
-                        <TextField label='機台名稱' />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField label='保養項目' />
-                    </Grid>
-                    <Grid item xs={12}> 
-                        <TextField label='保養週期(天)'/>
-                    </Grid>
-                    <Grid item xs={12} align={'left'} ml={4}>
-                        <FormControlLabel control={<Checkbox />} 
-                            label='自動啟用: ' labelPlacement="start" sx={{ color: '#030303' }} />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained"
-                                sx={{ bgcolor: '#20B2AA', ':hover': { bgcolor: '#1c9c95' } }}>
-                                送出</Button>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Collapse>
-    );
-}
+const initialMaintainData = { status: [], records: [] };
+const initialSectionState = { nc_id: null, item: null, period: null, enable: true };
