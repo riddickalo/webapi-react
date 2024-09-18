@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 import DataFilterSection from "../components/Data_Filter";
-import AlarmSubTable from "../components/Table_Alarm";
+import { AlarmSubTable } from "../components/Table_Alarm";
 import axios from "axios";
 
 export default function Alarm_Status() {

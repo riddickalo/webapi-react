@@ -1,9 +1,9 @@
 import React from "react";
 import NoData from "./NoData";
 import { StyledSubTable, StyledTableCell, StyledTableRow } from "./StyledTable";
-import dayjs from "dayjs";
+import { convertTimeFormat } from "../utils/timeFormat";
 
-export default function AlarmSubTable({ data }) {
+export function AlarmSubTable({ data }) {
     const tableHead = ['機台廠區', '機台產線', '機台工作站', '機台名稱', '警報時間', '警報描述'];
     const bodyData = (statusData) => {
         if(statusData == null || statusData.length === 0) {
@@ -25,11 +25,29 @@ export default function AlarmSubTable({ data }) {
         }
     }
 
-    const convertTimeFormat = (time) => dayjs(time).format('YYYY/MM/DD HH:mm:ss');    
-
     return <StyledSubTable
-                ariaLabel='alarm-table'
+                ariaLabel='Alarm-SubTable'
                 headData={tableHead}
+                bodyData={bodyData(data)} />;
+}
+
+export function AlarmPopTable ({ data }) {
+    const bodyData = (statusData) => {
+        if(statusData == null || statusData.length === 0) {
+            return (<NoData />);
+        } else {
+            return (
+                statusData.map((row) => (
+                    <StyledTableRow key={row.alarm_sn}>
+                        <StyledTableCell align='center'>{row.nc_id}</StyledTableCell>
+                        <StyledTableCell align='center'>{convertTimeFormat(row.alarm_timestamp)}</StyledTableCell>
+                    </StyledTableRow>
+            )));
+        }
+    }
+    return <StyledSubTable
+                ariaLabel='Alarm-PopTable'
+                headData={[]}
                 bodyData={bodyData(data)} />;
 }
 
