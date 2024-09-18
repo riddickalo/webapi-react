@@ -34,7 +34,7 @@ export function AlarmSubTable({ data }) {
 export function AlarmPopTable ({ data }) {
     const bodyData = (statusData) => {
         if(statusData == null || statusData.length === 0) {
-            return (<NoData />);
+            return null;
         } else {
             return (
                 statusData.map((row) => (

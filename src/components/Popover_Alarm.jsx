@@ -52,7 +52,8 @@ export default function Popover_Alarm() {
                         size="medium"
                         sx={{  
                             color: 'white', bgcolor: 'red',
-                            my: 2, mx: 10, }}>
+                            mt: (alarmData.length > 0)? 2: 40,
+                            mb: 2, mx: 10, }}>
                         查看即時警報
                     </Button>
                 </Box>
