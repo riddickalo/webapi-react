@@ -11,8 +11,8 @@ export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, hand
             className: "NcSubMenu",
             summary: "機台",
             icon: <MonitorRounded fontSize="large"/>,
-            details: ['機台稼動率', '機台狀態', '機台保養', '加工程式'],
-            links: [`${base_name}/machine/utilize`, `${base_name}/machine/status`, `${base_name}/machine/maintain`, `${base_name}/machine/ncfile`]
+            details: ['機台稼動率', '機台狀態', '機台保養', /*'加工程式'*/],
+            links: [`${base_name}/machine/utilize`, `${base_name}/machine/status`, `${base_name}/machine/maintain`, /*`${base_name}/machine/ncfile`*/]
         },
         {
             className: "AlarmSubMenu",
@@ -21,13 +21,13 @@ export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, hand
             details: ['即時警報', '歷史警報'],
             links: [`${base_name}/alarm/status`, `${base_name}/alarm/history`],
         },
-        {
-            className: "OrderMenu",
-            summary: "工單",
-            icon: <FeedRounded fontSize="large" />,
-            details: null,
-            links: `${base_name}/order`,
-        },
+        // {
+        //     className: "OrderMenu",
+        //     summary: "工單",
+        //     icon: <FeedRounded fontSize="large" />,
+        //     details: null,
+        //     links: `${base_name}/order`,
+        // },
         {
             className: "ReportMenu",
             summary: "報表下載",
@@ -39,8 +39,8 @@ export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, hand
             className: "SettingMenu",
             summary: "基本設定",
             icon: <SettingsRounded fontSize="large" />,
-            details: ['機台參數', '機台保養項目', '品項料號', '加工程式與品項'],
-            links: [`${base_name}/setting/machine`, `${base_name}/setting/maintain`, `${base_name}/setting/item`, `${base_name}/setting/pp_map`],
+            details: ['機台參數', '機台保養項目', /*'品項料號', '加工程式與品項'*/],
+            links: [`${base_name}/setting/machine`, `${base_name}/setting/maintain`, /*`${base_name}/setting/item`, `${base_name}/setting/pp_map`*/],
         },
         {
             className: "SysMenu",

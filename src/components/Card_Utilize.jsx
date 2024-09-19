@@ -21,7 +21,7 @@ export default function Card_Utilize(props) {
                 avatar={<StatusIcon status={props.opStatus} />}
                 title={props.nc_id} 
                 titleTypographyProps={{variant: 'h5', fontWeight: 'bold'}}
-                subheader={props.region}
+                // subheader={props.region}
                 subheaderTypographyProps={{variant: 'h6', fontWeight: 'bold', marginTop: 1}} 
                 sx={{color: 'white'}}>
             </CardHeader>
