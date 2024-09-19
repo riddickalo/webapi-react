@@ -30,7 +30,7 @@ export function AlarmSubTable({ data }) {
                 headData={tableHead}
                 bodyData={bodyData(data)} />;
 }
-
+// Alarm subtable for popover
 export function AlarmPopTable ({ data }) {
     const bodyData = (statusData) => {
         if(statusData == null || statusData.length === 0) {

@@ -18,7 +18,7 @@ function StatusIcon(actStatus) {
 
 function EditButtons() {
     return(
-        <Stack direction='row' spacing={2}>
+        <Stack direction='row' spacing={2} alignItems='center' justifyContent='center' >
             <Button sx={{ color: 'white', bgcolor: green[600], ':hover': {bgcolor: green[800]} }} 
                 startIcon={<CreateRounded />}>編輯</Button>
             <Button sx={{ color: 'white', bgcolor: red[600], ':hover': {bgcolor: red[800]} }} 

@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, dividerClasses } from "@mui/material";
+import { useState } from "react";
+import { Tabs, Tab, Box, Stack, dividerClasses } from "@mui/material";
 import { BorderColor } from "@mui/icons-material";
 import NoData from "./NoData";
 import { StyledTableCell, StyledTableRow, StyledSubTable } from "./StyledTable";
-import { StatusIcon, MaintainIcon } from "./Icons";
+import { MaintainIcon, MaintainEnabledIcon, EditMaintainButton, CheckMaintainItemButton, BackMaintainItemButton } from "./Icons";
+import { convertTimeFormat } from '../utils/timeFormat';
 
-export default function NCMaintainSubTable() {
-    const [maintainData, setMaintainData] = useState(null);
-    const [value, setValues] = React.useState(0);
+export default function NCMaintainSubTable(props) {
+    const [value, setValues] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValues(newValue);
@@ -23,10 +22,10 @@ export default function NCMaintainSubTable() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <MaintainSubPanel label='Status' data={maintainData} />
+                <MaintainSubPanel label='Item' data={props.maintainData.items} {...props} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <MaintainSubPanel label='Record' data={maintainData} />
+                <MaintainSubPanel label='Record' data={props.maintainData.records} {...props} />
             </CustomTabPanel>
         </Box>
     );
@@ -36,36 +35,46 @@ function MaintainSubPanel(props) {
     const tableHead = (props.label === 'Record')? ['保養項目', '保養人員', '預約保養時間', '實際保養時間']:
         ['項次', '保養項目', '保養週期(天)', '保養狀態', '預約保養時間', '最後保養時間', '啟用狀態', '操作'];
         
-    const bodyData = (statusData) => {
+    const bodyData = (statusData, label, isEdit, editItem, handleClick) => {
         if(statusData === null || statusData.length === 0) {
             return (<NoData />);
         } else {
-            if(props.label === 'Status'){
+            if(label === 'Item'){
+                let item_count = 1;
                 return (
                     statusData.map((row) => (
-                        <StyledTableRow key={row.no}>
+                        <StyledTableRow key={row.sn}>
                             <StyledTableCell component={'th'} scope="row" align='center'>
-                                {row.no}
+                                {item_count++}
                             </StyledTableCell>
                             <StyledTableCell align='center'>{row.item}</StyledTableCell>
                             <StyledTableCell align='center'>{row.period}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.status}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
-                            <StyledTableCell align='center'>{row.ncfile}</StyledTableCell>
+                            <StyledTableCell align='center'>{<MaintainIcon status={row.status} />}</StyledTableCell>
+                            <StyledTableCell align='center'>{convertTimeFormat(row.scheduled_check_time)}</StyledTableCell>
+                            <StyledTableCell align='center'>{convertTimeFormat(row.last_check_time)}</StyledTableCell>
+                            <StyledTableCell align='center'>
+                                {<MaintainEnabledIcon status={row.enable} />}
+                            </StyledTableCell>
+                            <StyledTableCell align='center'>
+                                {(isEdit === row.sn)? 
+                                    <Stack spacing={2} direction={'row'} alignContent={'center'} justifyContent={'center'}>
+                                        <CheckMaintainItemButton id={`Check-${row.sn}`} onClick={handleClick} />
+                                        <BackMaintainItemButton id={`Back-${row.sn}`} onClick={handleClick} />
+                                    </Stack>:
+                                    <EditMaintainButton id={`Edit-${row.sn}`} onClick={handleClick} />}
+                            </StyledTableCell>
                         </StyledTableRow>
                 )));
             } else {
                 return (
                     statusData.map((row) => (
-                        <StyledTableRow key={row.item}>
+                        <StyledTableRow key={row.sn}>
                             <StyledTableCell component={'th'} scope="row" align='center'>
                                     {row.item}
                                 </StyledTableCell>
                                 <StyledTableCell align='center'>{row.worker}</StyledTableCell>
-                                <StyledTableCell align='center'>{row.scheduled_check_time}</StyledTableCell>
-                                <StyledTableCell align='center'>{row.actual_check_time}</StyledTableCell>
+                                <StyledTableCell align='center'>{convertTimeFormat(row.scheduled_check_time)}</StyledTableCell>
+                                <StyledTableCell align='center'>{convertTimeFormat(row.actual_check_time)}</StyledTableCell>
                     
                         </StyledTableRow>
                 )));
@@ -76,7 +85,7 @@ function MaintainSubPanel(props) {
     return <StyledSubTable
                 ariaLabel={`NcMaintain-${props.label}-Subtable`}
                 headData={tableHead}
-                bodyData={bodyData(props.data)} />;
+                bodyData={bodyData(props.data, props.label, props.isEdit, props.editItem, props.handleClick)} />;
 }
 
 function CustomTabPanel(props) {

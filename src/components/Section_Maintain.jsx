@@ -26,7 +26,8 @@ export function MaintainFilterSection({ showSection, selectedNc, selectChange, h
                     '.p': { fontSize: '16px' }, }} > 
                 <Grid container mt={1} mb={4} spacing={2} width='100%'>
                     <Grid item xs={12}>
-                        <TextField select label='機台名稱' name='nc_id' onChange={handleChange} value={selectedNc.nc_id} >
+                        <TextField select align='left' label='機台名稱' name='nc_id' 
+                            onChange={handleChange} value={selectedNc.nc_id} >
                                 {ncList.map((nc) => (     // should be '(' not'{'
                                     <MenuItem value={nc.nc_id}>
                                         {nc.nc_id}
@@ -70,7 +71,8 @@ export function MaintainAddSection({ showSection, newItem, selectChange, handleS
                     '.p': { fontSize: '16px' }, }} > 
                 <Grid container mt={1} mb={4} spacing={2} width='100%'>
                     <Grid item xs={12}>
-                        <TextField select label='機台名稱' name='nc_id' onChange={handleChange} value={newItem.nc_id} >
+                        <TextField select align='left' label='機台名稱' name='nc_id' 
+                            onChange={handleChange} value={newItem.nc_id} >
                                 {ncList.map((nc) => (     // should be '(' not'{'
                                     <MenuItem value={nc.nc_id}>
                                         {nc.nc_id}
