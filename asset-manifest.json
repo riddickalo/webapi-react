@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.b23e8581.css",
-    "main.js": "/static/js/main.2242e33e.js",
+    "main.css": "/static/css/main.78225d06.css",
+    "main.js": "/static/js/main.eef45608.js",
     "static/js/453.31d691e7.chunk.js": "/static/js/453.31d691e7.chunk.js",
     "static/media/mat logo.png": "/static/media/mat logo.b024798d01b235c0d70c.png",
     "index.html": "/index.html",
-    "main.b23e8581.css.map": "/static/css/main.b23e8581.css.map",
-    "main.2242e33e.js.map": "/static/js/main.2242e33e.js.map",
+    "main.78225d06.css.map": "/static/css/main.78225d06.css.map",
+    "main.eef45608.js.map": "/static/js/main.eef45608.js.map",
     "453.31d691e7.chunk.js.map": "/static/js/453.31d691e7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b23e8581.css",
-    "static/js/main.2242e33e.js"
+    "static/css/main.78225d06.css",
+    "static/js/main.eef45608.js"
   ]
 }
