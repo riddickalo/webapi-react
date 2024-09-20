@@ -27,9 +27,9 @@ export default function Setting_Maintain() {
 
     // onClick event for button on sections
     const handleSectionClick = ({target}) => {
-        console.log(sectionState)
+        // console.log(sectionState)
         if(target.name === 'SetFilterButton') {
-            console.log('filter')
+            // console.log('filter')
             let NcId;
             if(sectionState.nc_id === null) NcId = 'all';
             else NcId = sectionState.nc_id;
@@ -41,10 +41,10 @@ export default function Setting_Maintain() {
                 }).catch((err) => console.error(err));
 
         } else if(target.name === 'SubmmitButton') {
-            console.log('submit')
+            // console.log('submit')
             axios.post(process.env.REACT_APP_API_URL + '/api/maintain/update-item', sectionState)
                 .then(({data, }) => {
-                    console.log(data)
+                    // console.log(data)
                     setMaintainData(data);
                 }).catch((err) => console.error(err));
         }
@@ -58,9 +58,9 @@ export default function Setting_Maintain() {
         }));
     };
     const handleEditTrigger = ({target}) => {
-        console.log(target.name)
+        // console.log(target.name)
         const action = target.name.split('-');
-        console.log(action);
+        // console.log(action);
         if(action[0] === 'Edit') {
             const tg = Number(action[1])
             setIsEdit(tg); 

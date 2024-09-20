@@ -28,7 +28,10 @@ export default function NC_Utilize(props) {
                 setUtilizeData(data);
             }).catch((err) => console.error(err));
     };
-
+    // page mounting
+    useEffect(() => fetchData(), []);
+    
+    // set updating timer
     useEffect(() => {
         const timerId = setInterval(fetchData, props.interval);
         // observe parent component width
@@ -46,7 +49,6 @@ export default function NC_Utilize(props) {
 
         // clean listener
         return() => {
-            fetchData();
             clearInterval(timerId);
             if(sizeObserver.current) {
                 sizeObserver.unobserve(layoutRef.current);

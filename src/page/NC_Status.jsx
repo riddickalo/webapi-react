@@ -19,15 +19,6 @@ export default function NC_Status(props) {
     const [filterConditions, setFilterConditions] = useState(initConditions);
 
     const toggleSection = () => setShowSection(!showSection);
-    // get data from middle
-    const fetchData = (flag=false) => {
-        axios.get(process.env.REACT_APP_API_URL + '/api/status')
-            .then(({data, }) => {
-                statusData.current = data;
-                if(flag) setFilteredData(data);
-            }).catch((err) => console.error(err));
-    };
-
     // 篩選資料
     const filterData = ({target}) => {   
         // let statusData = localStorage.getItem('statusData');
@@ -47,15 +38,27 @@ export default function NC_Status(props) {
             setFilteredData(statusData.current);
         }
     };
+    // get data from middle
+    const fetchData = () => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/status')
+            .then(({data, }) => {
+                statusData.current = data;
+            }).catch((err) => console.error(err));
+    };
 
+    // page mounting
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/status')
+            .then(({data, }) => {
+                setFilteredData(data);
+                statusData.current = data;
+            }).catch((err) => console.error(err));
+    }, []);
+     
     // Polling statusData
     useEffect(() => {
         const timerId = setInterval(fetchData, props.interval);
-
-        return() => {
-            clearInterval(timerId);
-            fetchData(true);
-        }
+        return() => clearInterval(timerId);
     }, [props.interval]);
     
     // statusData update callback
@@ -64,7 +67,7 @@ export default function NC_Status(props) {
             let ncList = [];
             filteredData.forEach(row => ncList.push(row.nc_id));
             setFilteredData(statusData.current.filter(row => (ncList.includes(row.nc_id))));
-        }
+        } 
     }, [statusData.current]);
 
     return (
