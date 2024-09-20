@@ -8,8 +8,8 @@ export default function ReportSubTable({ onDownload }) {
     const tableContents = [
         { label: '機台產量 (月)', desc: '期間該月機台產量', key: 'nc_month' }, { label: '機台產量 (日)', desc: '期間每日機台產量', key: 'nc_day' }, 
         { label: '機台產量 (時)', desc: '期間該月機台產量', key: 'nc_hour' }, 
-        { label: '加工項目產量 (月)', key: 'item_month' }, { label: '加工項目產量 (日)', key: 'item_day' }, 
-        { label: '加工項目產量 (時)', key: 'item_hour' },
+        // { label: '加工項目產量 (月)', key: 'item_month' }, { label: '加工項目產量 (日)', key: 'item_day' }, 
+        // { label: '加工項目產量 (時)', key: 'item_hour' },
     ];
 
     return (

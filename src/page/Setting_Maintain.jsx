@@ -14,8 +14,9 @@ export default function Setting_Maintain() {
     const [editItem, setEditItem] = useState(initialSectionState);
     const [openDialog, setOpenDialog] = useState(false);
     // show or change sections
-    const toggleSection = (sectionName) => {
+    const switchSection = (sectionName) => {
         setShowSection(showSection === sectionName? null: sectionName);
+        setSectionState(initialSectionState);
     };
     const handleSectionChange = (name, value) => {
         setSectionState(prevState => ({
@@ -107,14 +108,14 @@ export default function Setting_Maintain() {
                     </Typography>
                     <Button className="icon-search" 
                         variant="text" 
-                        onClick={ () => toggleSection('filter') }
+                        onClick={ () => switchSection('filter') }
                         sx={{ fontSize: '20px', color: 'white' }}
                         startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
                         進階搜尋
                     </Button>
                     <Button className="icon-add" 
                         variant="text" 
-                        onClick={ () => toggleSection('add') }
+                        onClick={ () => switchSection('add') }
                         sx={{ fontSize: '20px', color: 'white' }}
                         startIcon={<NoteAddRounded sx={{ mr: '3px' }} />} > 
                         新增保養項目

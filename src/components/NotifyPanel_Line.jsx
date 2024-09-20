@@ -1,8 +1,7 @@
 import { Button, Stack, Grid, Typography, TextField, Switch } from "@mui/material";
-import { SaveRounded } from "@mui/icons-material";
-import { useState } from "react";
+import { SaveRounded, SendTimeExtension } from "@mui/icons-material";
 
-export default function LinePanel({ onSubmit, onChange, status }) {
+export default function LinePanel({ onSubmit, onChange, status, onTest }) {
 
     const handleTextChange = ({target, }) => onChange(target.name, target.value);
     const handleSwitchChange = ({target, }) => onChange(target.name, target.checked);
@@ -70,8 +69,21 @@ export default function LinePanel({ onSubmit, onChange, status }) {
                         name="line_daily_time" value={status.line_daily_time} />
                 </Grid>
             </Grid>
+            <Grid container width={'100%'} spacing={2}
+                    sx={{ alignItems: 'center', bgcolor: '#bfb3f4', borderRadius: 2 }}>
+                <Grid item xs={12}>
+                    <Typography variant="h5" textAlign={'left'}>測試通知</Typography>
+                </Grid>
+                <Grid item xs={12} align='left'>
+                    <Button 
+                        variant="contained" name='Line-Test' startIcon={<SendTimeExtension />} onClick={onTest}
+                        sx={{ bgcolor: '#20B2AA', width: 'flex', marginBottom: 3, marginLeft: 2 }}>
+                            傳送測試訊息
+                    </Button>
+                </Grid>
+            </Grid>
             <Button 
-                variant="contained" startIcon={<SaveRounded />} onClick={onSubmit}
+                variant="contained" name='Line-Save' startIcon={<SaveRounded />} onClick={onSubmit}
                 sx={{ bgcolor: '#20B2AA', width: '100%', marginBottom: 3 }}>
                     儲存設定
             </Button>

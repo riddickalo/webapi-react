@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FilterAltRounded } from '@mui/icons-material';
@@ -12,41 +12,60 @@ const initConditions = {
     opStatus: '',
 }
 
-export default function NC_Status() {
+export default function NC_Status(props) {
     const [showSection, setShowSection] = useState(true);
-    const [statusData, setStatusData] = useState([]);
-    const [filteredData, setFilteredData] = useState(null);
+    const statusData = useRef(null);
+    const [filteredData, setFilteredData] = useState([]);
     const [filterConditions, setFilterConditions] = useState(initConditions);
 
     const toggleSection = () => setShowSection(!showSection);
+    // get data from middle
+    const fetchData = (flag=false) => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/status')
+            .then(({data, }) => {
+                statusData.current = data;
+                if(flag) setFilteredData(data);
+            }).catch((err) => console.error(err));
+    };
 
     // 篩選資料
-    const filterData = (event) => {   
-        if(event.target.name === 'SetFilterButton') {             // 設定條件篩選
-            setFilteredData(statusData.filter(row => {
-                if(filterConditions.region === '' || (filterConditions.region.split(';').includes(row.region))) 
-                    if(filterConditions.prod_line === '' || (filterConditions.prod_line.split(';').includes(row.prod_line))) 
-                        if(filterConditions.nc_id === '' || (filterConditions.nc_id.split(';').includes(row.nc_id))) 
-                            if(filterConditions.opStatus === '' || filterConditions.opStatus === 'all' || (row.opStatus === filterConditions.opStatus))
+    const filterData = ({target}) => {   
+        // let statusData = localStorage.getItem('statusData');
+        // statusData = (statusData)? JSON.parse(statusData): {};
+        if(target.name === 'SetFilterButton') {             // 設定條件篩選
+            setFilteredData(statusData.current.filter(row => {
+                if(filterConditions.region.length === 0 || (filterConditions.region.split(';').includes(row.region))) 
+                    if(filterConditions.prod_line.length === 0 || (filterConditions.prod_line.split(';').includes(row.prod_line))) 
+                        if(filterConditions.nc_id.length === 0 || (filterConditions.nc_id.split(';').includes(row.nc_id))) 
+                            if(filterConditions.opStatus.length === 0 || filterConditions.opStatus === 'all' || row.opStatus === filterConditions.opStatus)
                                 return true;
 
                 return false;
             }));
-        } else if(event.target.name === 'CleanFilterButton') {    // 清除篩選
+        } else if(target.name === 'CleanFilterButton') {    // 清除篩選
             setFilterConditions(initConditions);
-            setFilteredData(statusData);
+            setFilteredData(statusData.current);
         }
     };
 
+    // Polling statusData
     useEffect(() => {
-        // setStatusData(demoData);
-        axios.get(process.env.REACT_APP_API_URL + '/api/status')
-            .then(({data, }) => {
-                // console.log(data);
-                setStatusData(data);
-                setFilteredData(data);
-            }).catch((err) => console.error(err));
-    }, []);
+        const timerId = setInterval(fetchData, props.interval);
+
+        return() => {
+            clearInterval(timerId);
+            fetchData(true);
+        }
+    }, [props.interval]);
+    
+    // statusData update callback
+    useEffect(() => {
+        if(filteredData && statusData.current) {
+            let ncList = [];
+            filteredData.forEach(row => ncList.push(row.nc_id));
+            setFilteredData(statusData.current.filter(row => (ncList.includes(row.nc_id))));
+        }
+    }, [statusData.current]);
 
     return (
         <Stack direction='column' mx='5%'>

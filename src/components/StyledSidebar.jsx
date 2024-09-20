@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { styled, Drawer, Accordion, AccordionSummary, AccordionDetails, List, ListItemIcon, ListItemButton, ListItemText } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 
-export const SidebarDrawer = styled(Drawer)(() => ({
+export const SidebarDrawer = styled(Drawer)(({theme, sidebarWidth}) => ({
     '& .MuiDrawer-paper': { 
         backgroundColor: '#dff1fb',
         boxShadow: '5px 0 5px rgba(0, 0, 0, 0.1)',
         transistion: 'left 0.3s ease',
-        boxSizing: 'border-box' 
+        boxSizing: 'border-box',
+        width: `${sidebarWidth}px`,
     },
     '& img': { height: '80px' },
     '& .MuiAccordionSummary-content': { margin: 'auto' },

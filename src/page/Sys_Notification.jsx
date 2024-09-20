@@ -1,8 +1,90 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Tabs, Tab, Box, Stack, Typography } from "@mui/material";
 import LinePanel from "../components/NotifyPanel_Line";
 import EmailPanel from "../components/NotifiPanel_Email";
+import CheckNotifyDialog from "../components/Dialog_TestNotify";
 import axios from "axios";
+
+export default function Sys_Notification() {
+    const [value, setValue] = useState(0);
+    const [settingStatus, setSettingStatus] = useState(initStatus);
+    const [openDialog, setOpenDialog] = useState(false);
+    const testResult = useRef(null);
+
+    // 控制Line和Email設定版面顯示切換
+    const handlePanelChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    // 控制設定內容變化
+    const handleInputChange = (name, value) => {
+        setSettingStatus(prevStatus => ({
+            ...prevStatus,
+            [name]: value,
+        }));
+    };
+    // 控制儲存按鍵程序
+    const handleSubmit = () => {
+        axios.post(process.env.REACT_APP_API_URL + '/api/sys', settingStatus)
+            .then((ret) => {
+                console.info(ret);
+                setSettingStatus(ret.data);
+                console.info('new settings effected.'); 
+            }).catch(err => console.error(err));
+    };
+    // 測試訊息按鍵
+    const handleSendTest = ({target}) => {
+        const type = target.name.split('-');
+        axios.get(process.env.REACT_APP_API_URL + `/api/test-notify/${type[0]}`)
+            .then(() => {
+                testResult.current = true;
+                setOpenDialog(true);
+            }).catch(() => {
+                testResult.current = false;
+                setOpenDialog(true);
+            });
+    };
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/api/sys').then((ret) => {
+            setSettingStatus(ret.data);
+            console.log(ret.data)
+        }).catch(err => console.error(err));
+    }, []);
+
+    return (
+        <div>
+            <Stack direction='column' mx='5%' Spacing={2}>
+                <Stack className="layoutHead" 
+                    direction="column" 
+                    spacing='15px'
+                    mt='30px' >
+                    
+                    <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
+                        通知設定
+                    </Typography>
+                </Stack>
+
+                <Stack className="layouContent" direction='row' spacing={2} mt={2} alignItems='center'>
+                    <Box sx={{ width: '100%' }}>
+                        <Box sx={{ borderBottom: 1, BorderColor: 'divider', borderRadius: 2, backgroundColor: '#f0f0f0' }}>
+                            <Tabs value={value} onChange={handlePanelChange} aria-label="ncMaintain tabs" centered variant="fullWidth">
+                                <Tab label='Line' {...allyProps(0)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
+                                <Tab label='E-Mail' {...allyProps(1)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
+                            </Tabs>
+                        </Box>
+                        <CustomTabPanel value={value} index={0}>
+                            <LinePanel onSubmit={handleSubmit} onTest={handleSendTest} onChange={handleInputChange} status={settingStatus} />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                            <EmailPanel onSubmit={handleSubmit} onChange={handleInputChange} status={settingStatus} />
+                        </CustomTabPanel>
+                    </Box>
+                </Stack>
+            </Stack>
+            <CheckNotifyDialog testResp={testResult} openDialog={openDialog} setOpenDialog={setOpenDialog} />
+        </div>
+    );
+}
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -46,67 +128,4 @@ const initStatus = {
     email_daily_to: 'jack@jacktech.com.tw',
     email_daily_cc: '',
     email_daily_time: '10:00',
-}
-
-export default function Sys_Notification() {
-    const [value, setValue] = useState(0);
-    const [settingStatus, setSettingStatus] = useState(initStatus);
-    // 控制Line和Email設定版面顯示切換
-    const handlePanelChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    // 控制設定內容變化
-    const handleInputChange = (name, value) => {
-        setSettingStatus(prevStatus => ({
-            ...prevStatus,
-            [name]: value,
-        }));
-    };
-    // 控制儲存按鍵程序
-    const onSubmit = () => {
-        axios.post(process.env.REACT_APP_API_URL + '/api/sys', settingStatus)
-            .then((ret) => {
-                console.info(ret);
-                setSettingStatus(ret.data);
-                console.info('new settings effected.'); 
-            }).catch(err => console.error(err));
-    }
-
-    useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + '/api/sys').then((ret) => {
-            setSettingStatus(ret.data);
-            console.log(ret.data)
-        }).catch(err => console.error(err));
-    }, []);
-
-    return (
-        <Stack direction='column' mx='5%' Spacing={2}>
-            <Stack className="layoutHead" 
-                direction="column" 
-                spacing='15px'
-                mt='30px' >
-                
-                <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
-                    通知設定
-                </Typography>
-            </Stack>
-
-            <Stack className="layouContent" direction='row' spacing={2} mt={2} alignItems='center'>
-                <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, BorderColor: 'divider', borderRadius: 2, backgroundColor: '#f0f0f0' }}>
-                        <Tabs value={value} onChange={handlePanelChange} aria-label="ncMaintain tabs" centered variant="fullWidth">
-                            <Tab label='Line' {...allyProps(0)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
-                            <Tab label='E-Mail' {...allyProps(1)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
-                        </Tabs>
-                    </Box>
-                    <CustomTabPanel value={value} index={0}>
-                        <LinePanel onSubmit={onSubmit} onChange={handleInputChange} status={settingStatus} />
-                    </CustomTabPanel>
-                    <CustomTabPanel value={value} index={1}>
-                        <EmailPanel onSubmit={onSubmit} onChange={handleInputChange} status={settingStatus} />
-                    </CustomTabPanel>
-                </Box>
-            </Stack>
-        </Stack>
-    );
 }

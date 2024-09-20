@@ -7,7 +7,7 @@ function StyledIcon(content) {
     return (
         <Button name={content.name} size="small" variant="contained" 
             startIcon={content.icon} onClick={content.onClick} disableRipple={true}
-            sx={{ bgcolor: content.color, '&:hover': {bgcolor: content.color} }}>
+            sx={{ color: content.fontColor, bgcolor: content.color, '&:hover': {bgcolor: content.color} }}>
             {content.op}
         </Button>
     )
@@ -40,14 +40,24 @@ export function StatusIcon(props) {
         icon: null,
         onClick: null,
         name: null,
+        fontColor: 'white',
     };
 
     if(props.status === 'idle') {
-        content.color = 'orange';
+        content.color = '#FFD306';
         content.op = '閒置中';
     } else if(props.status === 'running') {
         content.color = 'green';
         content.op = '運轉中';
+    } else if(props.status === 'warning') {
+        content.color = 'orange';
+        content.op = '警告';
+    } else if(props.status === 'pause') {
+        content.color = '#AFAF61';
+        content.op = '暫停中';
+    } else if(props.status === 'offline') {
+        content.color = '#808070';
+        content.op = '未連線';
     }
 
     return <StyledIcon {...content} />;
@@ -60,14 +70,16 @@ export function MaintainIcon(props) {
         icon: null,
         onClick: null,
         name: null,
+        fontColor: 'white',
     };
 
     if(props.status === 1) {
         content.color = 'green';
         content.op = '預約';
     } else if(props.status === 2) {
-        content.color = 'yellow';
+        content.color = 'orange';
         content.op = '需保養';
+        // content.fontColor = 'black';
     } else if(props.status === 3) {
         content.color = 'red';
         content.op = '過期';
@@ -131,7 +143,7 @@ export function CheckMaintainItemButton(props) {
     return(
         <Button size="small" variant="contained" startIcon={<AlarmOn />}
             name={`${props.id}`} onClick={props.onClick}
-            sx={{ color: 'black', bgcolor: '#FFD306', '&:hover': {bgcolor: '#D9B300'} }}>
+            sx={{ color: 'black', bgcolor: '#F9F900', '&:hover': {bgcolor: '#C4C400'} }}>
             完工
         </Button>
     );

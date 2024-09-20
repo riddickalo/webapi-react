@@ -63,17 +63,19 @@ export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, hand
     return (
         <Box className='Sidebar'>
             {/* Desktop */}
-            <SidebarDrawer variant="persistent" anchor="left" open={isSidebarOpen} disableScrollLock
-                sx={{ width: sidebarWidth, display: { xs: 'none', sm: 'block' } }} >           
+            <SidebarDrawer variant="persistent" anchor="left" disableScrollLock
+                open={isSidebarOpen} sidebarWidth={sidebarWidth}
+                sx={{ display: { xs: 'none', sm: 'block' } }} >           
                 <img className="Sidebar-Logo" src={ logo }></img>
                 <List>
                     <SidebarAccordion content={accordionContents} accordionState={accordionState} onChange={handleChange} />
                 </List>
             </SidebarDrawer>  
             {/* Mobile */}
-            <SidebarDrawer variant='temporary' anchor="left" open={isSidebarOpen} disableScrollLock
+            <SidebarDrawer variant='temporary' anchor="left" disableScrollLock
+                open={isSidebarOpen} sidebarWidth={sidebarWidth}
                 /*onTransitionEnd={handleTransitionEnd}*/ onClose={handleClose}
-                sx={{ width: sidebarWidth, display: { xs: 'block', sm: 'none' } }} >           
+                sx={{ display: { xs: 'block', sm: 'none' } }} >           
                 <img className="Sidebar-Logo" src={ logo }></img>
                 <List>
                     <SidebarAccordion content={accordionContents} accordionState={accordionState} onChange={handleChange} />

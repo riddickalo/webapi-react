@@ -45,9 +45,9 @@ function App() {
   //   setIsSidebarClosing(false);
   // }
   
-  const [accordionState, setAccordionState]= useState(() => {   // define state for accordion
-    const savedState = localStorage.getItem('accordionState');  // read previous state from storage
-    return savedState? JSON.parse(savedState): {};              // return it as initial state
+  const [accordionState, setAccordionState] = useState(() => {    // define state for accordion
+    const savedState = localStorage.getItem('accordionState');    // read previous state from storage
+    return savedState? JSON.parse(savedState): {};                // return it as initial state
   });
 
   useEffect(() => {
@@ -59,6 +59,7 @@ function App() {
   }, [loc, isXsScreen])
   
   const sidebarWidth = 250;
+  const refreshInterval = process.env.REACT_APP_REFRESH_INTERVAL || 3600000;
 
   return (
     <div className="App">
@@ -69,9 +70,9 @@ function App() {
         <div className={`Layout ${isSidebarOpen? 'SidebarOpen': ''}`}>
           <Box sx={{ bgcolor: '#5b5b99', width: '100%', minHeight: '100vh' }}>
             <Routes>
-                <Route path='/machine/status' element={ <NC_Status />}/>
+                <Route path='/machine/status' element={ <NC_Status interval={refreshInterval} />}/>
                 <Route path='/machine/maintain' element={ <NC_Maintain />}/>
-                <Route path='/machine/utilize' element={ <NC_Utilize />}/>
+                <Route path='/machine/utilize' element={ <NC_Utilize interval={refreshInterval} />}/>
                 {/* <Route path='/machine/ncfile' element={ <NC_File />}/> */}
                 <Route path='/alarm/status' element={ <Alarm_Status />}/>
                 <Route path='/alarm/history' element={ <Alarm_History />}/>

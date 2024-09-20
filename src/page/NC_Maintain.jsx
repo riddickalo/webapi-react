@@ -43,7 +43,7 @@ export default function NC_Maintain() {
             setIsEdit(null);
             setEditItem(initialSectionState);
         } else if(action[0] === 'Check') {
-            if(editItem.enable) {
+            if(editItem.status > 0) {
                 axios.post(process.env.REACT_APP_API_URL + '/api/maintain/create-record', editItem)
                     .then(({data, }) => {
                         console.log(data);
@@ -53,7 +53,6 @@ export default function NC_Maintain() {
                 setOpenDialog(true);
             }
             setIsEdit(null);
-            setEditItem(initialSectionState);
         }
     };
 

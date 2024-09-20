@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { Fragment } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import axios from "axios";
 
@@ -22,7 +22,7 @@ export default function DeleteItemDialog({ itemContent, openDialog, handleClose 
                     <DialogContent>
                         <DialogContentText id="delete-alert-dialog-content" >
                             {`將會刪除指定保養項目且無法恢復
-                                但已有保養紀錄將不受任何影響`}
+                                但已有保養紀錄不受任何影響`}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
