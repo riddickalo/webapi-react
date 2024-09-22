@@ -26,7 +26,8 @@ export default function Report() {
                     },
                     responseType: 'blob',
                 }).then(resp => {
-                    let fileName = `${e.target.name}_${rangeStart}_to_${rangeEnd}.zip`;
+                    let fileName = `${e.target.name}_${rangeStart}_to_${rangeEnd}.xlsx`;
+                    // let fileName = `${e.target.name}_${rangeStart}_to_${rangeEnd}.zip`;      // zip format has been deprecated
                     
                     // create a object handling from received data download to local
                     const url = window.URL.createObjectURL(new Blob([resp.data]));
