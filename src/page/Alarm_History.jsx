@@ -31,15 +31,15 @@ export default function Alarm_History() {
                 <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
                     歷史警報
                 </Typography>
-                <Button className="icon" 
+                {/* <Button className="icon" 
                     variant="text" 
                     onClick={ toggleSection }
                     sx={{ fontSize: '20px', color: 'white' }}
                     startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
                     進階搜尋
-                </Button>
+                </Button> */}
             </Stack>
-            <DataSearchSection showSection={showSection} />
+            {/* <DataSearchSection showSection={showSection} /> */}
             <Box className="layoutContent" mt={1} mb={3}>
                 {/* <p>歷史警報頁面</p> */}
                 <AlarmSubTable data={alarmData} />

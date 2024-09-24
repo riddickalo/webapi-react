@@ -4,12 +4,24 @@ import LinePanel from "../components/NotifyPanel_Line";
 import EmailPanel from "../components/NotifiPanel_Email";
 import CheckNotifyDialog from "../components/Dialog_TestNotify";
 import axios from "axios";
+import dayjs from "dayjs";
+import objectSupport from "dayjs/plugin/objectSupport";
+
+dayjs.extend(objectSupport);
+
+const str2dayjs = (str) => {
+    if(str) {
+        const strArr = str.split(':');
+        return dayjs({ hour: strArr[0], minute: strArr[1] });
+    } else return null;
+};
 
 export default function Sys_Notification() {
     const [value, setValue] = useState(0);
     const [settingStatus, setSettingStatus] = useState(initStatus);
     const [openDialog, setOpenDialog] = useState(false);
     const testResult = useRef(null);
+    const dailyTime = useRef(null);
 
     // 控制Line和Email設定版面顯示切換
     const handlePanelChange = (event, newValue) => {
@@ -24,9 +36,16 @@ export default function Sys_Notification() {
     };
     // 控制儲存按鍵程序
     const handleSubmit = () => {
-        axios.post(process.env.REACT_APP_API_URL + '/api/sys', settingStatus)
+        // convert dayjs object to string
+        const sentSetting = {
+            ...settingStatus,
+            ['line_daily_time']: dayjs(dailyTime.current).format('HH:mm'),
+        }
+        axios.post(process.env.REACT_APP_API_URL + '/api/sys', sentSetting)
             .then((ret) => {
-                console.info(ret);
+                // console.info(ret);
+                // convert string to dayjs object
+                dailyTime.current = str2dayjs(ret.data.line_daily_time);
                 setSettingStatus(ret.data);
                 console.info('new settings effected.'); 
             }).catch(err => console.error(err));
@@ -43,13 +62,21 @@ export default function Sys_Notification() {
                 setOpenDialog(true);
             });
     };
-
+    // page mounting event
     useEffect(() => {
         axios.get(process.env.REACT_APP_API_URL + '/api/sys').then((ret) => {
+            dailyTime.current = str2dayjs(ret.data.line_daily_time);
             setSettingStatus(ret.data);
-            console.log(ret.data)
+            // console.log(ret.data);
         }).catch(err => console.error(err));
     }, []);
+    // handle timepicker change, set line_daily_time
+    useEffect(() => {
+        setSettingStatus(prevSetting => ({
+            ...prevSetting,
+            ['line_daily_time']: dayjs(dailyTime).format('HH:mm'),
+        }));
+    }, [dailyTime]);
 
     return (
         <div>
@@ -59,7 +86,7 @@ export default function Sys_Notification() {
                     spacing='15px'
                     mt='30px' >
                     
-                    <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
+                    <Typography variant="h4" fontWeight={'bold'} mt={'30px'} textAlign={'left'} >
                         通知設定
                     </Typography>
                 </Stack>
@@ -69,15 +96,16 @@ export default function Sys_Notification() {
                         <Box sx={{ borderBottom: 1, BorderColor: 'divider', borderRadius: 2, backgroundColor: '#f0f0f0' }}>
                             <Tabs value={value} onChange={handlePanelChange} aria-label="ncMaintain tabs" centered variant="fullWidth">
                                 <Tab label='Line' {...allyProps(0)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
-                                <Tab label='E-Mail' {...allyProps(1)} sx={{ fontSize: '18px', fontWeight: 'bold' }} />
+                                {/* <Tab label='E-Mail' {...allyProps(1)} sx={{ fontSize: '18px', fontWeight: 'bold' }} /> */}
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            <LinePanel onSubmit={handleSubmit} onTest={handleSendTest} onChange={handleInputChange} status={settingStatus} />
+                            <LinePanel onSubmit={handleSubmit} onTest={handleSendTest} onChange={handleInputChange} 
+                                status={settingStatus} dailyTime={dailyTime} />
                         </CustomTabPanel>
-                        <CustomTabPanel value={value} index={1}>
+                        {/* <CustomTabPanel value={value} index={1}>
                             <EmailPanel onSubmit={handleSubmit} onChange={handleInputChange} status={settingStatus} />
-                        </CustomTabPanel>
+                        </CustomTabPanel> */}
                     </Box>
                 </Stack>
             </Stack>

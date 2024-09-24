@@ -1,10 +1,13 @@
-import { Button, Stack, Grid, Typography, TextField, Switch } from "@mui/material";
+import { Button, Stack, Grid, Typography, TextField, Switch, MenuItem } from "@mui/material";
 import { SaveRounded, SendTimeExtension } from "@mui/icons-material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs/AdapterDayjs";
 
-export default function LinePanel({ onSubmit, onChange, status, onTest }) {
-
+export default function LinePanel({ onSubmit, onChange, status, onTest, dailyTime }) {
     const handleTextChange = ({target, }) => onChange(target.name, target.value);
     const handleSwitchChange = ({target, }) => onChange(target.name, target.checked);
+    const handleTimeChange = (e) => dailyTime.current = e;
 
     return (
         <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
@@ -31,15 +34,20 @@ export default function LinePanel({ onSubmit, onChange, status, onTest }) {
                     <Typography variant="h6" textAlign={'left'}>訊息語言: </Typography>
                 </Grid>
                 <Grid item xs={9}>
-                    <TextField label='MsgLang' sx={{ width: '100%' }} onChange={handleTextChange}
-                        name="line_alarm_ln" value={status.line_alarm_ln} />
+                    <TextField select label='MsgLang' sx={{ width: '100%' }} onChange={handleTextChange}
+                        name="line_alarm_ln" value={status.line_alarm_ln} align='left' >
+                            <MenuItem value={'zh-TW'} >zh-TW</MenuItem>
+                            <MenuItem value={'en'} >en</MenuItem>
+                    </TextField>
                 </Grid>
                 <Grid item xs={2} ml={1} mb={2}>
                     <Typography variant="h6" textAlign={'left'}>時區: </Typography>
                 </Grid>
                 <Grid item xs={9} mb={2}>
-                    <TextField label='TimeZone' sx={{ width: '100%' }} onChange={handleTextChange}
-                        name="line_alarm_timezone" value={status.line_alarm_timezone}  />
+                    <TextField select label='TimeZone' sx={{ width: '100%' }} onChange={handleTextChange}
+                        name="line_alarm_timezone" value={status.line_alarm_timezone} align='left' >
+                            <MenuItem value={'Taipei'} >Taipei</MenuItem>
+                    </TextField>
                 </Grid>
             </Grid>
             <Grid container width={'100%'} spacing={2}
@@ -52,7 +60,7 @@ export default function LinePanel({ onSubmit, onChange, status, onTest }) {
                 </Grid>
                 <Grid item xs={9} align={'left'}>
                     <Switch name="line_daily_status" onChange={handleSwitchChange}
-                        value={status.line_daily_status}/>
+                        checked={status.line_daily_status} />
                 </Grid>
                 <Grid item xs={2} ml={1}>
                     <Typography variant="h6" textAlign={'left'}>Line Token: </Typography>
@@ -65,8 +73,16 @@ export default function LinePanel({ onSubmit, onChange, status, onTest }) {
                     <Typography variant="h6" textAlign={'left'}>通知時間: </Typography>
                 </Grid>
                 <Grid item xs={9} mb={2}>
-                    <TextField label='NotifyTime' sx={{ width: '100%' }} onChange={handleTextChange}
-                        name="line_daily_time" value={status.line_daily_time} />
+                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="zh-TW" >
+                        <TimePicker 
+                            format="HH:mm"
+                            label='NotifyTime' 
+                            views={['hours', 'minutes']}
+                            ampm={false}
+                            onChange={(e) => handleTimeChange(e)}
+                            value={dailyTime.current}
+                            sx={{ width: '100%' }} /> 
+                    </LocalizationProvider>
                 </Grid>
             </Grid>
             <Grid container width={'100%'} spacing={2}

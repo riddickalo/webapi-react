@@ -66,15 +66,15 @@ export default function NC_Utilize(props) {
                 <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
                     機台稼動率
                 </Typography>
-                <Button className="icon" 
+                {/* <Button className="icon" 
                     variant="text" 
                     onClick={ toggleSection }
                     sx={{ fontSize: '20px', color: 'white' }}
                     startIcon={<FindInPageRounded sx={{ mr: '3px' }} />} > 
                     進階搜尋
-                </Button>
+                </Button> */}
             </Stack>
-            <DataSearchSection showSection={showSection} />
+            {/* <DataSearchSection showSection={showSection} /> */}
             <Box className="layoutContent" ref={layoutRef} sx={{ height: '100%', my: 3, display: 'flex' }}>
                 <Grid container spacing={5} columns={getGridColumns()}>
                     {

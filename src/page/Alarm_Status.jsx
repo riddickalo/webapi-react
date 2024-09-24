@@ -31,13 +31,13 @@ export default function Alarm_Status() {
                 <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
                     即時警報
                 </Typography>
-                <Button className="icon" 
+                {/* <Button className="icon" 
                     variant="text" 
                     onClick={ toggleSection }
                     sx={{ fontSize: '20px', color: 'white' }}
                     startIcon={<FilterAltRounded sx={{ mr: '3px' }} />} > 
                     資料篩選
-                </Button>
+                </Button> */}
             </Stack>
             {/* <DataFilterSection showSection={showSection} /> */}
             <Box className="layoutContent" mt={1} mb={3}>

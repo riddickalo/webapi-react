@@ -18,7 +18,7 @@ export default function Sys_General() {
                 spacing='15px'
                 mt='30px' >
                 
-                <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
+                <Typography variant="h4" fontWeight={'bold'} mt={'30px'} textAlign={'left'} >
                     一般設定
                 </Typography>
 
@@ -31,9 +31,9 @@ export default function Sys_General() {
                         <Typography variant="h6">系統語系: </Typography>
                     </Grid>
                     <Grid item xs={9}>
-                        <TextField select label='選擇語系' sx={{ width: '100%', marginBottom: 1 }}>
+                        <TextField select label='選擇語系' align='left' sx={{ width: '100%', marginBottom: 1 }}>
                             {lgOpts.map((choice) => (     // should be '(' not'{'
-                                <MenuItem key={choice.key} value={choice.value} >
+                                <MenuItem key={choice.code} value={choice.key} >
                                     {choice.value}
                                 </MenuItem>
                             ))}
