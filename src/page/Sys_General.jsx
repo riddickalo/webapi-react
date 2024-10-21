@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Grid, TextField, MenuItem, Box, Button, Card, CardContent, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { SaveRounded } from '@mui/icons-material';
 
@@ -8,6 +8,14 @@ const lgOpts = [
 ];
 
 export default function Sys_General() {
+    const [version, setVersion] = useState();
+
+    useEffect(() => {
+        import('../../package.json').then((pck) => {
+            setVersion(pck.default.version);
+        });
+    }, []);
+
     return (
         <Stack direction='column' mx='5%' 
             Spacing={2}
@@ -53,7 +61,7 @@ export default function Sys_General() {
                     系統版本
                 </Typography>
                 <Card sx={{ width: 55, height: 25, bgcolor: "#E56717", alignContent:'center'}}>
-                    <Typography variant="body2" sx={{ color: 'white' }}> v0.1.0 </Typography>
+                    <Typography variant="body2" sx={{ color: 'white' }}> {version} </Typography>
                 </Card>
             </Stack>
         </Stack>
