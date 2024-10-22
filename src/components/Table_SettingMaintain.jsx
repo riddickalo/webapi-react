@@ -10,7 +10,7 @@ export default function SettingMaintainSubTable({ data, isEdit, editItem, handle
     const handleClick = ({target}) => handleChange(target.name, !editItem[target.name]);
     const handleTextChange = ({target}) => handleChange(target.name, target.value);
     
-    const tableHead = ['項次', '保養項目', '機台週期(天)', '自動啟用', '操作'];
+    const tableHead = ['項次', '保養項目', '保養週期(天)', '自動啟用', '操作'];
     const bodyData = (statusData, handleTrigger) => {
         if(statusData === null || statusData.length === 0) {
             return (<NoData />);
