@@ -1,0 +1,4 @@
+# Ignore devcontainer files
+.devcontainer/*
+
+node_modules/*

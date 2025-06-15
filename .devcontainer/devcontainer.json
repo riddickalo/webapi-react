@@ -1,0 +1,38 @@
+{
+    "name": "react-dev-node-18.20",
+    "image": "node:18.20",
+    "workspaceFolder": "/react-app",
+    
+    // 掛載本機目錄到容器
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/react-app,type=bind"
+    ],
+
+    // Port mapping
+    "forwardPorts": [3000],
+    
+    // VS Code 擴充套件
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "xabikos.ReactSnippets"
+            ],
+            "settings": {
+                "editor.formatOnSave": true,
+                "eslint.enable": true,
+                "eslint.validate": [
+                    "javascript",
+                    "javascriptreact",
+                    "typescript",
+                    "typescriptreact"
+                ]
+            }
+        }
+    },
+    "postCreateCommand": "npm install && npm list",
+    
+    // 保持容器運行
+    "shutdownAction": "stopContainer"
+}
