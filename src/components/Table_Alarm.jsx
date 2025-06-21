@@ -1,7 +1,7 @@
 import React from "react";
 import NoData from "./NoData";
 import { StyledSubTable, StyledTableCell, StyledTableRow } from "./StyledTable";
-import { convertTimeFormat } from "../utils/timeFormat";
+import { convertTimeFormat } from "../utils/time_format";
 
 export function AlarmSubTable({ data }) {
     const tableHead = ['機台廠區', '機台產線', '機台工作站', '機台名稱', '警報時間', '警報描述'];

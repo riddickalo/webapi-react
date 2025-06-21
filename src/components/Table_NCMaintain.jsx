@@ -4,7 +4,7 @@ import { BorderColor } from "@mui/icons-material";
 import NoData from "./NoData";
 import { StyledTableCell, StyledTableRow, StyledSubTable } from "./StyledTable";
 import { MaintainIcon, MaintainEnabledIcon, EditMaintainButton, CheckMaintainItemButton, BackMaintainItemButton } from "./Icons";
-import { convertTimeFormat } from '../utils/timeFormat';
+import { convertTimeFormat } from '../utils/time_format';
 
 export default function NCMaintainSubTable(props) {
     const [value, setValues] = useState(0);
