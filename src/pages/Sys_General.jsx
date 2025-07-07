@@ -1,4 +1,5 @@
 import React from "react";
+import pckInfo from '../../package.json';
 import { Grid, TextField, MenuItem, Box, Button, Card, CardContent, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { SaveRounded } from '@mui/icons-material';
 
@@ -53,7 +54,7 @@ export default function Sys_General() {
                     系統版本
                 </Typography>
                 <Card sx={{ width: 55, height: 25, bgcolor: "#E56717", alignContent:'center'}}>
-                    <Typography variant="body2" sx={{ color: 'white' }}> v0.1.0 </Typography>
+                    <Typography variant="body2" sx={{ color: 'white' }}> {pckInfo.version} </Typography>
                 </Card>
             </Stack>
         </Stack>
