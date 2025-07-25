@@ -6,11 +6,11 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function ChangePswdDialog({ openDialog, setOpenDialog, onPasswordChange }) {
     const { userInfo, setUserInfo } = useContext(UserContext);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState({ current: false, new: false, confirm: false });
     const [chgData, setChgData] = useState({
         current_password: '',
-        new_password: ''
+        new_password: '',
+        confirm_password: ''
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -22,17 +22,24 @@ export default function ChangePswdDialog({ openDialog, setOpenDialog, onPassword
     };
 
     const handleSubmit = async () => {
+        // 檢查新密碼和確認密碼是否相同
+        if (chgData.new_password !== chgData.confirm_password) {
+            onPasswordChange?.(false, '新密碼和確認密碼不一致，請重新輸入。');
+            return;
+        }
+
         setIsLoading(true);
         try {
             console.log('Attempting to change password with:', chgData);
-            const response = await axios.post(process.env.REACT_APP_API_URL + '/auth/change-password', chgData, {
+            await axios.post(process.env.REACT_APP_API_URL + '/auth/change-password', chgData, {
                 headers: { 'authorization': `Bearer ${localStorage.getItem('token')}` }
             });
             
             // 清空輸入欄位（只在成功時清空）
             setChgData({
                 current_password: '',
-                new_password: ''
+                new_password: '',
+                confirm_password: ''
             });
             
             // 通知父組件變更密碼成功
@@ -64,7 +71,8 @@ export default function ChangePswdDialog({ openDialog, setOpenDialog, onPassword
         setOpenDialog(false);
         setChgData({
             current_password: '',
-            new_password: ''
+            new_password: '',
+            confirm_password: ''
         })
     };
 
@@ -81,7 +89,7 @@ export default function ChangePswdDialog({ openDialog, setOpenDialog, onPassword
                             <TextField
                                 label="Current Password"
                                 variant='outlined'
-                                type={showPassword ? 'text' : 'password'}
+                                type={showPassword.current ? 'text' : 'password'}
                                 fullWidth
                                 value={chgData.current_password}
                                 onChange={(e) => handleInputChange('current_password', e.target.value)}
@@ -90,10 +98,10 @@ export default function ChangePswdDialog({ openDialog, setOpenDialog, onPassword
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
-                                                onClick={() => setShowPassword(!showPassword)}
+                                                onClick={() => setShowPassword(prev => ({ ...prev, current: !prev.current }))}
                                                 edge="end"
                                             >
-                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                {showPassword.current ? <Visibility /> : <VisibilityOff />}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
@@ -102,7 +110,7 @@ export default function ChangePswdDialog({ openDialog, setOpenDialog, onPassword
                             <TextField
                                 label="New Password"
                                 variant='outlined'
-                                type={showNewPassword ? 'text' : 'password'}
+                                type={showPassword.new ? 'text' : 'password'}
                                 fullWidth
                                 value={chgData.new_password}
                                 onChange={(e) => handleInputChange('new_password', e.target.value)}
@@ -111,10 +119,30 @@ export default function ChangePswdDialog({ openDialog, setOpenDialog, onPassword
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
-                                                onClick={() => setShowNewPassword(!showNewPassword)}
+                                                onClick={() => setShowPassword(prev => ({ ...prev, new: !prev.new }))}
                                                 edge="end"
                                             >
-                                                {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                                                {showPassword.new ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }} />
+                            <TextField
+                                label="Confirm Password"
+                                variant='outlined'
+                                type={showPassword.confirm ? 'text' : 'password'}
+                                fullWidth
+                                value={chgData.confirm_password}
+                                onChange={(e) => handleInputChange('confirm_password', e.target.value)}
+                                disabled={isLoading}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPassword(prev => ({ ...prev, confirm: !prev.confirm }))}
+                                                edge="end"
+                                            >
+                                                {showPassword.confirm ? <Visibility /> : <VisibilityOff />}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
@@ -127,7 +155,7 @@ export default function ChangePswdDialog({ openDialog, setOpenDialog, onPassword
                         </Button>
                         <Button onClick={handleSubmit}
                                 variant="contained"
-                                disabled={isLoading || !chgData.current_password || !chgData.new_password}
+                                disabled={isLoading || !chgData.current_password || !chgData.new_password || !chgData.confirm_password}
                         >
                             變更
                         </Button>

@@ -4,7 +4,9 @@ import { UserContext } from "../../shared/contexts/User_Provider";
 import NoPermission from "../../shared/components/NoPermission";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { FindInPageRounded, NoteAddRounded } from '@mui/icons-material';
-import { MaintainFilterSection, MaintainAddSection} from "../NC/Section_Maintain";
+import { useLogout } from "../../shared/utils/logout";
+import MaintainFilterSection from "../NC/Section_FilterMaintain";
+import MaintainAddSection from "./Section_AddMaintain";
 import SettingMaintainSubTable from "./Table_SettingMaintain";
 import DeleteItemDialog from "../NC/Dialog_DeleteMaintain";
 
@@ -15,6 +17,7 @@ export default function Setting_Maintain() {
     const [isEdit, setIsEdit] = useState(null);
     const [editItem, setEditItem] = useState(initialSectionState);
     const [openDialog, setOpenDialog] = useState(false);
+    const logout = useLogout();
 
     const { userInfo } = useContext(UserContext);
     const permission = userInfo?.permissions?.Setting_Maintain;
@@ -50,17 +53,24 @@ export default function Setting_Maintain() {
 
         } else if(target.name === 'SubmmitButton') {
             // console.log('submit')
-            const token = localStorage.getItem('token'); // 或從 context 獲取
-            axios.post(process.env.REACT_APP_API_URL + '/api/maintain/update-item', sectionState, {
-                headers: {
-                    'authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(({data, }) => {
-                    // console.log(data)
-                    setMaintainData(data);
-                }).catch((err) => console.error(err));
+            if(canEdit) {
+                const token = localStorage.getItem('token'); // 或從 context 獲取
+                axios.post(process.env.REACT_APP_API_URL + '/api/maintain/update-item', sectionState, {
+                    headers: {
+                        'authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(({data, }) => {
+                        // console.log(data)
+                        setMaintainData(data);
+                    }).catch((err) => {
+                        console.error(err);
+                        if(err.response?.status === 401) {
+                            logout();
+                        }
+                    });
+            }
         }
     };
 
@@ -87,12 +97,16 @@ export default function Setting_Maintain() {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
-            })
-                .then(({data,}) => {
-                    setMaintainData(data);
-                    setIsEdit(null);
-                    setEditItem(initialSectionState);
-                });
+            }).then(({data,}) => {
+                setMaintainData(data);
+                setIsEdit(null);
+                setEditItem(initialSectionState);
+            }).catch((err) => {
+                console.error(err);
+                if(err.response?.status === 401) {
+                    logout();
+                }
+            });
         } else if(action[0] === 'Del') {
             setOpenDialog(true);
         }

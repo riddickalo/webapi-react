@@ -2,17 +2,19 @@ import { Fragment } from "react";
 import { IconButton, Snackbar } from "@mui/material";
 import { Close, CheckCircle, Cancel } from "@mui/icons-material";
 
-export default function AlertSnackbar({ openSnackbar, setOpenSnackbar, msg, type = 'info', position = { v: 'bottom', h: 'center' } }) {
+export default function AlertSnackbar({ open, onClose, message, severity = 'info', position = { vertical: 'bottom', horizontal: 'center' } }) {
     const handleClose = (event, reason) => {
         if(reason === 'clickaway') {
             return;
         }
-        setOpenSnackbar(false);
+        if (onClose) {
+            onClose();
+        }
     }
 
     // 根據類型決定樣式和圖標
     const getSnackbarStyle = () => {
-        switch(type) {
+        switch(severity) {
             case 'success':
                 return {
                     backgroundColor: '#4caf50',
@@ -38,10 +40,10 @@ export default function AlertSnackbar({ openSnackbar, setOpenSnackbar, msg, type
 
     // 根據類型決定消息內容和動作
     const style = getSnackbarStyle();
-    const message = (
+    const messageContent = (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             {style.icon}
-            {msg}
+            {message}
         </div>
     );
 
@@ -55,11 +57,11 @@ export default function AlertSnackbar({ openSnackbar, setOpenSnackbar, msg, type
 
     return (
         <Snackbar 
-            open={openSnackbar} 
+            open={open} 
             autoHideDuration={5000} 
             onClose={handleClose}
-            anchorOrigin={{ vertical: position.v, horizontal: position.h }}
-            message={message}
+            anchorOrigin={{ vertical: position.vertical, horizontal: position.horizontal }}
+            message={messageContent}
             action={action}
             ContentProps={{
                 sx: {

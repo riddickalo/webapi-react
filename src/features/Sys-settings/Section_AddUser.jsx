@@ -3,6 +3,8 @@ import { Collapse, Grid, Box, TextField, Button, FormControlLabel, Checkbox, Inp
 // import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
 import SetPermissionsSubPanel from "./Panel_SetPermissions";
+import AlertSnackbar from "../../shared/components/SnackBar_Alert";
+import { useLogout } from "../../shared/utils/logout";
 
 export default function AddUserSection({ showSection, onUserAdded }) {
     const [newUser, setNewUser] = useState({
@@ -18,6 +20,8 @@ export default function AddUserSection({ showSection, onUserAdded }) {
         },
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+    const logout = useLogout();
     // 新增使用者會套用預設密碼，新使用者登入後變更密碼
     // const [showPassword, setShowPassword] = useState(false);
     // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -81,7 +85,7 @@ export default function AddUserSection({ showSection, onUserAdded }) {
                 onUserAdded(response.data);
             }
             
-            alert('使用者新增成功！');
+            setSnackbar({ open: true, message: '使用者新增成功！', type: 'success' });
             
         } catch (error) {
             console.error('Create user failed:', error);
@@ -91,19 +95,21 @@ export default function AddUserSection({ showSection, onUserAdded }) {
                 errorMessage = '輸入資料有誤，請檢查後重新提交。';
             } else if (error.response?.status === 401) {
                 errorMessage = '認證失敗，請重新登入。';
+                logout();
             } else if (error.response?.status === 409) {
                 errorMessage = '使用者帳號已存在，請使用其他帳號。';
             } else if (error.response?.data?.message) {
                 errorMessage = error.response.data.message;
             }
             
-            alert(errorMessage);
+            setSnackbar({ open: true, message: errorMessage, type: 'error' });
         } finally {
             setIsSubmitting(false);
         }
     }
 
     return (
+        <>
         <Collapse in={showSection}>
             <Box m={1} alignContent='center' alignItems='center' maxWidth='95%' 
                 sx={{ 
@@ -179,5 +185,13 @@ export default function AddUserSection({ showSection, onUserAdded }) {
                 </Grid>
             </Box>
         </Collapse>
+        <AlertSnackbar
+            open={snackbar.open}
+            message={snackbar.message}
+            severity={snackbar.severity}
+            position={{ vertical: 'top', horizontal: 'center' }}
+            onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+        />
+        </>
     );
 }

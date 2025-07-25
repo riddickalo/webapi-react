@@ -5,6 +5,7 @@ import { PersonAddAltRounded } from '@mui/icons-material';
 import NoPermission from "../../shared/components/NoPermission";
 import AddUserSection from "./Section_AddUser";
 import AccountSubTable from "./Table_Account";
+import AlertSnackbar from "../../shared/components/SnackBar_Alert";
 import axios from "axios";
 
 const initialUserState = {
@@ -19,6 +20,7 @@ export default function Sys_Account() {
     const [userData, setUserData] = useState([]);
     const [isEdit, setIsEdit] = useState(null);
     const [editItem, setEditItem] = useState(initialUserState);
+    const [alertStatus, setAlertStatus] = useState({ open: false, message: '', severity: 'info' });
 
     const { userInfo } = useContext(UserContext);
     const permission = userInfo?.permissions?.Sys_Account;
@@ -44,7 +46,11 @@ export default function Sys_Account() {
 
         // 禁止編輯 admin 用戶
         if (userId === 'admin' && (action[0] === 'Edit' || action[0] === 'Save')) {
-            alert('系統管理員帳號不允許被編輯');
+            setAlertStatus({
+                open: true,
+                message: '無法編輯系統管理員帳號',
+                severity: 'error'
+            });
             return;
         }
 
@@ -71,17 +77,41 @@ export default function Sys_Account() {
         }
     };
 
-    // 加載用戶數據
-    useEffect(() => {
+    // 新增用戶後，關閉section
+    const handleUserAdded = (newUser) => {
+        setShowSection(false);
+        obtainUserData();
+        if(newUser) {
+            setAlertStatus({
+                open: true,
+                message: '使用者新增成功！',
+                severity: 'success'
+            });
+        }
+    };
+
+    // 獲取用戶數據
+    const obtainUserData = async () => {
         if (!hasPermission) return;
         
-        // TODO: 實際從後端 API 獲取用戶數據
-        axios.get(process.env.REACT_APP_API_URL + '/auth/user')
-            .then(({ data }) => {
-                console.log('Fetched user data:', data);
-                setUserData(data);
-            }).catch((err) => console.error(err));
-        
+        try {
+            const { data } = await axios.get(process.env.REACT_APP_API_URL + '/auth/user');
+            // console.log('Fetched user data:', data);
+            setUserData(data);
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+            setAlertStatus({
+                open: true,
+                message: '無法獲取使用者資料，請稍後再試。',
+                severity: 'error'
+            });
+        }
+    };
+
+    // 加載用戶數據
+    useEffect(() => {
+        obtainUserData();
+
         // 模擬數據
         // setUserData(mockUserData);
     }, [hasPermission]);
@@ -91,35 +121,42 @@ export default function Sys_Account() {
     }
 
     return (
-        <Stack direction='column' mx='5%'>
-            <Stack className="layoutHead" 
-                direction="row" 
-                spacing='40px'
-                mt='30px' >
-                
-                <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
-                    使用者管理
-                </Typography>
-                <Button className="icon" 
-                    variant="text" 
-                    onClick={toggleSection}
-                    sx={{ fontSize: '20px', color: 'white' }}
-                    startIcon={<PersonAddAltRounded sx={{ mr: '3px' }} />} > 
-                    新增帳號
-                </Button>
+        <>
+            <Stack direction='column' mx='5%'>
+                <Stack className="layoutHead" 
+                    direction="row" 
+                    spacing='40px'
+                    mt='30px' >
+                    
+                    <Typography variant="h4" fontWeight={'bold'} mt={'30px'}>
+                        使用者管理
+                    </Typography>
+                    <Button className="icon" 
+                        variant="text" 
+                        onClick={toggleSection}
+                        sx={{ fontSize: '20px', color: 'white' }}
+                        startIcon={<PersonAddAltRounded sx={{ mr: '3px' }} />} > 
+                        新增帳號
+                    </Button>
+                </Stack>
+                <AddUserSection showSection={showSection} onUserAdded={handleUserAdded} />
+                <Box className="layoutContent" mt={2} mb={5}>
+                    <AccountSubTable 
+                        data={userData}
+                        isEdit={isEdit}
+                        editItem={editItem}
+                        handleClick={handleClick}
+                        handleChange={handleEditItemChange}
+                        canEdit={hasPermission}
+                    />
+                </Box>
             </Stack>
-            <AddUserSection showSection={showSection} />
-            <Box className="layoutContent" mt={2} mb={5}>
-                <AccountSubTable 
-                    data={userData}
-                    isEdit={isEdit}
-                    editItem={editItem}
-                    handleClick={handleClick}
-                    handleChange={handleEditItemChange}
-                    canEdit={hasPermission}
-                />
-            </Box>
-        </Stack>
+            <AlertSnackbar  open={alertStatus.open}
+                            onClose={() => setAlertStatus({ ...alertStatus, open: false })}
+                            message={alertStatus.message}
+                            severity={alertStatus.severity}
+                            position={{ vertical: 'top', horizontal: 'center' }} />
+        </>
     );
 }
 

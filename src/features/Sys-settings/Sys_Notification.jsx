@@ -7,6 +7,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import objectSupport from "dayjs/plugin/objectSupport";
 import { UserContext } from "../../shared/contexts/User_Provider";
+import { useLogout } from "../../shared/utils/logout";
 import NoPermission from "../../shared/components/NoPermission";
 import AlertSnackbar from "../../shared/components/SnackBar_Alert";
 
@@ -22,13 +23,15 @@ const str2dayjs = (str) => {
 export default function Sys_Notification() {
     const [value, setValue] = useState(0);
     const [settingStatus, setSettingStatus] = useState(initStatus);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState({ open: false });
     const testResult = useRef(null);
     const dailyTime = useRef(null);
 
     const { userInfo } = useContext(UserContext);
     const permission = userInfo?.permissions?.Sys_Notification;
     const hasPermission = permission === 'edit' || permission === 'view';
+
+    const logout = useLogout();
 
     // 控制Line和Email設定版面顯示切換
     const handlePanelChange = (event, newValue) => {
@@ -64,7 +67,12 @@ export default function Sys_Notification() {
                 dailyTime.current = str2dayjs(ret.data.line_daily_time);
                 setSettingStatus(ret.data);
                 console.info('new settings effected.'); 
-            }).catch(err => console.error(err));
+            }).catch((err) => {
+                console.error(err);
+                if(err.response?.status === 401) {
+                    logout();
+                }
+            });
     };
 
     // 測試訊息按鍵
@@ -141,7 +149,7 @@ export default function Sys_Notification() {
                     </Box>
                 </Stack>
             </Stack>
-            <AlertSnackbar openSnackbar={openSnackbar} setOpenSnackbar={setOpenSnackbar} msg={getTestResMsg()} type={testResult.current? 'success':'fail'} />
+            <AlertSnackbar open={openSnackbar.open} onClose={() => setOpenSnackbar({ ...openSnackbar, open: false })} message={getTestResMsg()} severity={testResult.current? 'success':'fail'} />
             {/* <CheckNotifyDialog testResp={testResult} openDialog={openDialog} setOpenDialog={setOpenDialog} /> */}
         </div>
     );

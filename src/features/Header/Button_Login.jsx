@@ -12,40 +12,31 @@ export default function LoginButton() {
     const [openLoginDialog, setOpenLoginDialog] = useState(false);
 
     // snackbar state
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState(''); 
-    const [snackbarType, setSnackbarType] = useState('info');
+    const [snackbar, setSnackbar] = useState({ open: false, msg: '', severity: 'info' });
 
     // 接收登入結果，並執行對應的操作
     const handleLoginResult = (success, message) => {
-        setSnackbarOpen(true);
-        setSnackbarMessage(message);
-        setSnackbarType(success ? 'success' : 'fail');
+        setSnackbar({ open: true, msg: message, severity: success ? 'success' : 'fail' });
         if (success) {
             setOpenLoginDialog(false); // Close the dialog on successful login
         }
     };
 
     // 接收登出結果
-    const handleLogoutResult = (message) => {
-        setSnackbarOpen(true);
-        setSnackbarMessage(message);
-        setSnackbarType('info');
-    };
+    const handleLogoutResult = (message) => setSnackbar({ open: true, msg: message, type: 'success' });
 
     // 接收變更密碼結果
     const handlePasswordChangeResult = (success, message) => {
-        setSnackbarOpen(true);
-        setSnackbarMessage(message);
-        setSnackbarType(success ? 'success' : 'fail');
-        
+        setIsLogOutPop(null); // Close the logout popover
+        setSnackbar({ open: true, msg: message, severity: success ? 'success' : 'fail' });
+
         if (success) {
             // 密碼變更成功後自動登出
             setTimeout(() => {
                 setUserInfo(null);
                 localStorage.removeItem('token');
                 localStorage.removeItem('userInfo');
-            }, 2000); // 2秒後自動登出，讓用戶看到成功訊息
+            }, 3000); // 2秒後自動登出，讓用戶看到成功訊息
         }
         // 失敗時不關閉對話框，讓用戶重新嘗試
     };
@@ -64,11 +55,11 @@ export default function LoginButton() {
                     <LoginDialog openDialog={openLoginDialog} 
                                  setOpenDialog={setOpenLoginDialog}
                                  onLogin={handleLoginResult} />
-                    <AlertSnackbar openSnackbar={snackbarOpen}
-                                   setOpenSnackbar={setSnackbarOpen}
-                                   msg={snackbarMessage}
-                                   type={snackbarType}
-                                   position={{ v: 'top', h: 'center' }} />
+                    <AlertSnackbar open={snackbar.open}
+                                   onClose={() => setSnackbar({ ...snackbar, open: false })}
+                                   message={snackbar.msg}
+                                   severity={snackbar.severity}
+                                   position={{ vertical: 'top', horizontal: 'center' }} />
                 </div>
             );
         } else {
@@ -78,11 +69,11 @@ export default function LoginButton() {
                                    setIsLogOutPop={setIsLogOutPop}
                                    onLogout={handleLogoutResult}
                                    onPasswordChange={handlePasswordChangeResult} />
-                    <AlertSnackbar openSnackbar={snackbarOpen}
-                                   setOpenSnackbar={setSnackbarOpen}
-                                   msg={snackbarMessage}
-                                   type={snackbarType}
-                                   position={{ v: 'top', h: 'center' }} />
+                    <AlertSnackbar open={snackbar.open}
+                                   onClose={() => setSnackbar({ ...snackbar, open: false })}
+                                   message={snackbar.msg}
+                                   severity={snackbar.severity}
+                                   position={{ vertical: 'top', horizontal: 'center' }} />
                 </div>
             );
         }

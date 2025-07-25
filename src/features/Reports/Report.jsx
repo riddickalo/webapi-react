@@ -4,6 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { UserContext } from "../../shared/contexts/User_Provider";
+import { useLogout } from "../../shared/utils/logout";
 import NoPermission from "../../shared/components/NoPermission";
 import ReportSubTable from "./Table_Report";
 import axios from 'axios';
@@ -13,6 +14,7 @@ import downloader from 'js-file-download';
 export default function Report() {
     const [timeRange, setTimeRange] = useState({ startTime: null, endTime: null });
     const { userInfo } = useContext(UserContext);
+    const logout = useLogout();
 
     const permission = userInfo?.permissions?.Report;
     const hasPermission = permission === 'edit' || permission === 'view';
@@ -57,7 +59,12 @@ export default function Report() {
                     downloader(res.data, `${e.target.name}_${rangeStart}_to_${rangeEnd}.csv`);
                 })
             }
-        } catch(err) { console.error(err) };
+        } catch(err) { 
+            console.error(err) 
+            if(err.response?.status === 401) {
+                logout();
+            }
+        };
     }
 
     const handleChangeRange = (label, e) => {

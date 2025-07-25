@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { UserContext } from "../../shared/contexts/User_Provider";
 import { Popover, Button, Stack } from "@mui/material";
 import { LogoutRounded, KeyRounded, AccountBoxRounded  } from "@mui/icons-material";
+import { useLogout } from "../../shared/utils/logout";
 import ChangePswdDialog from "./Dialog_ChangePswd";
 
 export default function LogoutPopover({ isLogOutPop, setIsLogOutPop, onLogout, onPasswordChange }) {
@@ -10,11 +11,11 @@ export default function LogoutPopover({ isLogOutPop, setIsLogOutPop, onLogout, o
 
     const showLogOutPop = (event) => setIsLogOutPop(event.currentTarget);
     const handleClose = () => setIsLogOutPop(null);
+    const logout = useLogout();
 
     const handleLogout = () => {
         handleClose();                      // 關閉 Popover
-        setUserInfo(null);                  // 清除使用者資訊
-        localStorage.removeItem('token');   // Clear the token
+        logout();                          // 執行登出操作
         onLogout?.('登出成功');              // 通知父組件登出成功
     }
 

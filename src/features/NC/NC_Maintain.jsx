@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import { Box, Button, Stack, Typography, Collapse, Grid, TextField } from "@mui/material";
 import { FilterAltRounded } from '@mui/icons-material';
 import NcMaintainSubTable from "./Table_NCMaintain";
-import { MaintainFilterSection } from "./Section_Maintain";
+import MaintainFilterSection from "./Section_FilterMaintain";
 import { initialMaintainData, initialSectionState } from "../General-settings/Setting_Maintain";
 import CheckItemDialog from "./Dialog_CheckMaintain";
 import NoPermission from "../../shared/components/NoPermission";
 import { UserContext } from "../../shared/contexts/User_Provider";
+import { useLogout } from "../../shared/utils/logout";
 import axios from "axios";
 
 export default function NC_Maintain() {
@@ -22,6 +23,8 @@ export default function NC_Maintain() {
     const permission = userInfo?.permissions?.NC_Maintain;
     const hasPermission = permission === 'edit' || permission === 'view';
     const canEdit = permission === 'edit';
+
+    const logout = useLogout();
     
     // show or change sections
     const toggleSection = () => {
@@ -58,7 +61,12 @@ export default function NC_Maintain() {
                 }).then(({data, }) => {
                     console.log(data);
                     setOpenDialog(true);
-                }).catch((err) => console.error(err));
+                }).catch((err) => {
+                    console.error(err)
+                    if(err.response?.status === 401) {
+                        logout();
+                    }
+                });
             } else {
                 setOpenDialog(true);
             }
