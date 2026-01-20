@@ -95,9 +95,9 @@ function CustomTabPanel(props) {
 
     return (
         <div 
-            role='tablepanel'
+            role='tabpanel'
             hidden={value !== index}
-            id={`tablepanel-${index}`}
+            id={`tabpanel-${index}`}
             aria-labelledby={`table-tab-${index}`}
             {...other} >
                 {value === index && <Box sx={{ p: 3 }}> {children} </Box>}
@@ -108,6 +108,6 @@ function CustomTabPanel(props) {
 function allyProps(index) {
     return {
         id: `table-tab-${index}`,
-        'aria-controls': `tablepanel-${index}`,
+        'aria-controls': `tabpanel-${index}`,
     };
 }

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../../shared/contexts/User_Provider";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { PersonAddAltRounded } from '@mui/icons-material';
@@ -91,7 +91,7 @@ export default function Sys_Account() {
     };
 
     // 獲取用戶數據
-    const obtainUserData = async () => {
+    const obtainUserData = useCallback(async () => {
         if (!hasPermission) return;
         
         try {
@@ -106,7 +106,7 @@ export default function Sys_Account() {
                 severity: 'error'
             });
         }
-    };
+    }, [hasPermission]);
 
     // 加載用戶數據
     useEffect(() => {
@@ -114,7 +114,7 @@ export default function Sys_Account() {
 
         // 模擬數據
         // setUserData(mockUserData);
-    }, [hasPermission]);
+    }, [hasPermission, obtainUserData]);
 
     if (!hasPermission) {
         return (<NoPermission />);
@@ -160,47 +160,47 @@ export default function Sys_Account() {
     );
 }
 
-const mockUserData = [
-            {
-                sn: 1,
-                user_name: 'admin',
-                user_alias: '系統管理員',
-                last_login: '2024-01-15 10:30:00',
-                status: true,
-                permissions: {
-                    Sys_Notification: 'edit',
-                    NC_Maintain: 'edit',
-                    Report: 'edit',
-                    Setting_Maintain: 'edit',
-                    Setting_NCstatus: 'edit'
-                }
-            },
-            {
-                sn: 2,
-                user_name: 'operator',
-                user_alias: '操作員',
-                last_login: '2024-01-14 15:20:00',
-                status: true,
-                permissions: {
-                    Sys_Notification: 'none',
-                    NC_Maintain: 'view',
-                    Report: 'view',
-                    Setting_Maintain: 'none',
-                    Setting_NCstatus: 'none'
-                }
-            },
-            {
-                sn: 3,
-                user_name: 'viewer',
-                user_alias: '觀察者',
-                last_login: '2024-01-13 09:15:00',
-                status: true,
-                permissions: {
-                    Sys_Notification: 'none',
-                    NC_Maintain: 'view',
-                    Report: 'view',
-                    Setting_Maintain: 'none',
-                    Setting_NCstatus: 'none'
-                }
-            }
-        ];
+// const mockUserData = [
+//             {
+//                 sn: 1,
+//                 user_name: 'admin',
+//                 user_alias: '系統管理員',
+//                 last_login: '2024-01-15 10:30:00',
+//                 status: true,
+//                 permissions: {
+//                     Sys_Notification: 'edit',
+//                     NC_Maintain: 'edit',
+//                     Report: 'edit',
+//                     Setting_Maintain: 'edit',
+//                     Setting_NCstatus: 'edit'
+//                 }
+//             },
+//             {
+//                 sn: 2,
+//                 user_name: 'operator',
+//                 user_alias: '操作員',
+//                 last_login: '2024-01-14 15:20:00',
+//                 status: true,
+//                 permissions: {
+//                     Sys_Notification: 'none',
+//                     NC_Maintain: 'view',
+//                     Report: 'view',
+//                     Setting_Maintain: 'none',
+//                     Setting_NCstatus: 'none'
+//                 }
+//             },
+//             {
+//                 sn: 3,
+//                 user_name: 'viewer',
+//                 user_alias: '觀察者',
+//                 last_login: '2024-01-13 09:15:00',
+//                 status: true,
+//                 permissions: {
+//                     Sys_Notification: 'none',
+//                     NC_Maintain: 'view',
+//                     Report: 'view',
+//                     Setting_Maintain: 'none',
+//                     Setting_NCstatus: 'none'
+//                 }
+//             }
+//         ];

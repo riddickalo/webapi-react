@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { Box, Stack, Typography, Grid } from "@mui/material";
 // import { FindInPageRounded } from '@mui/icons-material';
 // import DataSearchSection from "../../shared/components/Data_Search";
-import Card_Utilize from "./Card_Utilize";
+import CardUtilize from "./Card_Utilize";
 import NoData from "../../shared/components/NoData";
 import axios from "axios";
 // import * as dayjs from 'dayjs';
 
 export default function NC_Utilize(props) {
-    const [showSection, setShowSection] = useState(false);
+    // const [showSection, setShowSection] = useState(false);
     const [utilizeData, setUtilizeData] = useState(null);
     const layoutRef = useRef(null);
     const [layoutWidth, setLayoutWidth] = useState(0);
 
-    const toggleSection = () => setShowSection(!showSection);
+    // const toggleSection = () => setShowSection(!showSection);
     // cal grid columns base on window width
     const getGridColumns = () => {
         if(layoutWidth > 900) return 3;
@@ -42,16 +42,19 @@ export default function NC_Utilize(props) {
             }
         });
 
+        // capture ref value to stable variable
+        const currentLayout = layoutRef.current;
+
         // start listening if listener exists
-        if(layoutRef.current) {
-            sizeObserver.observe(layoutRef.current);
+        if(currentLayout) {
+            sizeObserver.observe(currentLayout);
         }
 
         // clean listener
         return() => {
             clearInterval(timerId);
-            if(sizeObserver.current) {
-                sizeObserver.unobserve(layoutRef.current);
+            if(currentLayout) {
+                sizeObserver.unobserve(currentLayout);
             }
         }
     }, [props.interval]);
@@ -81,7 +84,7 @@ export default function NC_Utilize(props) {
                         utilizeData==null? <NoData mt={3} ml={5}/>:
                             utilizeData.map((row) => (
                                 <Grid item xs={1} key={row.nc_id}>
-                                    <Card_Utilize {...row} />
+                                    <CardUtilize {...row} />
                                 </Grid>
                             ))
                     }

@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import axios from "axios";
 // import { UserContext } from "../../shared/contexts/User_Provider";
-import { Stack, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, TextField, InputAdornment, IconButton } from "@mui/material";
+import { Stack, Button, Dialog, DialogTitle, DialogActions, DialogContent, TextField, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function ChangePswdDialog({ openDialog, setOpenDialog, onPasswordChange }) {
