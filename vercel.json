@@ -18,6 +18,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/((?!static|.*\\.\\w+$).*)", "destination": "/" }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
