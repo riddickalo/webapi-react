@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Stack, Typography } from "@mui/material";
 // import { FindInPageRounded, FilterAltRounded } from '@mui/icons-material';
 // import DataFilterSection from "../../shared/components/Data_Filter";
 import { AlarmSubTable } from "./Table_Alarm";
 import axios from "axios";
 
 export default function Alarm_Status() {
-    const [showSection, setShowSection] = useState(true);
+    // const [showSection, setShowSection] = useState(true);
     const [alarmData, setAlarmData] = useState([]);
 
-    const toggleSection = ()=>{
-        setShowSection(!showSection);
-    }
+    // const toggleSection = ()=>{
+    //     setShowSection(!showSection);
+    // }
 
     useEffect(() => {
         axios.get(process.env.REACT_APP_API_URL + '/api/alarm/current')

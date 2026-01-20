@@ -6,7 +6,7 @@ import { useLogout } from "../../shared/utils/logout";
 import ChangePswdDialog from "./Dialog_ChangePswd";
 
 export default function LogoutPopover({ isLogOutPop, setIsLogOutPop, onLogout, onPasswordChange }) {
-    const { userInfo, setUserInfo } = useContext(UserContext);
+    const { userInfo, } = useContext(UserContext);
     const [openDialog, setOpenDialog] = useState(false);
 
     const showLogOutPop = (event) => setIsLogOutPop(event.currentTarget);

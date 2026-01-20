@@ -68,7 +68,7 @@ export default function NC_Status(props) {
             filteredData.forEach(row => ncList.push(row.nc_id));
             setFilteredData(statusData.current.filter(row => (ncList.includes(row.nc_id))));
         } 
-    }, [statusData.current]);
+    }, [filteredData]);
 
     return (
         <Stack direction='column' mx='5%'>

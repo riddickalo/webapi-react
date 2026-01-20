@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Tabs, Tab, Box, Stack, Typography } from "@mui/material";
 import LinePanel from "./NotifyPanel_Line";
-import EmailPanel from "./NotifyPanel_Email";
-import CheckNotifyDialog from "./Dialog_TestNotify";
+// import EmailPanel from "./NotifyPanel_Email";
+// import CheckNotifyDialog from "./Dialog_TestNotify";
 import axios from "axios";
 import dayjs from "dayjs";
 import objectSupport from "dayjs/plugin/objectSupport";
@@ -53,7 +53,7 @@ export default function Sys_Notification() {
         // convert dayjs object to string
         const sentSetting = {
             ...settingStatus,
-            ['line_daily_time']: dayjs(dailyTime.current).format('HH:mm'),
+            line_daily_time: dayjs(dailyTime.current).format('HH:mm'),
         }
         axios.post(process.env.REACT_APP_API_URL + '/api/sys', sentSetting, {
             headers: {
@@ -110,7 +110,7 @@ export default function Sys_Notification() {
         if(!dailyTime.current) return;
         setSettingStatus(prevSetting => ({
             ...prevSetting,
-            ['line_daily_time']: dayjs(dailyTime).format('HH:mm'),
+            line_daily_time: dayjs(dailyTime.current).format('HH:mm'),
         }));
     }, [dailyTime]);
 
@@ -160,7 +160,7 @@ function CustomTabPanel(props) {
 
     return (
         <div 
-            role='notifypanel'
+            role='tabpanel'
             hidden={value !== index}
             id={`notifypanel-${index}`}
             aria-labelledby={`table-tab-${index}`}

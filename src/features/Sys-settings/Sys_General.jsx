@@ -1,6 +1,5 @@
-import React from "react";
 import pckInfo from '../../../package.json';
-import { Grid, TextField, MenuItem, Box, Button, Card, CardContent, Divider, IconButton, Stack, Typography } from "@mui/material";
+import { Card, Grid, TextField, MenuItem, Button, Stack, Typography, Divider } from "@mui/material";
 import { SaveRounded } from '@mui/icons-material';
 
 const lgOpts = [

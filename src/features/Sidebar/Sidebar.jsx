@@ -1,7 +1,7 @@
 import React from "react";
 import logo from '../../shared/assets/img/JackTech banner logo.png';
 import { List, Box } from '@mui/material';
-import { FilePresentRounded, MonitorRounded, ReportProblemRounded, FeedRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
+import { FilePresentRounded, MonitorRounded, ReportProblemRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
 import { SidebarDrawer, SidebarAccordion } from "./StyledSidebar";
 
 export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, handleTransitionEnd, accordionState, setAccordionState }) {
@@ -66,7 +66,7 @@ export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, hand
             <SidebarDrawer variant="persistent" anchor="left" disableScrollLock
                 open={isSidebarOpen} sidebarWidth={sidebarWidth}
                 sx={{ display: { xs: 'none', sm: 'block' } }} >           
-                <img className="Sidebar-Logo" src={ logo }></img>
+                <img className="Sidebar-Logo" src={ logo } alt="JackTech Logo"></img>
                 <List>
                     <SidebarAccordion content={accordionContents} accordionState={accordionState} onChange={handleChange} />
                 </List>
@@ -76,7 +76,7 @@ export default function Sidebar({ sidebarWidth, isSidebarOpen, handleClose, hand
                 open={isSidebarOpen} sidebarWidth={sidebarWidth}
                 /*onTransitionEnd={handleTransitionEnd}*/ onClose={handleClose}
                 sx={{ display: { xs: 'block', sm: 'none' } }} >           
-                <img className="Sidebar-Logo" src={ logo }></img>
+                <img className="Sidebar-Logo" src={ logo } alt="JackTech Logo"></img>
                 <List>
                     <SidebarAccordion content={accordionContents} accordionState={accordionState} onChange={handleChange} />
                 </List>

@@ -5,22 +5,21 @@ import './shared/assets/css/Layout.css';
 import './App.css';
 import Header from './features/Header/Header';
 import Sidebar from './features/Sidebar/Sidebar';
-import NC_Status from './features/NC/NC_Status';
-import NC_Maintain from './features/NC/NC_Maintain';
+import NCStatus from './features/NC/NC_Status';
+import NCMaintain from './features/NC/NC_Maintain';
 // import NC_File from './pages/NC_File';
-import NC_Utilize from './features/NC/NC_Utilize';
-import Alarm_Status from './features/Alarms/Alarm_Status';
-import Alarm_History from './features/Alarms/Alarm_History';
+import NCUtilize from './features/NC/NC_Utilize';
+import AlarmStatus from './features/Alarms/Alarm_Status';
+import AlarmHistory from './features/Alarms/Alarm_History';
 // import Order from './pages/Order';
 import Report from './features/Reports/Report';
 // import Setting_Item from './pages/Setting_Item';
-import Setting_Maintain from './features/General-settings/Setting_Maintain';
-import Setting_NCStatus from './features/General-settings/Setting_NCstatus';
+import SettingMaintain from './features/General-settings/Setting_Maintain';
+import SettingNCStatus from './features/General-settings/Setting_NCstatus';
 // import Setting_PPmap from './pages/Setting_PPmap';
-import Sys_Account from './features/Sys-settings/Sys_Account';
-import Sys_General from './features/Sys-settings/Sys_General';
-import Sys_Notification from './features/Sys-settings/Sys_Notification';
-import TestPage from './tests/test';
+import SysAccount from './features/Sys-settings/Sys_Account';
+import SysGeneral from './features/Sys-settings/Sys_General';
+import SysNotification from './features/Sys-settings/Sys_Notification';
 
 // import MenuItem from './components/MenuItem';
 
@@ -72,22 +71,22 @@ function App() {
       <div className={`Layout ${isSidebarOpen? 'SidebarOpen': ''}`}>
         <Box sx={{ bgcolor: '#5b5b99', width: '100%', minHeight: '100vh' }}>
           <Routes>
-              <Route path='/machine/status' element={ <NC_Status interval={refreshInterval} />}/>
-              <Route path='/machine/maintain' element={ <NC_Maintain />}/>
-              <Route path='/machine/utilize' element={ <NC_Utilize interval={refreshInterval} />}/>
+              <Route path='/machine/status' element={ <NCStatus interval={refreshInterval} />}/>
+              <Route path='/machine/maintain' element={ <NCMaintain />}/>
+              <Route path='/machine/utilize' element={ <NCUtilize interval={refreshInterval} />}/>
               {/* <Route path='/machine/ncfile' element={ <NC_File />}/> */}
-              <Route path='/alarm/status' element={ <Alarm_Status />}/>
-              <Route path='/alarm/history' element={ <Alarm_History />}/>
+              <Route path='/alarm/status' element={ <AlarmStatus />}/>
+              <Route path='/alarm/history' element={ <AlarmHistory />}/>
               {/* <Route path='/order' element={ <Order />}/> */}
               <Route path='/report' element={ <Report />}/>
-              <Route path='/setting/machine' element={ <Setting_NCStatus />}/>
-              <Route path='/setting/maintain' element={ <Setting_Maintain />}/>
+              <Route path='/setting/machine' element={ <SettingNCStatus />}/>
+              <Route path='/setting/maintain' element={ <SettingMaintain />}/>
               {/* <Route path='/setting/item' element={ <Setting_Item />}/> */}
               {/* <Route path='/setting/pp_map' element={ <Setting_PPmap />}/> */}
-              <Route path='/sys/general' element={ <Sys_General />}/>
-              <Route path='/sys/account' element={ <Sys_Account />}/>
-              <Route path='/sys/notify' element={ <Sys_Notification />}/>
-              <Route path='/' element={ <NC_Utilize />}/>
+              <Route path='/sys/general' element={ <SysGeneral />}/>
+              <Route path='/sys/account' element={ <SysAccount />}/>
+              <Route path='/sys/notify' element={ <SysNotification />}/>
+              <Route path='/' element={ <NCUtilize />}/>
           </Routes>
         </Box>
       </div>

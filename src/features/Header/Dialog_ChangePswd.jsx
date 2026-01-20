@@ -1,11 +1,11 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useState } from "react";
 import axios from "axios";
-import { UserContext } from "../../shared/contexts/User_Provider";
+// import { UserContext } from "../../shared/contexts/User_Provider";
 import { Stack, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, TextField, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function ChangePswdDialog({ openDialog, setOpenDialog, onPasswordChange }) {
-    const { userInfo, setUserInfo } = useContext(UserContext);
+    // const { userInfo, setUserInfo } = useContext(UserContext);
     const [showPassword, setShowPassword] = useState({ current: false, new: false, confirm: false });
     const [chgData, setChgData] = useState({
         current_password: '',
