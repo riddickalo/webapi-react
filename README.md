@@ -35,6 +35,47 @@ v2.0 => feature based
     |- index.js
 ```
 
+## Demo
+User info for demo as below.
+```yaml
+# refers to src/mock_server/data/users.js
+- admin:
+    user_name: 'admin',
+    user_password: 'admin123',
+    permissions: 
+        - NC_Maintain: 'edit'
+        - Report: 'edit'
+        - Setting_NCstatus: 'edit'
+        - Setting_Maintain: 'edit'
+        - Sys_Account: 'edit'
+        - Sys_Notification: 'edit'
+    enable: true
+
+- operator:
+    user_name: 'operator1'
+    user_password: 'operator123'
+    permissions: 
+        - NC_Maintain: 'view'
+        - Report: 'view'
+        - Setting_NCstatus: 'view'
+        - Setting_Maintain: 'edit'
+        - Sys_Account: 'none'
+        - Sys_Notification: 'none'
+    enable: true
+
+- viwer:
+    user_name: 'viewer'
+    user_password: 'viewer123'
+    permissions: 
+        - NC_Maintain: 'view'
+        - Report: 'view'
+        - Setting_NCstatus: 'view'
+        - Setting_Maintain: 'none'
+        - Sys_Account: 'none'
+        - Sys_Notification: 'none'
+    enable: true
+``` 
+
 ## Scripts
 
 For installing the dependencies,
