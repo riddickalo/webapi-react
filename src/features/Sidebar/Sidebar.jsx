@@ -1,5 +1,5 @@
 import React from "react";
-import logo from '../../shared/assets/img/mat logo.png';
+import logo from '../../shared/assets/img/JackTech banner logo.png';
 import { List, Box } from '@mui/material';
 import { FilePresentRounded, MonitorRounded, ReportProblemRounded, FeedRounded, SettingsRounded, DisplaySettingsRounded } from '@mui/icons-material';
 import { SidebarDrawer, SidebarAccordion } from "./StyledSidebar";

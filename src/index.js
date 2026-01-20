@@ -9,17 +9,27 @@ import UserProvider from './shared/contexts/User_Provider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base_name = process.env.REACT_APP_BASE_NAME || '';
 
-root.render(
-  <React.StrictMode>
-    <UserProvider>
-      <BrowserRouter basename={base_name}>
-        <App />
-      </BrowserRouter> 
-    </UserProvider>     
-  </React.StrictMode>
-);
+async function initApp() {
+  // Enable MSW for local development and Vercel preview
+  if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_USE_MSW === 'true') {
+    const { worker } = require('./mock_server/browser');
+    await worker.start({
+      onUnhandledRequest: 'bypass',
+    });
+  }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  // Only render App after MSW is fully started
+  root.render(
+    <React.StrictMode>
+      <UserProvider>
+        <BrowserRouter basename={base_name}>
+          <App />
+        </BrowserRouter> 
+      </UserProvider>     
+    </React.StrictMode>
+  );
+
+  reportWebVitals();
+}
+
+initApp();

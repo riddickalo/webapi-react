@@ -1,10 +1,10 @@
-# JackTech WarRoom Front-end
+# JackTech WarRoom GUI
 
 Build views for monitoring machine status and alarms. Download production reports and maintainance reminder.
 
 ## Framework
 
-- Node.js v18.20
+- Node.js v20.20
 - React v18.3
 - MaterialUI
 
@@ -25,6 +25,7 @@ v2.0 => feature based
         |- Reports              # report page
         |- Sidebar              # menu, sidebar
         |- Sys-settings         # system, notification settings
+    |- mock_server              # mock data server
     |- shared                   # cross-feature components
         |- assets               # resources
         |- contexts             # react context
@@ -59,3 +60,10 @@ For the serving static pages in middle server, it needs to build project and pus
 ```sh
 npm run deploy
 ```
+
+## Note
+
+Building with node:18.x is no longer an option for vercel.  
+CRA is deprecated by Facebook(Meta), last version is react-script v5.x
+
+I might reengineer this...?

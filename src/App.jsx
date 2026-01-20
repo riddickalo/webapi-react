@@ -25,6 +25,7 @@ import TestPage from './tests/test';
 // import MenuItem from './components/MenuItem';
 
 function App() {
+  console.log("App Rendered");
   // sidebar state
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const loc = useLocation();                                // page changing listener

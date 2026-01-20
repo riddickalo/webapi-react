@@ -1,0 +1,140 @@
+export const mockAlarms = [
+  {
+    alarm_sn: "1",
+    nc_id: "NC-1-2",
+    alarm_type: "alarm",
+    alarm_msg: "Temperature exceeds threshold",
+    alarm_timestamp: "2026-01-20T10:30:00.000Z",
+    history_flag: false,
+    createdAt: "2026-01-20T10:30:06.158Z",
+    Nc_Info: {
+      nc_id: "NC-1-2",
+      nc_ip: "192.168.1.2",
+      region: "Factory 1",
+      prod_line: "Ball Screw-S1",
+      station: "Surface Grinding",
+      opStatus: "running",
+      running_flag: 1,
+      ncfile: "run_100.nc",
+      maintainStatus: 0,
+      utilize_rate: 76,
+      createdAt: "2026-01-15T08:00:00.000Z",
+      updatedAt: "2026-01-20T10:30:07.407Z"
+    }
+  },
+  {
+    alarm_sn: "2",
+    nc_id: "NC-1-3",
+    alarm_type: "alarm",
+    alarm_msg: "Pressure abnormal",
+    alarm_timestamp: "2026-01-20T09:15:00.000Z",
+    history_flag: true,
+    createdAt: "2026-01-20T09:15:06.158Z",
+    Nc_Info: {
+      nc_id: "NC-1-3",
+      nc_ip: "192.168.1.3",
+      region: "Factory 1",
+      prod_line: "Roll Block-RB1",
+      station: "Milling",
+      opStatus: "running",
+      running_flag: 1,
+      ncfile: "run_200.nc",
+      maintainStatus: 0,
+      utilize_rate: 85,
+      createdAt: "2026-01-15T09:00:00.000Z",
+      updatedAt: "2026-01-20T09:15:07.407Z"
+    }
+  },
+  {
+    alarm_sn: "3",
+    nc_id: "NC-2-1",
+    alarm_type: "alarm",
+    alarm_msg: "Spindle speed abnormal",
+    alarm_timestamp: "2026-01-20T08:45:00.000Z",
+    history_flag: true,
+    createdAt: "2026-01-20T08:45:06.158Z",
+    Nc_Info: {
+      nc_id: "NC-2-1",
+      nc_ip: "192.168.2.1",
+      region: "Factory 2",
+      prod_line: "Gear Box-GB2",
+      station: "Lathe turning",
+      opStatus: "idle",
+      running_flag: 1,
+      ncfile: "run_100.nc",
+      maintainStatus: 0,
+      utilize_rate: 33,
+      createdAt: "2026-01-15T10:00:00.000Z",
+      updatedAt: "2026-01-20T08:45:07.407Z"
+    }
+  },
+  {
+    alarm_sn: "4",
+    nc_id: "NC-2-1",
+    alarm_type: "alarm",
+    alarm_msg: "Tool wear detected",
+    alarm_timestamp: "2026-01-20T07:20:00.000Z",
+    history_flag: true,
+    createdAt: "2026-01-20T07:20:06.158Z",
+    Nc_Info: {
+      nc_id: "NC-2-1",
+      nc_ip: "192.168.2.1",
+      region: "Factory 2",
+      prod_line: "Gear Box-GB2",
+      station: "Lathe turning",
+      opStatus: "idle",
+      running_flag: 1,
+      ncfile: "run_100.nc",
+      maintainStatus: 0,
+      utilize_rate: 33,
+      createdAt: "2026-01-15T10:00:00.000Z",
+      updatedAt: "2026-01-20T07:20:07.407Z"
+    }
+  },
+  {
+    alarm_sn: "5",
+    nc_id: "NC-2-1",
+    alarm_type: "warning",
+    alarm_msg: "Maintenance required soon",
+    alarm_timestamp: "2026-01-20T06:00:00.000Z",
+    history_flag: true,
+    createdAt: "2026-01-20T06:00:06.158Z",
+    Nc_Info: {
+      nc_id: "NC-2-1",
+      nc_ip: "192.168.2.1",
+      region: "Factory 2",
+      prod_line: "Gear Box-GB2",
+      station: "Lathe turning",
+      opStatus: "idle",
+      running_flag: 1,
+      ncfile: "run_100.nc",
+      maintainStatus: 0,
+      utilize_rate: 33,
+      createdAt: "2026-01-15T10:00:00.000Z",
+      updatedAt: "2026-01-20T06:00:07.407Z"
+    }
+  },
+  {
+    alarm_sn: "6",
+    nc_id: "NC-1-2",
+    alarm_type: "warning",
+    alarm_msg: "Power fluctuation detected",
+    alarm_timestamp: "2026-01-19T22:30:00.000Z",
+    history_flag: true,
+    createdAt: "2026-01-19T22:30:06.158Z",
+    Nc_Info: {
+      nc_id: "NC-1-2",
+      nc_ip: "192.168.1.2",
+      region: "Factory 1",
+      prod_line: "Ball Screw-S1",
+      station: "Surface Grinding",
+      opStatus: "running",
+      running_flag: 1,
+      ncfile: "run_100.nc",
+      maintainStatus: 0,
+      utilize_rate: 76,
+      createdAt: "2026-01-15T08:00:00.000Z",
+      updatedAt: "2026-01-19T22:30:07.407Z"
+    }
+  }
+];

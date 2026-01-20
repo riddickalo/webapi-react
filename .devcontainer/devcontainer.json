@@ -1,6 +1,6 @@
 {
     "name": "react-dev-node-18.20",
-    "image": "node:18.20",
+    "image": "node:20.20",
     "workspaceFolder": "/react-app",
     
     // 掛載本機目錄到容器
