@@ -1,6 +1,6 @@
 {
   "name": "webapi-react",
-  "version": "v2.0.1",
+  "version": "v2.1.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.13.0",
