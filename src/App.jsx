@@ -71,21 +71,21 @@ function App() {
       <div className={`Layout ${isSidebarOpen? 'SidebarOpen': ''}`}>
         <Box sx={{ bgcolor: '#5b5b99', width: '100%', minHeight: '100vh' }}>
           <Routes>
-              <Route path='/machine/status' element={ <NCStatus interval={refreshInterval} />}/>
-              <Route path='/machine/maintain' element={ <NCMaintain />}/>
-              <Route path='/machine/utilize' element={ <NCUtilize interval={refreshInterval} />}/>
-              {/* <Route path='/machine/ncfile' element={ <NC_File />}/> */}
-              <Route path='/alarm/status' element={ <AlarmStatus />}/>
-              <Route path='/alarm/history' element={ <AlarmHistory />}/>
-              {/* <Route path='/order' element={ <Order />}/> */}
-              <Route path='/report' element={ <Report />}/>
-              <Route path='/setting/machine' element={ <SettingNCStatus />}/>
-              <Route path='/setting/maintain' element={ <SettingMaintain />}/>
+              <Route path='machine/status' element={ <NCStatus interval={refreshInterval} />}/>
+              <Route path='machine/maintain' element={ <NCMaintain />}/>
+              <Route path='machine/utilize' element={ <NCUtilize interval={refreshInterval} />}/>
+              {/* <Route path='machine/ncfile' element={ <NC_File />}/> */}
+              <Route path='alarm/status' element={ <AlarmStatus />}/>
+              <Route path='alarm/history' element={ <AlarmHistory />}/>
+              {/* <Route path='order' element={ <Order />}/> */}
+              <Route path='report' element={ <Report />}/>
+              <Route path='setting/machine' element={ <SettingNCStatus />}/>
+              <Route path='setting/maintain' element={ <SettingMaintain />}/>
               {/* <Route path='/setting/item' element={ <Setting_Item />}/> */}
               {/* <Route path='/setting/pp_map' element={ <Setting_PPmap />}/> */}
-              <Route path='/sys/general' element={ <SysGeneral />}/>
-              <Route path='/sys/account' element={ <SysAccount />}/>
-              <Route path='/sys/notify' element={ <SysNotification />}/>
+              <Route path='sys/general' element={ <SysGeneral />}/>
+              <Route path='sys/account' element={ <SysAccount />}/>
+              <Route path='sys/notify' element={ <SysNotification />}/>
               <Route path='/' element={ <NCUtilize />}/>
           </Routes>
         </Box>
