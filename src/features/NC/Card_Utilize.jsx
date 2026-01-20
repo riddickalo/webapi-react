@@ -57,8 +57,8 @@ const dividerStyle = {
 
 function CircularProgressWithLabel(props) {
     return(
-        <Box sx={{alignItems: 'flex-end'}}>
-            <Stack direction={'column'} spacing={5}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Stack direction={'column'} spacing={5} sx={{ alignItems: 'center' }}>
                 <Box sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
                     <CircularProgress variant='determinate' 
                         {...props} 
